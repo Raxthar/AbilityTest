@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "Y",
+  "description": "A Vue.js project",
   "author": "suyunpeng <894624801@qq.com>",
   "private": true,
   "scripts": {
@@ -14,6 +14,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "echarts": "^4.2.0-rc.2",
+    "iview": "^3.2.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
