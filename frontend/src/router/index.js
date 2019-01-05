@@ -5,7 +5,6 @@ import AddEvaluationTitle from '@/components/AddEvaluationTitle'
 import AddDimensions from '@/components/AddDimensions'
 import CreateEvaluation from '@/components/CreateEvaluation'
 
-
 Vue.use(Router)
 
 export default new Router({
