@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import addtitle from '@/components/AddEvaluationTitle'
-import adddims from '@/components/AddDimensions'
+import AddEvaluationTitle from '@/components/AddEvaluationTitle'
+import AddDimensions from '@/components/AddDimensions'
+import CreateEvaluation from '@/components/CreateEvaluation'
 
 Vue.use(Router)
 
@@ -15,14 +16,19 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/addtitle',
-      name: 'addtitle',
-      component: addtitle
+      path: '/AddEvaluationTitle',
+      name: 'AddEvaluationTitle',
+      component: AddEvaluationTitle
     },
     {
-      path: '/adddims',
-      name: 'adddims',
-      component: adddims
+      path: '/AddDimensions',
+      name: 'AddDimensions',
+      component: AddDimensions
+    },
+    {
+      path: '/CreateEvaluation',
+      name: 'CreateEvaluation',
+      component: CreateEvaluation
     }
   ]
 })
