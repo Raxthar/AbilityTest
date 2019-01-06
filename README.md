@@ -9,4 +9,5 @@ django project root选择myproject文件夹，Settings选择settings.py文件
 
 请注意！！！
 开发前端的人员尽量不要下载django依赖，开发后端的人员请不要下载frontend依赖以避免麻烦！！！
+使用后端的人员也请执行pip install django-cors-headers解决跨域问题
 
