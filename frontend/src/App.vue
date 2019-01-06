@@ -1,13 +1,23 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+  <div>
+    <Breadcrumb>
+      <BreadcrumbItem to="/HelloWorld">Home</BreadcrumbItem>
+      <BreadcrumbItem to="/AddEvaluationTitle">AddEvaluationTitle</BreadcrumbItem>
+      <BreadcrumbItem to="/AddDimensions">AddDimensions</BreadcrumbItem>
+      <BreadcrumbItem to="/CreateEvaluation">CreateEvaluation</BreadcrumbItem>
+    </Breadcrumb>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'app',
+  methods: {
+    gotest () {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
