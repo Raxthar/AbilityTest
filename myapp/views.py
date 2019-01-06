@@ -41,6 +41,17 @@ def create(request):
             "code": 200,
         }
     except Exception as e:
+def create(request):
+    obj = json.loads(request.body)
+    name = obj['title']
+    describe = obj['describe']
+    try:
+        book = ATest(tName=name, tDescribe=describe)
+        book.save()
+        res = {
+            "code": 200,
+        }
+    except Exception as e:
         res = {
             "code": 0,
             "errMsg": e
