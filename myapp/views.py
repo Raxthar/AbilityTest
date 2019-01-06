@@ -27,3 +27,5 @@ def createDimension(request):
             "errMsg": e
         }
     return HttpResponse(json.dumps(result), content_type="application/json")
+
+
