@@ -61,11 +61,11 @@ export default {
         params: {
           content: this.uID
         }
-      }).then(res => {
-        if (res.data.code === 200) {
-          if (res.data.data && JSON.parse(res.data.data).length > 0) {
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.data && JSON.parse(response.data.data).length > 0) {
             this.evaluationData = []
-            let evaluations = JSON.parse(res.data.data)
+            let evaluations = JSON.parse(response.data.data)
             for (let i in evaluations) {
               tStatus = Number(evaluations[i].fields.tStatus)
               if (tSatus === 1){

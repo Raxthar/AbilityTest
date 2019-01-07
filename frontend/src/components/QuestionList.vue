@@ -52,11 +52,11 @@ export default {
         params: {
           content: this.tID
         }
-      }).then(res => {
-        if (res.data.code === 200) {
-          if (res.data.data && JSON.parse(res.data.data).length > 0) {
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.data && JSON.parse(response.data.data).length > 0) {
             this.questionData = []
-            let questions = JSON.parse(res.data.data)
+            let questions = JSON.parse(response.data.data)
             for (let i in questions) {
                 let obj = {
                   qID: questions[i].fields.qID,

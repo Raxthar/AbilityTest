@@ -55,8 +55,8 @@ export default {
           return
         }
       }
-      this.$axios.post('/dimension/', JSON.stringify(this.dimensionArray)).then(res => {
-        if (res.data.code === 200) {
+      this.$axios.post('/dimension/', JSON.stringify(this.dimensionArray)).then(response => {
+        if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
           this.$router.push('/QusetionList/' + this.dimensionArray.uID + '/' + this.dimensionArray.tID)
         } else {

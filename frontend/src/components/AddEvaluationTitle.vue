@@ -44,10 +44,10 @@ export default {
         this.$Message.info('请输入描述')
         return
       }
-      this.$axios.post('/create/', JSON.stringify(this.createData)).then(res => {
-        if (res.data.code === 200) {
+      this.$axios.post('/create/', JSON.stringify(this.createData)).then(response => {
+        if (response.data.code === 200) {
           this.$Message.success(`create ${this.createData.title} success`)
-          let tID = res.data.tID
+          let tID = response.data.tID
           this.$router.push('/AddDimensions/' + tID + '/' + this.createData.uID)
         } else {
           this.$Message.info("can't read database")
