@@ -27,8 +27,8 @@ export default {
   data () {
     return {
       buttonSize: 'large',
-      uID: 1,
       createData: {
+        uID: 1,
         title: '',
         describe: ''
       }
@@ -48,7 +48,7 @@ export default {
         if (res.data.code === 200) {
           this.$Message.success(`create ${this.createData.title} success`)
           let tID = res.data.tID
-          this.$router.push('/AddDimensions/' + tID + '/' + this.uID)
+          this.$router.push('/AddDimensions/' + tID + '/' + this.createData.uID)
         } else {
           this.$Message.info("can't read database")
         }
