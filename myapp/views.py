@@ -6,7 +6,7 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 
-from .models import ATest
+from .models import ATest, Question
 # Create your views here.
 from .models import Dimension
 
@@ -14,11 +14,13 @@ from .models import Dimension
 def createDimension(request):
     print('create')
     obj = json.loads(request.body)
-    dName = obj['dName']
+    dNamesArr = obj['dimensions']
     tID = obj['tID']
+    uID = obj['uID']
     try:
-        dimension = Dimension(dName=dName, tID=tID)  # 填数据库时还要测评号tID，怎么拿到测评号tID呢？在这里先假设拿到了.
-        dimension.save()
+        for dName in dNamesArr:
+            dimension = Dimension(dName=dName, tID_id=tID)
+            dimension.save()
         result = {
             "code": 200,
         }
@@ -29,18 +31,25 @@ def createDimension(request):
         }
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-
-def create(request):
-    obj = json.loads(request.body)
-    name = obj['title']
-    describe = obj['describe']
+'''
+def searchAllQuestions(request):
+    content = request.GET['content']
     try:
-        book = ATest(tName=name, tDescribe=describe)
-        book.save()
+        question = serializers.serialize("json", Question.objects.filter(tID=content))   # 查数据库找出测评号tID对应的所有题目
         res = {
             "code": 200,
+            "data": question
         }
+        print(question)
     except Exception as e:
+        res = {
+            "code": 0,
+            "errMsg": e
+        }
+    return HttpResponse(json.dumps(res), content_type="application/json")
+'''
+
+
 def create(request):
     obj = json.loads(request.body)
     name = obj['title']
