@@ -13,7 +13,9 @@
         </Button>
       </Content>
       <Footer>
-        <card>          
+        <card>
+          <Table :data="evaluationData">
+          </Table>
         </card>
       </Footer>
     </Layout>
@@ -22,15 +24,72 @@
 
 <script>
 export default {
+  mounted () {
+    this.searchEvaluation()
+  },
   data () {
     return {
       uID: 1,
+      columns: [
+        {
+          title: '测评号',
+          key: 'tID'
+        },
+        {
+          title: '测评名',
+          key: 'tName'
+        },
+        {
+          title: '测评状态',
+          key: 'tStatus'
+        },
+        {
+          title: '截止日期',
+          key: 'tDue'
+        }
+      ],
+      evaluationData: [],
       buttonSize: 'large'
     }
   },
   methods: {
     jumpToAddTitle () {
       this.$router.push('/AddEvaluationTitle/' + this.uID)
+    },
+    searchEvaluation () {
+      this.$axios.get('searchEvalution', {
+        params: {
+          content: this.uID
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          if (res.data.data && JSON.parse(res.data.data).length > 0) {
+            this.evaluationData = []
+            let evaluations = JSON.parse(res.data.data)
+            for (let i in evaluations) {
+              tStatus = Number(books[i].fields.tStatus)
+              if (tSatus === 1){
+                let obj = {
+                  tID: evaluations[i].fields.tID,
+                  tName: evaluations[i].fields.tName,
+                  tStatus: '已发布',
+                  tDue: evaluations[i].fields.tDue
+                }
+              } else {
+                let obj = {
+                  tID: evaluations[i].fields.tID,
+                  tName: evaluations[i].fields.tName,
+                  tStatus: '未发布',
+                  tDue: evaluations[i].fields.tDue
+                }
+              }
+              this.evaluationData.push(obj)
+            }
+          }
+        } else {
+          this.$Message.error(`can't search in database`)
+        }
+      })
     }
   }
 }
