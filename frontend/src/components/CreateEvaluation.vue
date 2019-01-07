@@ -67,7 +67,7 @@ export default {
             this.evaluationData = []
             let evaluations = JSON.parse(res.data.data)
             for (let i in evaluations) {
-              tStatus = Number(books[i].fields.tStatus)
+              tStatus = Number(evaluations[i].fields.tStatus)
               if (tSatus === 1){
                 let obj = {
                   tID: evaluations[i].fields.tID,
@@ -75,7 +75,7 @@ export default {
                   tStatus: '已发布',
                   tDue: evaluations[i].fields.tDue
                 }
-              } else {
+              } else if (tSatus === 0) {
                 let obj = {
                   tID: evaluations[i].fields.tID,
                   tName: evaluations[i].fields.tName,
