@@ -21,7 +21,7 @@ export default new Router({
       component: AddEvaluationTitle
     },
     {
-      path: '/AddDimensions/:tID',
+      path: '/AddDimensions/:tID/:uID',
       name: 'AddDimensions',
       component: AddDimensions
     },
