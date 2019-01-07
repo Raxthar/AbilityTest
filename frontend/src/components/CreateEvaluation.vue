@@ -8,12 +8,14 @@
         </Button>
       </Header>
       <Content>            
-        <Button :size="buttonSize" type="primary" to="/AddEvaluationTitle">   
+        <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
           创建测评
         </Button>
       </Content>
       <Footer>
-        <card>          
+        <card>
+          <Table :data="evaluationData">
+          </Table>
         </card>
       </Footer>
     </Layout>
@@ -22,11 +24,74 @@
 
 <script>
 export default {
+  mounted () {
+    this.searchEvaluation()
+  },
   data () {
     return {
+      uID: 1,
+      columns: [
+        {
+          title: '测评号',
+          key: 'tID'
+        },
+        {
+          title: '测评名',
+          key: 'tName'
+        },
+        {
+          title: '测评状态',
+          key: 'tStatus'
+        },
+        {
+          title: '截止日期',
+          key: 'tDue'
+        }
+      ],
+      evaluationData: [],
       buttonSize: 'large'
     }
-  } 
+  },
+  methods: {
+    jumpToAddTitle () {
+      this.$router.push('/AddEvaluationTitle/' + this.uID)
+    },
+    searchEvaluation () {
+      this.$axios.get('searchEvalution', {
+        params: {
+          content: this.uID
+        }
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.data && JSON.parse(response.data.data).length > 0) {
+            this.evaluationData = []
+            let evaluations = JSON.parse(response.data.data)
+            for (let i in evaluations) {
+              tStatus = Number(evaluations[i].fields.tStatus)
+              if (tSatus === 1){
+                let obj = {
+                  tID: evaluations[i].fields.tID,
+                  tName: evaluations[i].fields.tName,
+                  tStatus: '已发布',
+                  tDue: evaluations[i].fields.tDue
+                }
+              } else if (tSatus === 0) {
+                let obj = {
+                  tID: evaluations[i].fields.tID,
+                  tName: evaluations[i].fields.tName,
+                  tStatus: '未发布',
+                  tDue: evaluations[i].fields.tDue
+                }
+              }
+              this.evaluationData.push(obj)
+            }
+          }
+        } else {
+          this.$Message.error(`can't search in database`)
+        }
+      })
+    }
+  }
 }
 </script>
 

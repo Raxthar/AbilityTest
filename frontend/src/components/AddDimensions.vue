@@ -13,7 +13,7 @@
           <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-              <Input v-model="dimensions[index]" size="large" placeholder="请输入维度" />
+              <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
             </FormItem>
               <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
           </Form>
@@ -31,7 +31,11 @@ export default {
       lists: [{
         getdimension: ''
       }],
-      dimensions: {}
+      dimensionArray: {
+        tID: this.$route.params.tID,
+        uID: this.$route.params.uID,
+        dimensions: {}
+      }
     }
   },
   methods: {
@@ -45,16 +49,16 @@ export default {
       this.lists.splice(index, 1)
     },
     setDimensions: function () {
-      for (let i = 0; i < this.dimensions.length; i++) {
-        if (this.dimensions[i] === '') {
+      for (let i = 0; i < this.dimensionArray.dimensions.length; i++) {
+        if (this.dimensionArray.dimensions[i] === '') {
           this.$Message.info('please input evaluation dimensions')
           return
         }
       }
-      this.$axios.post('/dimension/', JSON.stringify(this.dimensions)).then(res => {
-        if (res.data.code === 200) {
+      this.$axios.post('/dimension/', JSON.stringify(this.dimensionArray)).then(response => {
+        if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
-          this.$router.push({name: 'HelloWorld'})
+          this.$router.push('/QusetionList/' + this.dimensionArray.uID + '/' + this.dimensionArray.tID)
         } else {
           this.$Message.info("can't read database")
         }
