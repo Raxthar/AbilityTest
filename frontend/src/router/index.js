@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import AddEvaluationTitle from '@/components/AddEvaluationTitle'
 import AddDimensions from '@/components/AddDimensions'
 import CreateEvaluation from '@/components/CreateEvaluation'
+import QuestionList from '@/components/QuestionList'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/CreateEvaluation',
       name: 'CreateEvaluation',
       component: CreateEvaluation
+    },
+    {
+      path: '/QuestionList',
+      name: 'QuestionList',
+      component: QuestionList
     }
   ]
 })
