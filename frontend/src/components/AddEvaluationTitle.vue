@@ -28,7 +28,7 @@ export default {
     return {
       buttonSize: 'large',
       createData: {
-        uID: 1,
+        uID: this.$route.params.uID,
         title: '',
         describe: ''
       }

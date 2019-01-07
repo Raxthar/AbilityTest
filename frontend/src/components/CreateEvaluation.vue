@@ -8,7 +8,7 @@
         </Button>
       </Header>
       <Content>            
-        <Button :size="buttonSize" type="primary" to="/AddEvaluationTitle">   
+        <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
           创建测评
         </Button>
       </Content>
@@ -24,9 +24,15 @@
 export default {
   data () {
     return {
+      uID: 1,
       buttonSize: 'large'
     }
-  } 
+  },
+  methods: {
+    jumpToAddTitle () {
+      this.$router.push('/AddEvaluationTitle/' + this.uID)
+    }
+  }
 }
 </script>
 
