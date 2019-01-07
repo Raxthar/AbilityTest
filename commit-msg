@@ -1,0 +1,22 @@
+#!/bin/sh
+msg=$(cat $1)
+red='\033[0;31m'
+nc='\033[0m'
+if [[ ${msg:0:1} =~ [a-z] ]]; then
+    echo "${red}Sorry, commit failed. First letter must be in uppercase!\n${nc}"
+    exit 1
+fi;
+
+# Check non-ascii
+# \t existed in .git/COMMIT_EDITMSG when git commit --amend
+\grep '[^ -~[:space:]]\+' $1 &>/dev/null
+if [[ $? -eq 0 ]]; then
+    echo "${red}Sorry, commit failed. No Chinese plz!\n${nc}"
+    exit 1
+fi;
+
+# Must reference an issue
+if ! grep -i '\(Merge\|Hotfix\|#[[:digit:]]\+\)' $1 &>/dev/null; then
+    echo "${red}Sorry, commit failed. Reference an issue plz!\n${nc}"
+    exit 2
+fi
