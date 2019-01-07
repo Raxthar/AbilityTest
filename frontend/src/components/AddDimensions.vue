@@ -28,6 +28,8 @@ export default {
   data () {
     return {
       buttonSize: 'large',
+      tID: this.$route.params.tID,
+      uID: this.$route.params.uID,
       lists: [{
         getdimension: ''
       }],
