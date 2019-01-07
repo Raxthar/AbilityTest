@@ -16,7 +16,7 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/AddEvaluationTitle',
+      path: '/AddEvaluationTitle/:uID',
       name: 'AddEvaluationTitle',
       component: AddEvaluationTitle
     },
