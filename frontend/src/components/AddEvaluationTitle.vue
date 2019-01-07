@@ -46,7 +46,8 @@ export default {
       this.$axios.post('/create/', JSON.stringify(this.createData)).then(res => {
         if (res.data.code === 200) {
           this.$Message.success(`create ${this.createData.title} success`)
-          this.$router.push({name: 'AddDimensions'})
+          let tID = res.data.tID
+          this.$router.push('/adddims/' + tID)
         } else {
           this.$Message.info("can't read database")
         }
