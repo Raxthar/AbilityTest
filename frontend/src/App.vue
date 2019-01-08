@@ -5,6 +5,7 @@
       <BreadcrumbItem to="/CreateEvaluation">CreateEvaluation</BreadcrumbItem>
       <BreadcrumbItem to="/AddEvaluationTitle">AddEvaluationTitle</BreadcrumbItem>
       <BreadcrumbItem to="/AddDimensions">AddDimensions</BreadcrumbItem>
+      <BreadcrumbItem to="/QuestionList">QuestionList</BreadcrumbItem>
     </Breadcrumb>
     <router-view></router-view>
   </div>
