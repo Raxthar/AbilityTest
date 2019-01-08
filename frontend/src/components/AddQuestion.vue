@@ -16,7 +16,7 @@
               <FormItem label="input">
                   <Input v-model="questionData.questionTitle" placeholder="Enter Title..." />
               </FormItem>
-              <FormItem v-for="option in options" :key="option">
+              <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
                   <Input v-model="questionData.options[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.dimensions[index]" type="button">
@@ -42,12 +42,13 @@ export default {
     return {
       uID: this.$route.params.uID,
       lists: [{
-        list: ''
+        index: {}
       }],
       dimensionsData: [],
       questionData: {
         tID: this.$route.params.tID,
         questionTitle: '',
+        options: {},
         dimensions: {},
         score: {}
       }
@@ -90,16 +91,16 @@ export default {
       })
     },
     setQuestion () {
-      for (let i = 0; i < Object.keys(this.questionData.dimensions).length; i++) {
-        if (this.questionData.dimensions[i] === '') {
+      for (let i = 0; i < this.lists.length; i++) {
+        if (!this.questionData.dimensions[i]) {
           this.$Message.info('please choose a dimension for option')
           return
         }
-        if (this.questionData.questionTitle[i] === '') {
+        if (!this.questionData.questionTitle[i]) {
           this.$Message.info('please enter question')
           return
         }
-        if (this.questionData.score[i] === '') {
+        if (!this.questionData.score[i]) {
           this.$Message.info('please enter the score for question')
           return
         }
