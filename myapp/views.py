@@ -21,15 +21,18 @@ def createDimension(request):
         for dName in dNamesArr:
             dimension = Dimension(dName=dName, tID_id=tID)
             dimension.save()
-        result = {
+        question = serializers.serialize("json", Question.objects.filter(tID_id=tID))   # 查数据库找出测评号tID对应的所有题目
+        print(question)
+        response = {
             "code": 200,
+            "question_data": question
         }
     except Exception as e:
-        result = {
+        response = {
             "code": 0,
             "errMsg": e
         }
-    return HttpResponse(json.dumps(result), content_type="application/json")
+    return HttpResponse(json.dumps(response), content_type="application/json")
 
 '''
 def searchAllQuestions(request):
