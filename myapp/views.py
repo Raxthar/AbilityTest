@@ -79,7 +79,6 @@ def create(request):
     test_id = {}
     test = Test(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
     test.save()
-    test1 = Test.objects.get(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
-    print(test1.tID)
-    test_id['data'] = test1.tID
+    test_info = Test.objects.get(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
+    test_id['data'] = test_info.tID
     return JsonResponse(test_id)
