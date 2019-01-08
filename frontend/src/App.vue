@@ -6,6 +6,7 @@
       <BreadcrumbItem to="/AddEvaluationTitle">AddEvaluationTitle</BreadcrumbItem>
       <BreadcrumbItem to="/AddDimensions">AddDimensions</BreadcrumbItem>
       <BreadcrumbItem to="/QuestionList">QuestionList</BreadcrumbItem>
+      <BreadcrumbItem to="/Welcome">Welcome</BreadcrumbItem>
     </Breadcrumb>
     <router-view></router-view>
   </div>
