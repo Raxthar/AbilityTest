@@ -11,14 +11,14 @@ from .models import ATest, Question
 from .models import Dimension
 
 
-def createDimension(request):
+def create_dimension(request):
     print('create')
     obj = json.loads(request.body)
-    dNamesArr = obj['dimensions']
+    d_names_arr = obj['dimensions']
     tID = obj['tID']
     uID = obj['uID']
     try:
-        for dName in dNamesArr:
+        for dName in d_names_arr:
             dimension = Dimension(dName=dName, tID_id=tID)
             dimension.save()
         question = serializers.serialize("json", Question.objects.filter(tID_id=tID))   # 查数据库找出测评号tID对应的所有题目
@@ -34,14 +34,15 @@ def createDimension(request):
         }
     return HttpResponse(json.dumps(response), content_type="application/json")
 
-'''
-def searchAllQuestions(request):
-    content = request.GET['content']
+
+def search_all_atest(request):
+    obj = json.loads(request.body)
+    u_id = obj['u_id']
     try:
-        question = serializers.serialize("json", Question.objects.filter(tID=content))   # 查数据库找出测评号tID对应的所有题目
+        atest = serializers.serialize("json", Question.objects.filter(u_id=u_id))   # 查数据库找出测评号tID对应的所有题目
         res = {
             "code": 200,
-            "data": question
+            "data": atest
         }
         print(question)
     except Exception as e:
@@ -50,7 +51,7 @@ def searchAllQuestions(request):
             "errMsg": e
         }
     return HttpResponse(json.dumps(res), content_type="application/json")
-'''
+
 
 
 def create(request):
