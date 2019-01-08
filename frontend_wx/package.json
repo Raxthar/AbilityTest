@@ -20,7 +20,7 @@
   "dependencies": {
     "mpvue": "^1.0.11",
     "vuex": "^3.0.1",
-	"iview-weapp": "^2.0.0"
+    "iview-weapp": "^1.1.0"
   },
   "devDependencies": {
     "mpvue-loader": "^1.1.2",
