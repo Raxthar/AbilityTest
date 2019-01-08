@@ -14,13 +14,13 @@
           <Content>
             <Form :model="questionData">
               <FormItem label="input">
-                  <Input v-model="questionData.questionTitle" placeholder="Enter Title...">
+                  <Input v-model="questionData.questionTitle" placeholder="Enter Title..." />
               </FormItem>
               <FormItem v-for="option in options" :key="option">
-                  <Input v-model="questionData.options[index]" size="large" placeholder="请输入选项">
-                  <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数">
+                  <Input v-model="questionData.options[index]" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.dimensions[index]" type="button">
-                    <Radio v-for="dimension in dimensionsData" :key="dimension" label={{dimension.dID}}>{{dimension}}</Radio>
+                    <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.dID>{{dimension}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
@@ -90,7 +90,7 @@ export default {
       })
     },
     setQuestion () {
-      for (let i = 0; i < this.questionData.Object.keys(dimensions).length; i++) {
+      for (let i = 0; i < Object.keys(this.questionData.dimensions).length; i++) {
         if (this.questionData.dimensions[i] === '') {
           this.$Message.info('please choose a dimension for option')
           return
@@ -107,7 +107,7 @@ export default {
       this.$axios.post('/addQuestion/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set questions success`)
-          this.$router.push('/QusetionList/' + this.dimensionArray.uID + '/' + this.dimensionArray.tID)
+          this.$router.push('/QusetionList/' + this.uID + '/' + this.questionData.tID)
         } else {
           this.$Message.info("can't read database")
         }
