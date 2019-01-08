@@ -49,7 +49,7 @@ export default {
       this.lists.splice(index, 1)
     },
     setDimensions: function () {
-      for (let i = 0; i < this.dimensionArray.dimensions.length; i++) {
+      for (let i = 0; i < this.dimensionArray.Object.keys(dimensions).length; i++) {
         if (this.dimensionArray.dimensions[i] === '') {
           this.$Message.info('please input evaluation dimensions')
           return

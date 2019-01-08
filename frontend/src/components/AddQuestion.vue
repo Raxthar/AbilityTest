@@ -23,6 +23,7 @@
                     <Radio v-for="dimension in dimensionsData" :key="dimension" label={{dimension.dID}}>{{dimension}}</Radio>
                   </RadioGroup>
               </FormItem>
+              <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
             </Form>
             <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button><br><br>
             <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
@@ -85,6 +86,30 @@ export default {
           }
         } else {
           this.$message.error(`can't search in database`)
+        }
+      })
+    },
+    setQuestion () {
+      for (let i = 0; i < this.questionData.Object.keys(dimensions).length; i++) {
+        if (this.questionData.dimensions[i] === '') {
+          this.$Message.info('please choose a dimension for option')
+          return
+        }
+        if (this.questionData.questionTitle[i] === '') {
+          this.$Message.info('please enter question')
+          return
+        }
+        if (this.questionData.score[i] === '') {
+          this.$Message.info('please enter the score for question')
+          return
+        }
+      }
+      this.$axios.post('/addQuestion/', JSON.stringify(this.questionData)).then(response => {
+        if (response.data.code === 200) {
+          this.$Message.success(`set questions success`)
+          this.$router.push('/QusetionList/' + this.dimensionArray.uID + '/' + this.dimensionArray.tID)
+        } else {
+          this.$Message.info("can't read database")
         }
       })
     }
