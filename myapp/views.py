@@ -56,24 +56,6 @@ def search_all_atest(request):
 
 def create(request):
     obj = json.loads(request.body)
-    name = obj['title']
-    describe = obj['describe']
-    try:
-        book = ATest(tName=name, tDescribe=describe)
-        book.save()
-        res = {
-            "code": 200,
-        }
-    except Exception as e:
-        res = {
-            "code": 0,
-            "errMsg": e
-        }
-    return HttpResponse(json.dumps(res), content_type="application/json")
-
-
-def create(request):
-    obj = json.loads(request.body)
     test_name = obj['tName']
     test_describe = obj['tDescribe']
     _id = obj['uID']
@@ -103,3 +85,13 @@ def add_question(request):
                         dID=dimension)
             option.save()
     return JsonResponse(question_list)
+
+
+def set_evaluate(request):
+    obj = json.loads(request.body)
+    test_id = obj['t_id']
+    dimension = {}
+    test_info = Dimension.objects.get(t_id=test_id)
+    dimension['d_id'] = test_info.d_id
+    dimension['d_name'] = test_info.d_name
+    return JsonResponse(dimension)
