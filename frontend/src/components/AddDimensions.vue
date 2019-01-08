@@ -29,7 +29,7 @@ export default {
     return {
       buttonSize: 'large',
       lists: [{
-        getdimension: ''
+        index: {}
       }],
       dimensionArray: {
         tID: this.$route.params.tID,
@@ -49,8 +49,8 @@ export default {
       this.lists.splice(index, 1)
     },
     setDimensions: function () {
-      for (let i = 0; i < this.dimensionArray.dimensions.length; i++) {
-        if (this.dimensionArray.dimensions[i] === '') {
+      for (let i = 0; i < this.lists.length; i++) {
+        if (!this.dimensionArray.dimensions[i]) {
           this.$Message.info('please input evaluation dimensions')
           return
         }

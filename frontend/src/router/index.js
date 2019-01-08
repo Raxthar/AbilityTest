@@ -5,6 +5,7 @@ import AddEvaluationTitle from '@/components/AddEvaluationTitle'
 import AddDimensions from '@/components/AddDimensions'
 import CreateEvaluation from '@/components/CreateEvaluation'
 import QuestionList from '@/components/QuestionList'
+import AddQuestion from '@/components/AddQuestion'
 
 Vue.use(Router)
 
@@ -32,9 +33,14 @@ export default new Router({
       component: CreateEvaluation
     },
     {
-      path: '/QuestionList',
+      path: '/QuestionList/:tID/:uID',
       name: 'QuestionList',
       component: QuestionList
+    },
+    {
+      path: '/AddQuestion/:tID/:uID',
+      name: 'AddQuestion',
+      component: AddQuestion
     }
   ]
 })

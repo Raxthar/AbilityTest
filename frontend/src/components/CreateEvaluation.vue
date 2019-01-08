@@ -67,23 +67,24 @@ export default {
             this.evaluationData = []
             let evaluations = JSON.parse(response.data.data)
             for (let i in evaluations) {
-              tStatus = Number(evaluations[i].fields.tStatus)
-              if (tSatus === 1){
+              let tStatus = Number(evaluations[i].fields.tStatus)
+              if (tStatus === 1){
                 let obj = {
                   tID: evaluations[i].fields.tID,
                   tName: evaluations[i].fields.tName,
                   tStatus: '已发布',
                   tDue: evaluations[i].fields.tDue
                 }
-              } else if (tSatus === 0) {
+                this.evaluationData.push(obj)
+              } else if (tStatus === 0) {
                 let obj = {
                   tID: evaluations[i].fields.tID,
                   tName: evaluations[i].fields.tName,
                   tStatus: '未发布',
                   tDue: evaluations[i].fields.tDue
                 }
+                this.evaluationData.push(obj)
               }
-              this.evaluationData.push(obj)
             }
           }
         } else {
