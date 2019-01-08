@@ -12,34 +12,36 @@ from .models import Dimension
 
 
 def create_dimension(request):
-    print('create')
+    print('create_dimension')
     obj = json.loads(request.body)
     d_names_arr = obj['dimensions']
-    tID = obj['tID']
-    uID = obj['uID']
+    t_id = obj['t_id']
+    u_id = obj['u_id']
     try:
-        for dName in d_names_arr:
-            dimension = Dimension(dName=dName, tID_id=tID)
+        for d_name in d_names_arr:
+            dimension = Dimension(d_name=d_name, t_id=t_id)
             dimension.save()
-        question = serializers.serialize("json", Question.objects.filter(tID_id=tID))   # 查数据库找出测评号tID对应的所有题目
-        print(question)
+        question_list = []
+        for i in Question.objects.filter(t_id=t_id):
+            question_list.append(i.q_name)
+        print(question_list)
         response = {
             "code": 200,
-            "question_data": question
+            "question_data": question_list
         }
     except Exception as e:
         response = {
             "code": 0,
             "errMsg": e
         }
-    return HttpResponse(json.dumps(response), content_type="application/json")
+    return JsonResponse(response)
 
 
 def search_all_atest(request):
     obj = json.loads(request.body)
     u_id = obj['u_id']
     try:
-        atest = serializers.serialize("json", Question.objects.filter(u_id=u_id))   # 查数据库找出测评号tID对应的所有题目
+        atest = serializers.serialize("json", Question.objects.filter(u_id=u_id))
         res = {
             "code": 200,
             "data": atest
@@ -53,12 +55,11 @@ def search_all_atest(request):
     return HttpResponse(json.dumps(res), content_type="application/json")
 
 
-
 def create(request):
     obj = json.loads(request.body)
-    test_name = obj['t_name']
-    test_describe = obj['t_describe']
-    u_id = obj['u_id']
+    test_name = obj['tName']
+    test_describe = obj['tDescribe']
+    _id = obj['uID']
     test_id = {}
     test = ATest(t_name=test_name, t_describe=test_describe, t_status=0, u_id=u_id, t_due="")
     test.save()
