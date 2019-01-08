@@ -13,7 +13,7 @@
           <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-              <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
+              <Input v-model="dimensionArray.dName[index]" size="large" placeholder="请输入维度" />
             </FormItem>
               <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
           </Form>
@@ -34,7 +34,7 @@ export default {
       dimensionArray: {
         tID: this.$route.params.tID,
         uID: this.$route.params.uID,
-        dimensions: {}
+        dName: {}
       }
     }
   },
@@ -50,7 +50,7 @@ export default {
     },
     setDimensions: function () {
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.dimensionArray.dimensions[i]) {
+        if (!this.dimensionArray.dName[i]) {
           this.$Message.info('please input evaluation dimensions')
           return
         }

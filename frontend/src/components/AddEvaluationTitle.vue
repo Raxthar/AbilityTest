@@ -11,9 +11,9 @@
         <Card>
           <Form :model="createData">
             <p class="title-text">测评标题</p>
-            <Input placeholder="Enter title" style="width: 300px"  v-model="createData.title"/><br><br>
+            <Input placeholder="Enter title" style="width: 300px"  v-model="createData.tName"/><br><br>
             <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="createData.describe"/><br><br>
+            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="createData.tDescribe"/><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">创建测评</Button>
           </Form>
         </Card>
@@ -29,24 +29,24 @@ export default {
       buttonSize: 'large',
       createData: {
         uID: this.$route.params.uID,
-        title: '',
-        describe: ''
+        tName: '',
+        tDescribe: ''
       }
     }
   },
   methods: {
     handleCreate () {
-      if (this.createData.title === '') {
+      if (this.createData.tName === '') {
         this.$Message.info('请输入标题')
         return
       }
-      if (this.createData.describe === '') {
+      if (this.createData.tDescribe === '') {
         this.$Message.info('请输入描述')
         return
       }
       this.$axios.post('/create/', JSON.stringify(this.createData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`create ${this.createData.title} success`)
+          this.$Message.success(`create ${this.createData.tName} success`)
           let tID = response.data.tID
           this.$router.push('/AddDimensions/' + tID + '/' + this.createData.uID)
         } else {

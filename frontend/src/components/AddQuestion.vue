@@ -14,12 +14,12 @@
           <Content>
             <Form :model="questionData">
               <FormItem label="input">
-                  <Input v-model="questionData.questionTitle" placeholder="Enter Title..." />
+                  <Input v-model="questionData.qName" placeholder="Enter Title..." />
               </FormItem>
               <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-                  <Input v-model="questionData.options[index]" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.oName[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
-                  <RadioGroup v-model="questionData.dimensions[index]" type="button">
+                  <RadioGroup v-model="questionData.dID[index]" type="button">
                     <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.dID>{{dimension}}</Radio>
                   </RadioGroup>
               </FormItem>
@@ -47,9 +47,9 @@ export default {
       dimensionsData: [],
       questionData: {
         tID: this.$route.params.tID,
-        questionTitle: '',
-        options: {},
-        dimensions: {},
+        qName: '',
+        oName: {},
+        dID: {},
         score: {}
       }
     }
@@ -79,8 +79,8 @@ export default {
             let dimensionData = JSON.parse(response.data.data)
             for (let i in dimensionData) {
                 let obj = {
-                  dimension: dimensions[i].fields.dName,
-                  dID: dimensions[i].fields.dID
+                  dimension: dimensionData[i].fields.dName,
+                  dID: dimensionData[i].fields.dID
                 }
               this.dimensionsData.push(obj)
             }
@@ -92,11 +92,11 @@ export default {
     },
     setQuestion () {
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.questionData.dimensions[i]) {
+        if (!this.questionData.dName[i]) {
           this.$Message.info('please choose a dimension for option')
           return
         }
-        if (!this.questionData.questionTitle[i]) {
+        if (!this.questionData.qName[i]) {
           this.$Message.info('please enter question')
           return
         }
