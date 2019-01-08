@@ -4,12 +4,12 @@ from django.db import models
 
 
 class User(models.Model):
-    u_id = models.IntegerField(primary_key=True, db_column='u_id')
+    u_id = models.AutoField(primary_key=True, db_column='u_id')
     u_name = models.CharField(max_length=30)
 
 
 class ATest(models.Model):
-    t_id = models.IntegerField(primary_key=True, db_column='t_id')
+    t_id = models.AutoField(primary_key=True, db_column='t_id')
     t_name = models.CharField(max_length=30)
     t_describe = models.CharField(max_length=80)
     u_id = models.IntegerField()
@@ -18,19 +18,19 @@ class ATest(models.Model):
 
 
 class Question(models.Model):
-    q_id = models.IntegerField(primary_key=True, db_column='q_id')
+    q_id = models.AutoField(primary_key=True, db_column='q_id')
     q_name = models.CharField(max_length=30)
     t_id = models.IntegerField()
 
 
 class Dimension(models.Model):
-    d_id = models.IntegerField(primary_key=True, db_column='d_id')
+    d_id = models.AutoField(primary_key=True, db_column='d_id')
     d_name = models.CharField(max_length=30)
     t_id = models.IntegerField()
 
 
 class Option(models.Model):
-    o_id = models.IntegerField(primary_key=True, db_column='o_id')
+    o_id = models.AutoField(primary_key=True, db_column='o_id')
     o_name = models.CharField(max_length=30)
     q_id = models.IntegerField()
     score = models.IntegerField()
