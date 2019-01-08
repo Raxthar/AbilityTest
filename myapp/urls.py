@@ -5,5 +5,5 @@ from . import views
 # url ( 正则表达式，view函数，传递给视图的参数， 别名（命名空间），前缀 ),
 urlpatterns = [
     url('create/', views.create, name='create'),
-    url('createDimension/', views.createDimension, name='createDimension'),
+    url('create_dimension/', views.create_dimension, name='create_dimension'),
 ]  # 正则表达式表示url
