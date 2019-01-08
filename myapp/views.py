@@ -82,3 +82,23 @@ def create(request):
     test_info = Test.objects.get(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
     test_id['data'] = test_info.tID
     return JsonResponse(test_id)
+
+
+def add_question(request):
+    obj = json.loads(request.body)
+    question_name = obj['qName']
+    test_id = obj['tID']
+    option_name = obj['oName']
+    option_score = obj['score']
+    option_dimension = obj['dID']
+    question_list = {}
+    question = Question(qName=question_name, tID_id=test_id)
+    question.save()
+    question_info = Question.objects.get(qName=question_name, tID_id=test_id)
+    question_list['name'] = question_info.qName
+    question_list['qID']=question_info.qID
+    for (oName, score, dimension) in zip(option_name, option_score, option_dimension):
+        option = Option(oName=oName, qID_id=question1.qID, score=score,
+                        dID=dimension)
+            option.save()
+    return JsonResponse(question_list)
