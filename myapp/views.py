@@ -69,3 +69,16 @@ def create(request):
             "errMsg": e
         }
     return HttpResponse(json.dumps(res), content_type="application/json")
+
+
+def create(request):
+    obj = json.loads(request.body)
+    test_name = obj['tName']
+    test_describe = obj['tDescribe']
+    _id = obj['uID']
+    test_id = {}
+    test = Test(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
+    test.save()
+    test_info = Test.objects.get(tName=test_name, qDescribe=test_describe, status=0, id=_id, Due="")
+    test_id['data'] = test_info.tID
+    return JsonResponse(test_id)
