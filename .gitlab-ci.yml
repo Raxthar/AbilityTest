@@ -9,7 +9,7 @@ frontendtest:
     - npm run test
   allow_failure: false
   tags:
-    - frontend
+    - second
 
 frontendlint:
   stage: frontend
@@ -20,4 +20,4 @@ frontendlint:
     - npm run stylelint
   allow_failure: false
   tags:
-    - frontend
+    - second
