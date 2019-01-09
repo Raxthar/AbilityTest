@@ -60,8 +60,6 @@ def create_judge(request):
     obj = json.loads(request.body)
     t_id = obj['t_id']
     content = obj['content']
-#    d_id_list = []
-#    j_content_list = []
     print(content)
     try:
         for i in content:
