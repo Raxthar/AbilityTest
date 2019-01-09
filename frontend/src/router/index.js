@@ -7,6 +7,7 @@ import CreateEvaluation from '@/components/CreateEvaluation'
 import QuestionList from '@/components/QuestionList'
 import AddQuestion from '@/components/AddQuestion'
 import Welcome from '@/components/Welcome'
+import QuestionEdit from '@/components/QuestionEdit'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/Welcome',
       name: 'Welcome',
       component: Welcome
+    },
+    {
+      path: '/QuestionEdit/:u_id/:t_id/:q_id',
+      name: 'QuestionEdit',
+      component: QuestionEdit
     }
   ]
 })
