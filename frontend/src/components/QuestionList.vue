@@ -96,7 +96,7 @@ export default {
     },
     questionEdit (index) {
       let q_id = this.questionData[index].q_id
-      this.$router.push('/QuestionEdit/' + this.t_id + '/' + q_id)
+      this.$router.push('/QuestionEdit/' + q_id)
     }
   }
 }
