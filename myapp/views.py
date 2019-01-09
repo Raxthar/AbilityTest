@@ -41,18 +41,19 @@ def search_all_atest(request):
     obj = json.loads(request.body)
     u_id = obj['u_id']
     try:
-        atest = serializers.serialize("json", Question.objects.filter(u_id=u_id))
-        res = {
+        atest_list = []
+        for i in ATest.objects.filter(u_id=u_id):
+            atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
+        response = {
             "code": 200,
-            "data": atest
+            "data": atest_list
         }
-        print(question)
     except Exception as e:
-        res = {
+        response = {
             "code": 0,
             "errMsg": e
         }
-    return HttpResponse(json.dumps(res), content_type="application/json")
+    return JsonResponse(response)
 
 
 def create(request):
