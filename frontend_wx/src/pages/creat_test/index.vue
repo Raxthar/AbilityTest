@@ -1,5 +1,5 @@
 <template>
-  <div  >
+  <div>
     <i-panel title="测评标题">
     <i-input value="value1" type="title"  mode="wrapped"/>
     </i-panel>
