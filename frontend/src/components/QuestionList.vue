@@ -59,7 +59,7 @@ export default {
                   }
                 }
               }, 'Edit'),
-              h('Button', {
+              buttonmethod('Button', {
                 props: {
                   type: 'error',
                   size: 'small'
