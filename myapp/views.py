@@ -93,7 +93,12 @@ def set_evaluate(request):
     obj = json.loads(request.body)
     test_id = obj['t_id']
     dimension = {}
-    test_info = Dimension.objects.get(t_id=test_id)
-    dimension['d_id'] = test_info.d_id
-    dimension['d_name'] = test_info.d_name
+    dimension_id = []
+    dimension_name = []
+    test_info = Dimension.objects.filter(t_id=test_id)
+    for i in range(len(test_info)):
+        dimension_id.append(test_info[i].d_id)
+        dimension_name.append(test_info[i].d_name)
+    dimension['d_id'] = dimension_id
+    dimension['d_name'] = dimension_name
     return JsonResponse(dimension)
