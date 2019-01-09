@@ -8,6 +8,9 @@ frontendtest:
     - npm install --registry https://registry.npm.taobao.org
     - npm run test
   allow_failure: false
+  tags:
+    - frontend
+    - only
 
 frontendlint:
   stage: frontend
@@ -17,3 +20,6 @@ frontendlint:
     - npm run lint
     - npm run stylelint
   allow_failure: false
+  tags:
+    - frontend
+    - only
