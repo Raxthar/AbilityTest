@@ -23,9 +23,8 @@
                     <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.d_id>{{dimension}}</Radio>
                   </RadioGroup>
               </FormItem>
+              <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
             </Form>
-            <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button><br><br>
-            <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
           </Content>
         </card>
       </Footer>
@@ -41,6 +40,8 @@ export default {
   },
   data () {
     return {
+      u_id: this.$route.params.u_id,
+      t_id: this.$route.params.t_id,
       buttonSize: 'large',
       lists: [{
         list: ''
@@ -58,15 +59,6 @@ export default {
   methods: {
     jumpBack () {
       this.$router.push('/QuestionList/' + this.t_id + '/' + this.u_id)
-    },
-    addOption: function () {
-      let cope = {
-        index: ''
-      }
-      this.lists.push(cope)
-    },
-    delOption: function (index) {
-      this.lists.splice(index, 1)
     },
     searchQuestion () {
       this.$axios.get('searchQuestion', {
@@ -86,7 +78,6 @@ export default {
             for (let i in optionName) {
               let obj = {
                 o_name: optionName[i].field.o_name,
-                d_name: dimensionName[i].field.d_name,
                 score: Number(scoreData[i].field.score),
                 d_id: Number(dimensionId[i].field.d_id)
               }
@@ -104,6 +95,30 @@ export default {
           }
         } else {
           this.$message.error(`can't search in database`)
+        }
+      })
+    },
+    editQuestion () {
+      for (let i = 0; i < this.questionData.newOptionData.length; i++) {
+        if (this.questionData.newOptionData[i].o_name === '') {
+          this.$Message.info('请输入选项内容')
+          return
+        }
+        if (this.questionData.newOptionData[i].d_id === 0) {
+          this.$Message.info('请选择维度')
+          return
+        }
+        if (this.questionData.newOptionData[i].score === 0) {
+          this.$Message.info('请确定选项分数')
+          return
+        }
+      }
+      this.$axios.post('/editQuestion/', JSON.stringify(this.questionData)).then(response => {
+        if (response.data.code === 200) {
+          this.$Message.success(`edit questions success`)
+          this.$router.push('/QusetionList/' + this.u_id + '/' + this.t_id)
+        } else {
+          this.$Message.info("can't read database")
         }
       })
     }

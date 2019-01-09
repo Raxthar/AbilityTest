@@ -24,7 +24,7 @@ export default new Router({
       component: AddEvaluationTitle
     },
     {
-      path: '/AddDimensions/:t_id/:u_id',
+      path: '/AddDimensions/:u_id/:t_id',
       name: 'AddDimensions',
       component: AddDimensions
     },
@@ -34,12 +34,12 @@ export default new Router({
       component: CreateEvaluation
     },
     {
-      path: '/QuestionList/:t_id/:u_id',
+      path: '/QuestionList/:u_id/:t_id',
       name: 'QuestionList',
       component: QuestionList
     },
     {
-      path: '/AddQuestion/:t_id/:u_id',
+      path: '/AddQuestion/:u_id/:t_id',
       name: 'AddQuestion',
       component: AddQuestion
     },
