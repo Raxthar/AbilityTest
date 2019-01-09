@@ -42,3 +42,16 @@ class Judge(models.Model):
     j_content = models.CharField(max_length=200)
     t_id = models.IntegerField()
     d_id = models.IntegerField()
+
+
+class Record(models.Model):
+    record_id = models.AutoField(primary_key=True, db_column='record_id')
+    t_id = models.IntegerField()
+    q_id = models.IntegerField()
+    o_id = models.IntegerField()
+
+
+class Result(models.Model):
+    result_id = models.AutoField(primary_key=True, db_column='result_id')
+    t_id = models.IntegerField()
+    d_id = models.IntegerField()
