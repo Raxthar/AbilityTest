@@ -95,7 +95,8 @@ export default {
       })
     },
     questionEdit (index) {
-      this.$router.push('/QuestionEdit/' + this.t_id + '/' + this.questionData[index].q_id)
+      let q_id = this.questionData[index].q_id
+      this.$router.push('/QuestionEdit/' + this.t_id + '/' + q_id)
     }
   }
 }

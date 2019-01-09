@@ -20,7 +20,7 @@
                   <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.d_id[index]" type="button">
-                    <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.d_id>{{dimension}}</Radio>
+                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" label=dimensions.d_id>{{dimension.dimenison}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
