@@ -39,14 +39,6 @@ class Option(models.Model):
 
 class Judge(models.Model):
     j_id = models.AutoField(primary_key=True, db_column='j_id')
-<<<<<<< HEAD
-<<<<<<< HEAD
     j_content = models.CharField(max_length=200)
-=======
-    u_content = models.CharField(max_length=200)
->>>>>>> Increase the judge table in the database. Ref #47
-=======
-    j_content = models.CharField(max_length=200)
->>>>>>> Update Data from the backend to the frontend of the atest table
     t_id = models.IntegerField()
     d_id = models.IntegerField()
