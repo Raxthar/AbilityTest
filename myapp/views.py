@@ -123,3 +123,13 @@ def set_evaluate(request):
     dimension['d_id'] = dimension_id
     dimension['d_name'] = dimension_name
     return JsonResponse(dimension)
+
+def edit_question(request):
+    obj = json.loads(request.body)
+    question_id = obj["q_id"]
+    message = {}
+    option_name = []
+    option_score = []
+    dimension_id = []
+    dimension_name = []
+    question = Question.objects.get(q_id=question_id)
