@@ -6,4 +6,5 @@ from . import views
 urlpatterns = [
     url('create/', views.create, name='create'),
     url('create_dimension/', views.create_dimension, name='create_dimension'),
+    url('search_all_atest/', views.search_all_atest, name='search_all_atest'),
 ]  # 正则表达式表示url
