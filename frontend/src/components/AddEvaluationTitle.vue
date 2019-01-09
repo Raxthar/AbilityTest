@@ -48,7 +48,7 @@ export default {
         if (response.data.code === 200) {
           this.$Message.success(`create ${this.createData.t_name} success`)
           let t_id = response.data.t_id
-          this.$router.push('/AddDimensions/' + t_id + '/' + this.createData.u_id)
+          this.$router.push('/AddDimensions/' + this.createData.u_id + '/' + t_id)
         } else {
           this.$Message.info("can't read database")
         }

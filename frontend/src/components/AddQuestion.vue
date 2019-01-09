@@ -20,7 +20,7 @@
                   <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.d_id[index]" type="button">
-                    <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.d_id>{{dimension}}</Radio>
+                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" label=dimensions.d_id>{{dimension.dimenison}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
@@ -79,7 +79,7 @@ export default {
             let dimensionData = JSON.parse(response.data.data)
             for (let i in dimensionData) {
               let obj = {
-                dimension: dimensionData[i].fields.dName,
+                dimension: dimensionData[i].fields.d_name,
                 d_id: dimensionData[i].fields.d_id
               }
               this.dimensionsData.push(obj)
@@ -92,7 +92,7 @@ export default {
     },
     setQuestion () {
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.questionData.dName[i]) {
+        if (this.questionData.d_id[i] === 0) {
           this.$Message.info('please choose a dimension for option')
           return
         }
