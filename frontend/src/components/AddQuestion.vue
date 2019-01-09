@@ -79,7 +79,7 @@ export default {
             let dimensionData = JSON.parse(response.data.data)
             for (let i in dimensionData) {
               let obj = {
-                dimension: dimensionData[i].fields.dName,
+                dimension: dimensionData[i].fields.d_name,
                 d_id: dimensionData[i].fields.d_id
               }
               this.dimensionsData.push(obj)
@@ -92,7 +92,7 @@ export default {
     },
     setQuestion () {
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.questionData.dName[i]) {
+        if (this.questionData.d_id[i] === 0) {
           this.$Message.info('please choose a dimension for option')
           return
         }
