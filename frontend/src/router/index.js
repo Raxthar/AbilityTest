@@ -8,6 +8,7 @@ import QuestionList from '@/components/QuestionList'
 import AddQuestion from '@/components/AddQuestion'
 import Welcome from '@/components/Welcome'
 import QuestionEdit from '@/components/QuestionEdit'
+import ReleaseSuccess from '@/components/ReleaseSuccess'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/QuestionEdit/:u_id/:t_id/:q_id',
       name: 'QuestionEdit',
       component: QuestionEdit
+    },
+    {
+      path: '/ReleaseSuccess',
+      name: 'ReleaseSuccess',
+      component: ReleaseSuccess
     }
   ]
 })
