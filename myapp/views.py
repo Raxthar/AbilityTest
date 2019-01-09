@@ -146,3 +146,21 @@ def edit_question(request):
     message["d_name"] = dimension_name
     message["score"] = option_score
     return JsonResponse(message)
+
+
+def update_question(request):
+    obj = json.loads(request.body)
+    question_id = obj["q_id"]
+    option_name = obj['o_name']
+    option_score = obj['score']
+    option_dimension = obj['d_id']
+    option_list = Option.objects.filter(q_id=question_id)
+    for i in range(len(option_list)):
+        option_list[i].o_name = option_name[i]
+        option_list[i].score = option_score[i]
+        option_list[i].d_id = option_dimension[i]
+        option_list[i].save()
+    response = {
+        "data": 200
+    }
+    return JsonResponse(response)
