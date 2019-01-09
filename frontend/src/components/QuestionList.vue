@@ -58,7 +58,18 @@ export default {
                     this.questionEdit(params.index)
                   }
                 }
-              }, 'View')
+              }, 'Edit'),
+              h('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.deleteQuestion(params.index)
+                  }
+                }
+              }, 'Delete')
             ])
           }
         }
@@ -97,6 +108,16 @@ export default {
     questionEdit (index) {
       let q_id = this.questionData[index].q_id
       this.$router.push('/QuestionEdit/' + u_id + '/' + t_id + '/' +q_id)
+    },
+    deleteQuestion (index) {
+      this.$axios.post('/deleteQuestion/', JSON.stringify(this.questionData.index.q_id)).then(res => {
+        if (res.data.code === 200) {
+          this.$Message.success(`delete ${this.questionData.index.q_id} success`)
+          this.$options.methods.searchQuestion()
+        } else {
+          this.$Message.info("can't read database")
+        }
+      })
     }
   }
 }
