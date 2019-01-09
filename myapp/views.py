@@ -26,7 +26,6 @@ def create_dimension(request):
             question_list.append(i.q_name)
         print(question_list)
         response = {
-            "code": 200,
             "question_data": question_list
         }
     except Exception as e:
@@ -45,7 +44,6 @@ def search_all_atest(request):
         for i in ATest.objects.filter(u_id=u_id):
             atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
         response = {
-            "code": 200,
             "data": atest_list
         }
     except Exception as e:
@@ -69,7 +67,6 @@ def create_judge(request):
         for i in ATest.objects.filter(u_id=u_id):
             atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
         response = {
-            "code": 200,
             "data": atest_list
         }
     except Exception as e:
