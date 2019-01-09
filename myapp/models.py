@@ -39,6 +39,6 @@ class Option(models.Model):
 
 class Judge(models.Model):
     j_id = models.AutoField(primary_key=True, db_column='j_id')
-    u_content = models.CharField(max_length=200)
+    j_content = models.CharField(max_length=200)
     t_id = models.IntegerField()
     d_id = models.IntegerField()

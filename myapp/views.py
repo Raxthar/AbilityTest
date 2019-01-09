@@ -6,7 +6,7 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 
-from .models import ATest, Question
+from .models import ATest, Question,Judge,Option
 # Create your views here.
 from .models import Dimension
 
@@ -47,6 +47,28 @@ def search_all_atest(request):
         response = {
             "code": 200,
             "data": atest_list
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
+
+
+def create_judge(request):
+    obj = json.loads(request.body)
+    t_id = obj['t_id']
+    content = obj['content']
+#    d_id_list = []
+#    j_content_list = []
+    print(content)
+    try:
+        for i in content:
+            judge = Judge(t_id=t_id, d_id=i.get('d_id'), j_content=i.get('j_content'))
+            judge.save()
+        response = {
+            "code": 200,
         }
     except Exception as e:
         response = {
