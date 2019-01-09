@@ -82,10 +82,10 @@ export default {
             this.questionData = []
             let questions = JSON.parse(response.data.data)
             for (let i in questions) {
-                let obj = {
-                  q_id: questions[i].fields.q_id,
-                  q_name: questions[i].fields.q_name,
-                }
+              let obj = {
+                q_id: questions[i].fields.q_id,
+                q_name: questions[i].fields.q_name,
+              }
               this.questionData.push(obj)
             }
           }
