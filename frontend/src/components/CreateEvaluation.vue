@@ -29,23 +29,23 @@ export default {
   },
   data () {
     return {
-      uID: 1,
+      u_id: 1,
       columns: [
         {
           title: '测评号',
-          key: 'tID'
+          key: 't_id'
         },
         {
           title: '测评名',
-          key: 'tName'
+          key: 't_name'
         },
         {
           title: '测评状态',
-          key: 'tStatus'
+          key: 't_status'
         },
         {
           title: '截止日期',
-          key: 'tDue'
+          key: 't_due'
         }
       ],
       evaluationData: [],
@@ -54,12 +54,12 @@ export default {
   },
   methods: {
     jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.uID)
+      this.$router.push('/AddEvaluationTitle/' + this.u_id)
     },
     searchEvaluation () {
       this.$axios.get('searchEvalution', {
         params: {
-          content: this.uID
+          content: this.u_id
         }
       }).then(response => {
         if (response.data.code === 200) {
@@ -67,21 +67,21 @@ export default {
             this.evaluationData = []
             let evaluations = JSON.parse(response.data.data)
             for (let i in evaluations) {
-              let tStatus = Number(evaluations[i].fields.tStatus)
-              if (tStatus === 1){
+              let t_status = Number(evaluations[i].fields.t_status)
+              if (t_status === 1){
                 let obj = {
-                  tID: evaluations[i].fields.tID,
-                  tName: evaluations[i].fields.tName,
-                  tStatus: '已发布',
-                  tDue: evaluations[i].fields.tDue
+                  t_id: evaluations[i].fields.t_id,
+                  t_name: evaluations[i].fields.t_name,
+                  t_status: '已发布',
+                  t_due: evaluations[i].fields.t_due
                 }
                 this.evaluationData.push(obj)
-              } else if (tStatus === 0) {
+              } else if (t_status === 0) {
                 let obj = {
-                  tID: evaluations[i].fields.tID,
-                  tName: evaluations[i].fields.tName,
-                  tStatus: '未发布',
-                  tDue: evaluations[i].fields.tDue
+                  t_id: evaluations[i].fields.t_id,
+                  t_name: evaluations[i].fields.t_name,
+                  t_status: '未发布',
+                  t_due: evaluations[i].fields.t_due
                 }
                 this.evaluationData.push(obj)
               }

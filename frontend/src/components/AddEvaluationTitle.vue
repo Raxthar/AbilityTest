@@ -11,9 +11,9 @@
         <Card>
           <Form :model="createData">
             <p class="title-text">测评标题</p>
-            <Input placeholder="Enter title" style="width: 300px"  v-model="createData.tName"/><br><br>
+            <Input placeholder="Enter title" style="width: 300px"  v-model="createData.t_name"/><br><br>
             <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="createData.tDescribe"/><br><br>
+            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="createData.t_describe"/><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">创建测评</Button>
           </Form>
         </Card>
@@ -28,27 +28,27 @@ export default {
     return {
       buttonSize: 'large',
       createData: {
-        uID: this.$route.params.uID,
-        tName: '',
-        tDescribe: ''
+        u_id: this.$route.params.u_id,
+        t_name: '',
+        t_describe: ''
       }
     }
   },
   methods: {
     handleCreate () {
-      if (this.createData.tName === '') {
+      if (this.createData.t_name === '') {
         this.$Message.info('请输入标题')
         return
       }
-      if (this.createData.tDescribe === '') {
+      if (this.createData.t_describe === '') {
         this.$Message.info('请输入描述')
         return
       }
       this.$axios.post('/create/', JSON.stringify(this.createData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`create ${this.createData.tName} success`)
-          let tID = response.data.tID
-          this.$router.push('/AddDimensions/' + tID + '/' + this.createData.uID)
+          this.$Message.success(`create ${this.createData.t_name} success`)
+          let t_id = response.data.t_id
+          this.$router.push('/AddDimensions/' + t_id + '/' + this.createData.u_id)
         } else {
           this.$Message.info("can't read database")
         }

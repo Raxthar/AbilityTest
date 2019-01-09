@@ -27,16 +27,16 @@ export default {
   },
   data () {
     return {
-      uID: this.$route.params.uID,
-      tID: this.$route.params.tID,
+      u_id: this.$route.params.u_id,
+      t_id: this.$route.params.t_id,
       columns: [
         {
           title: '题号',
-          key: 'qID'
+          key: 'q_id'
         },
         {
           title: '题目',
-          key: 'qName'
+          key: 'q_name'
         }
       ],
       questionData: [],
@@ -45,12 +45,12 @@ export default {
   },
   methods: {
     jumpToAddQuestion () {
-      this.$router.push('/AddQuestion/' + this.uID + '/' + this.tID)
+      this.$router.push('/AddQuestion/' + this.u_id + '/' + this.t_id)
     },
     searchQuestion () {
       this.$axios.get('searchQuestion', {
         params: {
-          content: this.tID
+          content: this.t_id
         }
       }).then(response => {
         if (response.data.code === 200) {
@@ -59,8 +59,8 @@ export default {
             let questions = JSON.parse(response.data.data)
             for (let i in questions) {
                 let obj = {
-                  qID: questions[i].fields.qID,
-                  qName: questions[i].fields.qName,
+                  q_id: questions[i].fields.q_id,
+                  q_name: questions[i].fields.q_name,
                 }
               this.questionData.push(obj)
             }
