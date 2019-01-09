@@ -7,6 +7,7 @@
       <BreadcrumbItem to="/AddDimensions">AddDimensions</BreadcrumbItem>
       <BreadcrumbItem to="/QuestionList">QuestionList</BreadcrumbItem>
       <BreadcrumbItem to="/Welcome">Welcome</BreadcrumbItem>
+      <BreadcrumbItem to="/ReleaseSuccess">ReleaseSuccess</BreadcrumbItem>
     </Breadcrumb>
     <router-view></router-view>
   </div>
