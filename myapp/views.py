@@ -178,7 +178,6 @@ def set_dimension_page(request):
     dimension['d_name'] = dimension_name
     return JsonResponse(dimension)
 
-
 def set_deadline(request):
     obj = json.loads(request.body)
     test_id = obj['t_id']
