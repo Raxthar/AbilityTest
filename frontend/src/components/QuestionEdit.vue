@@ -90,8 +90,8 @@ export default {
                 d_name: dimensionName[i].field.d_name,
                 d_id: Number(dimensionId[i].field.d_id)
               }
+              this.dimensionsData.push(obj)
             }
-            this.dimensionsData.push(obj)
           }
         } else {
           this.$message.error(`can't search in database`)
