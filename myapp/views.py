@@ -164,3 +164,30 @@ def update_question(request):
         "data": 200
     }
     return JsonResponse(response)
+def set_dimension_page(request):
+    obj = json.loads(request.body)
+    test_id = obj['t_id']
+    dimension = {}
+    dimension_id = []
+    dimension_name = []
+    test_info = Dimension.objects.filter(t_id=test_id)
+    for i in range(len(test_info)):
+        dimension_id.append(test_info[i].d_id)
+        dimension_name.append(test_info[i].d_name)
+    dimension['d_id'] = dimension_id
+    dimension['d_name'] = dimension_name
+    return JsonResponse(dimension)
+
+def set_deadline(request):
+    obj = json.loads(request.body)
+    test_id = obj['t_id']
+    test_due = obj['t_due']
+    test_message = {}
+    test_info = ATest.objects.get(t_id=test_id)
+    test_info.t_due = test_due
+    test_info.save()
+    test_update = ATest.objects.get(t_id=test_id)
+    test_message['t_name'] = test_update.t_name
+    test_message['t_status'] = test_update.t_status
+    test_message['t_due'] = test_update.t_due
+    return JsonResponse(test_message)
