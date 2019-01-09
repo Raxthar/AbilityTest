@@ -133,3 +133,16 @@ def edit_question(request):
     dimension_id = []
     dimension_name = []
     question = Question.objects.get(q_id=question_id)
+    message["q_name"] = question.q_name
+    option_list = Option.objects.filter(q_id=question_id)
+    for i in range(len(option_list)):
+        option_name.append(option_list[i].o_name)
+        dimension_id.append(option_list[i].d_id)
+        option_score.append(option_list[i].score)
+        dimension = Dimension(d_id=option_list[i].d_id)
+        dimension_name.append(dimension.d_name)
+    message["o_name"] = option_name
+    message["d_id"] = dimension_id
+    message["d_name"] = dimension_name
+    message["score"] = option_score
+    return JsonResponse(message)
