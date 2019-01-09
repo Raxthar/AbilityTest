@@ -6,7 +6,11 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 
+<<<<<<< HEAD
 from .models import ATest, Question,Judge,Option
+=======
+from .models import ATest, Question, Judge, Option
+>>>>>>> Update Data from the backend to the frontend of the atest table
 # Create your views here.
 from .models import Dimension
 
@@ -58,6 +62,10 @@ def search_all_atest(request):
 
 def create_judge(request):
     obj = json.loads(request.body)
+<<<<<<< HEAD
+=======
+    u_id = obj['u_id']
+>>>>>>> Update Data from the backend to the frontend of the atest table
     t_id = obj['t_id']
     content = obj['content']
     print(content)
@@ -65,8 +73,17 @@ def create_judge(request):
         for i in content:
             judge = Judge(t_id=t_id, d_id=i.get('d_id'), j_content=i.get('j_content'))
             judge.save()
+<<<<<<< HEAD
         response = {
             "code": 200,
+=======
+        atest_list = []
+        for i in ATest.objects.filter(u_id=u_id):
+            atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
+        response = {
+            "code": 200,
+            "data": atest_list
+>>>>>>> Update Data from the backend to the frontend of the atest table
         }
     except Exception as e:
         response = {
