@@ -10,7 +10,6 @@ frontendtest:
   allow_failure: false
   tags:
     - frontend
-    - only
 
 frontendlint:
   stage: frontend
@@ -22,4 +21,3 @@ frontendlint:
   allow_failure: false
   tags:
     - frontend
-    - only
