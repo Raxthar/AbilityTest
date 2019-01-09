@@ -78,10 +78,10 @@ export default {
             this.dimensionsData = []
             let dimensionData = JSON.parse(response.data.data)
             for (let i in dimensionData) {
-                let obj = {
-                  dimension: dimensionData[i].fields.dName,
-                  d_id: dimensionData[i].fields.d_id
-                }
+              let obj = {
+                dimension: dimensionData[i].fields.dName,
+                d_id: dimensionData[i].fields.d_id
+              }
               this.dimensionsData.push(obj)
             }
           }

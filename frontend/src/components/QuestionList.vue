@@ -11,7 +11,7 @@
       <Footer>
         <card>
           <Content>
-            <Table :data="questionData">
+            <Table border :columns="columns" :data="questionData">
             </Table>
           </Content>
         </card>
@@ -37,6 +37,30 @@ export default {
         {
           title: '题目',
           key: 'q_name'
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (buttonmethod, params) => {
+            return buttonmethod('div', [
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, 'View')
+            ])
+          }
         }
       ],
       questionData: [],
@@ -58,17 +82,20 @@ export default {
             this.questionData = []
             let questions = JSON.parse(response.data.data)
             for (let i in questions) {
-                let obj = {
-                  q_id: questions[i].fields.q_id,
-                  q_name: questions[i].fields.q_name,
-                }
+              let obj = {
+                q_id: questions[i].fields.q_id,
+                q_name: questions[i].fields.q_name,
+              }
               this.questionData.push(obj)
             }
           }
         } else {
-          this.$message.error(`can't search in database`)
+          this.$Message.error(`can't search in database`)
         }
       })
+    },
+    questionEdit (index) {
+      this.$router.push('/QuestionEdit/' + this.t_id + '/' + this.questionData[index].q_id)
     }
   }
 }
