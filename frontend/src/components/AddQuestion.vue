@@ -20,7 +20,7 @@
                   <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.d_id[index]" type="button">
-                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" label=dimensions.d_id>{{dimension.dimenison}}</Radio>
+                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" label=dimensions.d_id>{{dimensions.d_name}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
@@ -45,6 +45,8 @@ export default {
         index: {}
       }],
       dimensionsData: [],
+      dimension_id: [],
+      dimension_name: [],
       questionData: {
         t_id: this.$route.params.t_id,
         q_name: '',
@@ -68,25 +70,26 @@ export default {
       this.lists.splice(index, 1)
     },
     searchDimension () {
-      this.$axios.get('searchDmiension', {
+      this.$axios.get('search_dimensions', {
         params: {
           content: this.questionData.t_id
         }
-      }).then(response => {
-        if (response.data.code === 200) {
-          if (response.data.data && JSON.parse(response.data.data).length > 0) {
+      }).then(dimension => {
+        if (dimension.data.code === 200) {
+          if (dimension.data.d_id.length > 0) {
             this.dimensionsData = []
-            let dimensionData = JSON.parse(response.data.data)
-            for (let i in dimensionData) {
+            this.dimension_id = dimension.data.d_id
+            this.dimension_name = dimension.data.d_name
+            for (let i = 0; i < dimension.data.d_id.length; i++) {
               let obj = {
-                dimension: dimensionData[i].fields.d_name,
-                d_id: dimensionData[i].fields.d_id
+                d_name: this.dimension_name[i],
+                d_id: this.dimension_id[i]
               }
               this.dimensionsData.push(obj)
             }
           }
         } else {
-          this.$message.error(`can't search in database`)
+          this.$Message.error(`can't search in database`)
         }
       })
     },
@@ -105,7 +108,7 @@ export default {
           return
         }
       }
-      this.$axios.post('/addQuestion/', JSON.stringify(this.questionData)).then(response => {
+      this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set questions success`)
           this.$router.push('/QusetionList/' + this.u_id + '/' + this.questionData.t_id)
