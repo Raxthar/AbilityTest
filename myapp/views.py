@@ -126,31 +126,44 @@ def add_question(request):
     option_name = obj['o_name']
     option_score = obj['score']
     option_dimension = obj['d_id']
-    question_list = {}
-    question = Question(q_name=question_name, t_id=test_id)
-    question.save()
-    question_info = Question.objects.get(q_name=question_name, t_id=test_id)
-    question_list['q_name'] = question_info.q_name
-    question_list['q_id'] = question_info.q_id
-    for (oName, score, dimension) in zip(option_name, option_score, option_dimension):
-        option = Option(o_name=oName, q_id=question_info.q_id, score=score,
-                        d_id=dimension)
-        option.save()
-    return JsonResponse(question_list)
+#    question_list = {}    
+    try:
+        question = Question(q_name=question_name, t_id=test_id)
+        question.save()
+        question_info = Question.objects.get(q_name=question_name, t_id=test_id)
+#    question_list['q_name'] = question_info.q_name
+#    question_list['q_id'] = question_info.q_id
+        for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):
+            option = Option(o_name=o_name, q_id=question_info.q_id, score=score,d_id=d_id)
+            option.save()
+        response = {
+                "code": 200
+            }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
 
 
-def set_evaluate(request):
-    obj = json.loads(request.body)
-    test_id = obj['t_id']
+# 找所有的维度
+def search_dimensions(request):
+    t_id = request.GET['content']
     dimension = {}
     dimension_id = []
     dimension_name = []
-    test_info = Dimension.objects.filter(t_id=test_id)
-    for i in range(len(test_info)):
-        dimension_id.append(test_info[i].d_id)
-        dimension_name.append(test_info[i].d_name)
-    dimension['d_id'] = dimension_id
-    dimension['d_name'] = dimension_name
+    try:
+        dimension_info = Dimension.objects.filter(t_id=t_id)
+        for i in range(len(dimension_info)):
+            dimension_id.append(dimension_info[i].d_id)
+            dimension_name.append(dimension_info[i].d_name)
+        dimension['d_id'] = dimension_id
+        dimension['d_name'] = dimension_name
+        dimension['code'] = 200
+    except Exception as e:
+        dimension['code'] = 0
+        dimension['errMsg'] = e
     return JsonResponse(dimension)
 
 
