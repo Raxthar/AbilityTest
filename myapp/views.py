@@ -11,6 +11,7 @@ from .models import ATest, Question, Judge, Option
 from .models import Dimension
 
 
+# 创建维度
 def create_dimension(request):
     print('create_dimension')
     obj = json.loads(request.body)
@@ -18,9 +19,7 @@ def create_dimension(request):
     t_id = obj['t_id']
     u_id = obj['u_id']
     try:
-        print(d_names_arr)
         for i in d_names_arr:
-            print(i)
             dimension = Dimension(d_name=d_names_arr.get(i), t_id=t_id)
             dimension.save()
         '''
@@ -31,6 +30,29 @@ def create_dimension(request):
         '''
         response = {
             # "question_data": question_list
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
+
+
+def search_all_questions(request):
+    obj = json.loads(request.body)
+    t_id = obj['t_id']
+    try:
+        question_name_list = []
+        question_id_list = []
+        for i in Question.objects.filter(t_id=t_id):
+            question_id_list.append(i.q_id)
+            question_name_list.append(i.q_name)
+        #print(question_list)
+        response = {
+            "question_id": question_id_list,
+            "question_name": question_name_list,
             "code": 200
         }
     except Exception as e:
@@ -129,6 +151,7 @@ def set_evaluate(request):
     dimension['d_name'] = dimension_name
     return JsonResponse(dimension)
 
+
 def edit_question(request):
     obj = json.loads(request.body)
     question_id = obj["q_id"]
@@ -209,6 +232,7 @@ def set_dimension_page(request):
     dimension['d_id'] = dimension_id
     dimension['d_name'] = dimension_name
     return JsonResponse(dimension)
+
 
 def set_deadline(request):
     obj = json.loads(request.body)
