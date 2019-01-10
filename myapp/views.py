@@ -18,15 +18,20 @@ def create_dimension(request):
     t_id = obj['t_id']
     u_id = obj['u_id']
     try:
-        for d_name in d_names_arr:
-            dimension = Dimension(d_name=d_name, t_id=t_id)
+        print(d_names_arr)
+        for i in d_names_arr:
+            print(i)
+            dimension = Dimension(d_name=d_names_arr.get(i), t_id=t_id)
             dimension.save()
+        '''
         question_list = []
         for i in Question.objects.filter(t_id=t_id):
             question_list.append(i.q_name)
         print(question_list)
+        '''
         response = {
-            "question_data": question_list
+            # "question_data": question_list
+            "code": 200
         }
     except Exception as e:
         response = {
