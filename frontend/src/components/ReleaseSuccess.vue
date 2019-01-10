@@ -4,7 +4,7 @@
       <div class="content">
       <Button :size='buttonSize' shape='circle' type="success" to="/">
         分享
-      </Button></br></br></br></br></br></br>
+      </Button><br><br><br><br><br><br>
       <Button :size='buttonSize' shape='circle' type="success" to="/CreateEvaluation">
         返回测评列表
       </Button>
@@ -30,7 +30,7 @@ export default {
 }
 p{
   font-size: 50px;
-  text-aligh: center;
+  text-align: center;
   margin-top:50px; 
   color: red;
 }
