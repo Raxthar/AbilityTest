@@ -46,6 +46,97 @@ export default {
         {
           title: '截止日期',
           key: 't_due'
+        },
+        {
+          title: '操作',
+          key: 'action',
+          width: 150,
+          align: 'center',
+          render: (buttonmethod, params) => {
+            return buttonmethod('div', [
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, '编辑'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, '发布'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, '分享'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, '统计'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.questionEdit(params.index)
+                  }
+                }
+              }, '设置'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'error',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.deleteQuestion(params.index)
+                  }
+                }
+              }, '删除')
+            ])
+          }
         }
       ],
       evaluationData: [],
