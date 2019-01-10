@@ -169,6 +169,33 @@ def update_question(request):
         "data": 200
     }
     return JsonResponse(response)
+
+
+def test_list(request):
+    u_id = request.GET['u_id']
+    test_message = {}
+    list_name = []
+    list_status = []
+    list_due = []
+    list_id = []
+    try:
+        test_info = ATest.objects.filter(u_id=u_id)
+        for i in range(len(test_info)):
+            list_name.append(test_info[i].t_name)
+            list_status.append(test_info[i].t_status)
+            list_due.append(test_info[i].t_due)
+            list_id.append(test_info[i].t_id)
+        test_message['t_id'] = list_id
+        test_message['t_name'] = list_name
+        test_message['t_status'] = list_status
+        test_message['t_due'] = list_due
+        test_message['code'] = 200
+        return JsonResponse(test_message)
+    except Exception as e:
+        test_message['code'] = 0
+        return JsonResponse(test_message)
+
+
 def set_dimension_page(request):
     obj = json.loads(request.body)
     test_id = obj['t_id']
