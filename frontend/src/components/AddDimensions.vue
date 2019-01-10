@@ -13,7 +13,7 @@
           <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-              <Input v-model="dimensionArray.d_name[index]" size="large" placeholder="请输入维度" />
+              <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
             </FormItem>
               <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
           </Form>
@@ -34,7 +34,7 @@ export default {
       dimensionArray: {
         t_id: this.$route.params.t_id,
         u_id: this.$route.params.u_id,
-        d_name: {}
+        dimensions: {}
       }
     }
   },
@@ -50,12 +50,12 @@ export default {
     },
     setDimensions: function () {
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.dimensionArray.d_name[i]) {
+        if (!this.dimensionArray.dimensions[i]) {
           this.$Message.info('please input evaluation dimensions')
           return
         }
       }
-      this.$axios.post('/dimension/', JSON.stringify(this.dimensionArray)).then(response => {
+      this.$axios.post('/create_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
           this.$router.push('/QusetionList/' + this.dimensionArray.u_id + '/' + this.dimensionArray.t_id)

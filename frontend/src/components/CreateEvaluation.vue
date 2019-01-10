@@ -49,6 +49,10 @@ export default {
         }
       ],
       evaluationData: [],
+      t_id: [],
+      t_name: [],
+      t_due: [],
+      t_status: [],
       buttonSize: 'large'
     }
   },
@@ -57,35 +61,39 @@ export default {
       this.$router.push('/AddEvaluationTitle/' + this.u_id)
     },
     searchEvaluation () {
-      this.$axios.get('searchEvalution', {
+      this.$axios.get('test_list', {
         params: {
-          content: this.u_id
+          u_id: this.u_id
         }
-      }).then(response => {
-        if (response.data.code === 200) {
-          if (response.data.data && JSON.parse(response.data.data).length > 0) {
+      }).then(test_message => {
+        if (test_message.data.code === 200) {
+          if (test_message.data.t_name.length > 0) {
             this.evaluationData = []
-            let evaluations = JSON.parse(response.data.data)
-            for (let i in evaluations) {
-              let t_status = Number(evaluations[i].fields.t_status)
+            this.t_id = test_message.data.t_id
+            this.t_name = test_message.data.t_name
+            this.t_due = test_message.data.t_due
+            this.t_status = test_message.data.t_status
+            for (let i = 0; i < test_message.data.t_name.length; i++) {
+              let t_status = this.tStatus[i]
               if (t_status === 1){
                 let obj = {
-                  t_id: evaluations[i].fields.t_id,
-                  t_name: evaluations[i].fields.t_name,
+                  t_id: this.tId[i],
+                  t_name: this.tName[i],
                   t_status: '已发布',
-                  t_due: evaluations[i].fields.t_due
+                  t_due: this.tDue[i]
                 }
                 this.evaluationData.push(obj)
               } else if (t_status === 0) {
                 let obj = {
-                  t_id: evaluations[i].fields.t_id,
-                  t_name: evaluations[i].fields.t_name,
+                  t_id: this.tId[i],
+                  t_name: this.tName[i],
                   t_status: '未发布',
-                  t_due: evaluations[i].fields.t_due
+                  t_due: this.tDue[i]
                 }
                 this.evaluationData.push(obj)
               }
             }
+            this.$Message.info(`Create ${this.evaluationData[0].t_name} Success`)
           }
         } else {
           this.$Message.error(`can't search in database`)
