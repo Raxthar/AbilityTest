@@ -77,18 +77,18 @@ export default {
               let t_status = this.tStatus[i]
               if (t_status === 1){
                 let obj = {
-                  t_id: this.tId[i],
-                  t_name: this.tName[i],
+                  t_id: this.t_id[i],
+                  t_name: this.t_name[i],
                   t_status: '已发布',
-                  t_due: this.tDue[i]
+                  t_due: this.t_due[i]
                 }
                 this.evaluationData.push(obj)
               } else if (t_status === 0) {
                 let obj = {
-                  t_id: this.tId[i],
-                  t_name: this.tName[i],
+                  t_id: this.t_id[i],
+                  t_name: this.t_name[i],
                   t_status: '未发布',
-                  t_due: this.tDue[i]
+                  t_due: this.t_due[i]
                 }
                 this.evaluationData.push(obj)
               }
