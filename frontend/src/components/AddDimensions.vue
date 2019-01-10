@@ -58,7 +58,7 @@ export default {
       this.$axios.post('/create_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
-          this.$router.push('/QusetionList/' + this.dimensionArray.u_id + '/' + this.dimensionArray.t_id)
+          this.$router.push('/QuestionList/' + this.dimensionArray.u_id + '/' + this.dimensionArray.t_id)
         } else {
           this.$Message.info("can't read database")
         }

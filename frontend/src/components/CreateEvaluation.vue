@@ -14,7 +14,7 @@
       </Content>
       <Footer>
         <card>
-          <Table :data="evaluationData">
+          <Table border :columns="columns" :data="evaluationData">
           </Table>
         </card>
       </Footer>
@@ -74,7 +74,7 @@ export default {
             this.t_due = test_message.data.t_due
             this.t_status = test_message.data.t_status
             for (let i = 0; i < test_message.data.t_name.length; i++) {
-              let t_status = this.tStatus[i]
+              let t_status = this.t_status[i]
               if (t_status === 1){
                 let obj = {
                   t_id: this.t_id[i],

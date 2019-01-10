@@ -41,15 +41,13 @@ def create_dimension(request):
 
 
 def search_all_questions(request):
-    obj = json.loads(request.body)
-    t_id = obj['t_id']
+    t_id = request.GET['t_id']
     try:
         question_name_list = []
         question_id_list = []
         for i in Question.objects.filter(t_id=t_id):
             question_id_list.append(i.q_id)
             question_name_list.append(i.q_name)
-        #print(question_list)
         response = {
             "question_id": question_id_list,
             "question_name": question_name_list,

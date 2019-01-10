@@ -29,6 +29,8 @@ export default {
     return {
       u_id: this.$route.params.u_id,
       t_id: this.$route.params.t_id,
+      question_id: [],
+      question_name: [],
       columns: [
         {
           title: '题号',
@@ -83,19 +85,20 @@ export default {
       this.$router.push('/AddQuestion/' + this.u_id + '/' + this.t_id)
     },
     searchQuestion () {
-      this.$axios.get('searchQuestion', {
+      this.$axios.get('search_all_questions', {
         params: {
-          content: this.t_id
+          t_id: this.t_id
         }
       }).then(response => {
         if (response.data.code === 200) {
-          if (response.data.data && JSON.parse(response.data.data).length > 0) {
+          if (response.data.question_id.length > 0) {
             this.questionData = []
-            let questions = JSON.parse(response.data.data)
-            for (let i in questions) {
+            this.question_id = response.data.question_id
+            this.question_name = response.data.question_name
+            for (let i = 0; i < response.data.question_id.length; i++) {
               let obj = {
-                q_id: questions[i].fields.q_id,
-                q_name: questions[i].fields.q_name,
+                q_id: this.question_id[i],
+                q_name: this.question_name[i]
               }
               this.questionData.push(obj)
             }

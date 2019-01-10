@@ -10,4 +10,6 @@ urlpatterns = [
     url('set_dimension_page/', views.set_dimension_page, name='set_dimension_page'),
     url('set_deadline/', views.set_deadline, name='set_deadline'),
     url('search_all_questions/', views.search_all_questions, name='search_all_questions'),
+    url('test_list', views.test_list, name='test_list'),
+
 ]  
