@@ -106,15 +106,19 @@ def create_judge(request):
 
 def create(request):
     obj = json.loads(request.body)
-    test_name = obj['tName']
-    test_describe = obj['tDescribe']
-    _id = obj['uID']
+    test_name = obj['t_name']
+    test_describe = obj['t_describe']
+    u_id = obj['u_id']
     test_id = {}
-    test = ATest(t_name=test_name, t_describe=test_describe, t_status=0, u_id=u_id, t_due="")
-    test.save()
-    test_info = ATest.objects.get(t_name=test_name, t_describe=test_describe, t_status=0, u_id=u_id, t_due="")
-    test_id['data'] = test_info.t_id
-    return JsonResponse(test_id)
+    try:
+        test = ATest(t_name=test_name, t_describe=test_describe, t_status=0, u_id=u_id, t_due="")
+        test.save()
+        test_id['t_id'] = test.t_id
+        test_id['code'] = 200
+        return JsonResponse(test_id)
+    except Exception as e:
+        test_id['code'] = 0
+        return JsonResponse(test_id)
 
 
 def add_question(request):
