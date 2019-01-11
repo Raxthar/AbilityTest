@@ -33,24 +33,28 @@ export default {
       columns: [
         {
           title: '测评号',
-          key: 't_id'
+          key: 't_id',
+          width: 150
         },
         {
           title: '测评名',
-          key: 't_name'
+          key: 't_name',
+          width: 200
         },
         {
           title: '测评状态',
-          key: 't_status'
+          key: 't_status',
+          width: 150
         },
         {
           title: '截止日期',
-          key: 't_due'
+          key: 't_due',
+          width: 200
         },
         {
           title: '操作',
           key: 'action',
-          width: 150,
+          //width: 150,
           align: 'center',
           render: (buttonmethod, params) => {
             return buttonmethod('div', [
@@ -148,6 +152,9 @@ export default {
     }
   },
   methods: {
+    jumpToAddTitle () {
+      this.$router.push('/AddEvaluationTitle/' + this.u_id)
+    },
     jumpToAddTitle () {
       this.$router.push('/AddEvaluationTitle/' + this.u_id)
     },
