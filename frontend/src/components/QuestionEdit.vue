@@ -20,7 +20,7 @@
                   <Input v-model="questionData.newOptionData.options.o_name" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.newOptionData.options.score" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.newOptionData.options.d_id" type="button">
-                    <Radio v-for="dimension in dimensionsData" :key="dimension" label=dimension.d_id>{{dimension}}</Radio>
+                    <Radio v-for="dimension in dimensionsData" :key="dimension" :label=dimension.d_id>{{dimension}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
@@ -63,32 +63,32 @@ export default {
     searchQuestion () {
       this.$axios.get('searchQuestion', {
         params: {
-          content: this.questionData.q_id
+          q_id: this.questionData.q_id
         }
-      }).then(response => {
-        if (response.data.code === 200) {
-          if (response.data.data && JSON.parse(response.data.data).length > 0) {
+      }).then(message => {
+        if (message.data.code === 200) {
+          if (message.data.o_name.length > 0) {
             this.oldOptionData = []
-            let questionName = JSON.parse(response.data.q_name)
-            this.old_q_name = questionName.fields.q_name
-            let optionName = JSON.parse(response.data.o_name)
-            let dimensionName = JSON.parse(response.data.d_name)
-            let scoreData = JSON.parse(response.data.score)
-            let dimensionId = JSON.parse(response.data.d_id)
-            for (let i in optionName) {
+            let questionName = message.data.q_name
+            this.old_q_name = questionName
+            let optionName = message.data.o_name
+            let dimensionName = message.data.d_name
+            let scoreData = message.data.score
+            let dimensionId = message.data.d_id
+            for (let i = 0; i < message.data.o_name.length; i++) {
               let obj = {
-                o_name: optionName[i].field.o_name,
-                score: Number(scoreData[i].field.score),
-                d_id: Number(dimensionId[i].field.d_id)
+                o_name: optionName[i],
+                score: scoreData[i],
+                d_id: dimensionId[i]
               }
               this.oldOptionData.push(obj)
             }
             this.questionData.newOptionData = this.oldOptionData
             this.questionData.new_q_name = this.old_q_name
-            for (let i in dimensionName) {
+            for (let i = 0; i < dimensionName.length; i++) {
               let obj = {
-                d_name: dimensionName[i].field.d_name,
-                d_id: Number(dimensionId[i].field.d_id)
+                d_name: dimensionName[i],
+                d_id: dimensionId[i]
               }
               this.dimensionsData.push(obj)
             }
@@ -116,7 +116,7 @@ export default {
       this.$axios.post('/editQuestion/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`edit questions success`)
-          this.$router.push('/QusetionList/' + this.u_id + '/' + this.t_id)
+          this.$router.push('/QuestionList/' + this.u_id + '/' + this.t_id)
         } else {
           this.$Message.info("can't read database")
         }
