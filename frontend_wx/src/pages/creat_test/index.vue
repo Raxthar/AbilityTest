@@ -17,7 +17,7 @@
 <script>
 
 export default {
-  data () {
+ data () {
     return {
       buttonSize: 'large',
       createData: {
@@ -29,7 +29,7 @@ export default {
   },
 
   methods: {
-    handleCreate () {
+   handleCreate () {
       if (this.createData.t_name === '') {
         this.$Message.info('请输入标题')
         return
@@ -38,19 +38,19 @@ export default {
         this.$Message.info('请输入描述')
         return
       }
-      wx.request({
-        url: 'create/', // 仅为示例，并非真实的接口地址
-        data: {
-          x: '',
-          y: ''
-        },
-        header: {
-          'content-type': 'application/json' // 默认值
-        },
-        success (res) {
-          console.log(res.data)
-        }
-      })
+     wx.request({
+       url: 'create/', // 仅为示例，并非真实的接口地址
+       data: {
+       x: '',
+       y: ''
+     },
+     header: {
+       'content-type': 'application/json' // 默认值
+     },
+     success(res) {
+        console.log(res.data)
+  }
+})
     }
   }
 }

@@ -9,7 +9,7 @@
               <i-button @click='delDimension(index)'>删除</i-button>		
             </formitem>
           </ul>     
-        <i-button type="primary" size="small" @click="createQuestion" >下一步</i-button>
+        <i-button type="primary" size="small" @click="questionList" >下一步</i-button>
      </form>
   </div>
 </template>
@@ -26,9 +26,9 @@ export default {
   },
 
   methods: {
-    createQuestion () {
+    questionList () {
       wx.navigateTo({
-        url: '../create_question/main'
+        url: '../question_list/main'
       })
     },
     addDimension () {
