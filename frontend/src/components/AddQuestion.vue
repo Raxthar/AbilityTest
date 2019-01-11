@@ -18,7 +18,7 @@
               </FormItem>
               <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
                   <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
-                  <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
+                  <InputNumber v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.d_id[index]" type="button" name=index>
                     <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.d_id>{{dimensions.d_name}}</Radio>
                   </RadioGroup>
