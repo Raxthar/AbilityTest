@@ -12,5 +12,5 @@ urlpatterns = [
     url('search_all_questions/', views.search_all_questions, name='search_all_questions'),
     url('test_list', views.test_list, name='test_list'),
     url('search_dimensions', views.search_dimensions, name='search_dimensions'),
-
+    url('delete_question/', views.delete_question, name='delete_question'),
 ]  

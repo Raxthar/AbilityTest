@@ -126,19 +126,10 @@ def add_question(request):
     option_name = obj['o_name']
     option_score = obj['score']
     option_dimension = obj['d_id']
-    print(option_name)
-    print(option_score)
-    print(option_dimension)
-#    question_list = {}    
     try:
         question = Question(q_name=question_name, t_id=test_id)
         question.save()
         question_info = Question.objects.get(q_name=question_name, t_id=test_id)
-        '''
-        for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
-            option = Option(o_name=o_name, q_id=question_info.q_id, score=score,d_id=d_id)
-            option.save()
-        '''
         for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
             option = Option(o_name=option_name[o_name], q_id=question_info.q_id, score=option_score[score],d_id=option_dimension[d_id])
             option.save()
@@ -268,3 +259,19 @@ def set_deadline(request):
     test_message['t_status'] = test_update.t_status
     test_message['t_due'] = test_update.t_due
     return JsonResponse(test_message)
+
+
+def delete_question(request):
+    obj = json.loads(request.body)
+    q_id = obj['q_id']
+    try:
+        Question.objects.filter(q_id=q_id).delete()
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)

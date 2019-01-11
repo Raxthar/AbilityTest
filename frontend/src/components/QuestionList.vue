@@ -113,10 +113,10 @@ export default {
       this.$router.push('/QuestionEdit/' + u_id + '/' + t_id + '/' +q_id)
     },
     deleteQuestion (index) {
-      this.$axios.post('/deleteQuestion/', JSON.stringify(this.questionData[index]q_id)).then(res => {
-        if (res.data.code === 200) {
+      this.$axios.post('/delete_question/', JSON.stringify(this.questionData[index])).then(response => {
+        if (response.data.code === 200) {
           this.$Message.success(`delete ${this.questionData[index].q_id} success`)
-          this.$options.methods.searchQuestion()
+          this.questionData.splice(index, 1)
         } else {
           this.$Message.info("can't read database")
         }
