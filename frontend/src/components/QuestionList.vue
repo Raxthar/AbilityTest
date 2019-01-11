@@ -115,7 +115,7 @@ export default {
     deleteQuestion (index) {
       this.$axios.post('/delete_question/', JSON.stringify(this.questionData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`delete ${this.questionData[index].q_id} success`)
+          this.$Message.success(`delete ${this.questionData[index].q_name} success`)
           this.questionData.splice(index, 1)
         } else {
           this.$Message.info("can't read database")

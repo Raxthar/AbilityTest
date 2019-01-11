@@ -135,7 +135,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.deleteQuestion(params.index)
+                    this.deleteEvaluation(params.index)
                   }
                 }
               }, '删除')
@@ -195,6 +195,16 @@ export default {
           }
         } else {
           this.$Message.error(`can't search in database`)
+        }
+      })
+    },
+    deleteEvaluation (index) {
+      this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
+        if (response.data.code === 200) {
+          this.$Message.success(`delete ${this.evaluationData[index].t_name} success`)
+          this.evaluationData.splice(index, 1)
+        } else {
+          this.$Message.info("can't read database")
         }
       })
     }
