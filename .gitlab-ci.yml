@@ -5,7 +5,9 @@ frontendlint:
   stage: frontend
   script:
     - cd frontend
-    - echo "test for runner."
+    - npm install --registry https://resregistry.npm.taobao.org
+    - npm run lint
+    - npm run stylelint
   allow_failure: false
   tags:
     - frontend
