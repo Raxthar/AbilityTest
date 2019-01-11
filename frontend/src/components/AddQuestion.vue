@@ -20,7 +20,7 @@
                   <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
                   <Input v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.d_id[index]" type="button" name=index>
-                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" label=dimensions.d_id>{{dimensions.d_name}}</Radio>
+                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.d_id>{{dimensions.d_name}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
@@ -111,7 +111,7 @@ export default {
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set questions success`)
-          this.$router.push('/QusetionList/' + this.u_id + '/' + this.questionData.t_id)
+          this.$router.push('/QuestionList/' + this.u_id + '/' + this.questionData.t_id)
         } else {
           this.$Message.info("can't read database")
         }
