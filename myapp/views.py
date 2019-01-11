@@ -126,15 +126,21 @@ def add_question(request):
     option_name = obj['o_name']
     option_score = obj['score']
     option_dimension = obj['d_id']
+    print(option_name)
+    print(option_score)
+    print(option_dimension)
 #    question_list = {}    
     try:
         question = Question(q_name=question_name, t_id=test_id)
         question.save()
         question_info = Question.objects.get(q_name=question_name, t_id=test_id)
-#    question_list['q_name'] = question_info.q_name
-#    question_list['q_id'] = question_info.q_id
-        for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):
+        '''
+        for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
             option = Option(o_name=o_name, q_id=question_info.q_id, score=score,d_id=d_id)
+            option.save()
+        '''
+        for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
+            option = Option(o_name=option_name[o_name], q_id=question_info.q_id, score=option_score[score],d_id=option_dimension[d_id])
             option.save()
         response = {
                 "code": 200
