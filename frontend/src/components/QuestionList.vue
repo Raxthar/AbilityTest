@@ -110,7 +110,7 @@ export default {
     },
     questionEdit (index) {
       let q_id = this.questionData[index].q_id
-      this.$router.push('/QuestionEdit/' + u_id + '/' + t_id + '/' +q_id)
+      this.$router.push('/QuestionEdit/' + this.u_id + '/' + this.t_id + '/' + q_id)
     },
     deleteQuestion (index) {
       this.$axios.post('/delete_question/', JSON.stringify(this.questionData[index])).then(response => {
