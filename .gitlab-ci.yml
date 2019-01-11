@@ -1,0 +1,11 @@
+stages:
+  - frontend
+
+frontendlint:
+  stage: frontend
+  script:
+    - cd frontend
+    - echo "test for runner."
+  allow_failure: false
+  tags:
+    - frontend
