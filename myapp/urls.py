@@ -13,4 +13,6 @@ urlpatterns = [
     url('test_list', views.test_list, name='test_list'),
     url('search_dimensions', views.search_dimensions, name='search_dimensions'),
     url('delete_question/', views.delete_question, name='delete_question'),
+    url('edit_question', views.edit_question, name='edit_question'),
+    url('update_question/', views.update_question, name='update_question'),
 ]  

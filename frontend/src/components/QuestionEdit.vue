@@ -16,11 +16,11 @@
               <FormItem label="input">
                   <Input v-model="questionData.new_q_name" placeholder="Enter Title..." />
               </FormItem>
-              <FormItem v-for="options in questionData.newOptionData" :key="options">
-                  <Input v-model="questionData.newOptionData.options.o_name" size="large" placeholder="请输入选项" />
-                  <Input v-model="questionData.newOptionData.options.score" size="small" placeholder="请输入分数" />
-                  <RadioGroup v-model="questionData.newOptionData.options.d_id" type="button">
-                    <Radio v-for="dimension in dimensionsData" :key="dimension" :label=dimension.d_id>{{dimension}}</Radio>
+              <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
+                  <Input v-model="questionData.newOptionData[index].o_name" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
+                  <RadioGroup v-model="questionData.newOptionData[index].d_id" type="button">
+                    <Radio v-for="(dimension, item) in dimensionsData" :key="(dimension, item)" :label=dimensionsData[item].d_id>{{dimensionsData[item].d_name}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
@@ -48,6 +48,8 @@ export default {
       }],
       oldOptionData: [],
       dimensionsData: [],
+      dimension_id: [],
+      dimension_name: [],
       old_q_name: '',
       questionData: {
         q_id: this.$route.params.q_id,
@@ -60,14 +62,39 @@ export default {
     jumpBack () {
       this.$router.push('/QuestionList/' + this.t_id + '/' + this.u_id)
     },
+    searchDimension () {
+      this.$axios.get('search_dimensions', {
+        params: {
+          content: this.t_id
+        }
+      }).then(dimension => {
+        if (dimension.data.code === 200) {
+          if (dimension.data.d_id.length > 0) {
+            this.dimensionsData = []
+            this.dimension_id = dimension.data.d_id
+            this.dimension_name = dimension.data.d_name
+            for (let i = 0; i < dimension.data.d_id.length; i++) {
+              let obj = {
+                d_name: this.dimension_name[i],
+                d_id: this.dimension_id[i]
+              }
+              this.dimensionsData.push(obj)
+            }
+          }
+        } else {
+          this.$Message.error(`can't search in database`)
+        }
+      })
+    },
     searchQuestion () {
-      this.$axios.get('searchQuestion', {
+      this.$axios.get('edit_question', {
         params: {
           q_id: this.questionData.q_id
         }
       }).then(message => {
         if (message.data.code === 200) {
           if (message.data.o_name.length > 0) {
+            this.$Message.info(`can't ${message.data.o_name} database`)
             this.oldOptionData = []
             let questionName = message.data.q_name
             this.old_q_name = questionName
@@ -82,7 +109,9 @@ export default {
                 d_id: dimensionId[i]
               }
               this.oldOptionData.push(obj)
+              console.log(this.oldOptionData)
             }
+            console.log(this.oldOptionData)
             this.questionData.newOptionData = this.oldOptionData
             this.questionData.new_q_name = this.old_q_name
             for (let i = 0; i < dimensionName.length; i++) {
@@ -113,7 +142,7 @@ export default {
           return
         }
       }
-      this.$axios.post('/editQuestion/', JSON.stringify(this.questionData)).then(response => {
+      this.$axios.post('/update_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`edit questions success`)
           this.$router.push('/QuestionList/' + this.u_id + '/' + this.t_id)

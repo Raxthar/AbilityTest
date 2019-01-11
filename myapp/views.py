@@ -165,26 +165,30 @@ def search_dimensions(request):
 
 
 def edit_question(request):
-    obj = json.loads(request.body)
-    question_id = obj["q_id"]
+    question_id = request.GET['q_id']
     message = {}
     option_name = []
     option_score = []
     dimension_id = []
     dimension_name = []
-    question = Question.objects.get(q_id=question_id)
-    message["q_name"] = question.q_name
-    option_list = Option.objects.filter(q_id=question_id)
-    for i in range(len(option_list)):
-        option_name.append(option_list[i].o_name)
-        dimension_id.append(option_list[i].d_id)
-        option_score.append(option_list[i].score)
-        dimension = Dimension(d_id=option_list[i].d_id)
-        dimension_name.append(dimension.d_name)
-    message["o_name"] = option_name
-    message["d_id"] = dimension_id
-    message["d_name"] = dimension_name
-    message["score"] = option_score
+    try:
+        question = Question.objects.get(q_id=question_id)
+        message["q_name"] = question.q_name
+        option_list = Option.objects.filter(q_id=question_id)
+        for i in range(len(option_list)):
+            option_name.append(option_list[i].o_name)
+            dimension_id.append(option_list[i].d_id)
+            option_score.append(option_list[i].score)
+            dimension = Dimension(d_id=option_list[i].d_id)
+            dimension_name.append(dimension.d_name)
+        message["o_name"] = option_name
+        message["d_id"] = dimension_id
+        message["d_name"] = dimension_name
+        message["score"] = option_score
+        message['code'] = 200
+    except Exception as e:
+        message['code'] = 0
+        message['errMsg'] = e
     return JsonResponse(message)
 
 
@@ -194,15 +198,21 @@ def update_question(request):
     option_name = obj['o_name']
     option_score = obj['score']
     option_dimension = obj['d_id']
-    option_list = Option.objects.filter(q_id=question_id)
-    for i in range(len(option_list)):
-        option_list[i].o_name = option_name[i]
-        option_list[i].score = option_score[i]
-        option_list[i].d_id = option_dimension[i]
-        option_list[i].save()
-    response = {
-        "data": 200
-    }
+    try:
+        option_list = Option.objects.filter(q_id=question_id)
+        
+        for i in range(len(option_list)):
+            option_list[i].o_name = option_name[i]
+            option_list[i].score = option_score[i]
+            option_list[i].d_id = option_dimension[i]
+            option_list[i].save()
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0
+        }
     return JsonResponse(response)
 
 
