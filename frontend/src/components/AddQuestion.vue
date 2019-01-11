@@ -111,7 +111,7 @@ export default {
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set questions success`)
-          this.$router.push('/QusetionList/' + this.u_id + '/' + this.questionData.t_id)
+          this.$router.push('/QuestionList/' + this.u_id + '/' + this.questionData.t_id)
         } else {
           this.$Message.info("can't read database")
         }
