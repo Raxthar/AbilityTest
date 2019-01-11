@@ -17,7 +17,7 @@
 <script>
 
 export default {
- data () {
+  data () {
     return {
       buttonSize: 'large',
       createData: {
@@ -49,8 +49,8 @@ export default {
      },
      success(res) {
         console.log(res.data)
-  }
-})
+       }
+     })
     }
   }
 }
