@@ -30,7 +30,7 @@ export default {
   methods: {
     createbtn () {
       wx.navigateTo({
-        url: '../creat_test/main'
+        url: '../create_demision/main'
       })
     },
 
