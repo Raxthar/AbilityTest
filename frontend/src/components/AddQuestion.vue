@@ -94,17 +94,21 @@ export default {
       })
     },
     setQuestion () {
+      if (this.questionData.q_name === '') {
+        this.$Message.error('please enter question')
+        return
+      }
       for (let i = 0; i < this.lists.length; i++) {
-        if (this.questionData.d_id[i] === 0) {
-          this.$Message.info('please choose a dimension for option')
+        if (!this.questionData.d_id[i]) {
+          this.$Message.error('please choose a dimension for option')
           return
         }
-        if (!this.questionData.q_name[i]) {
-          this.$Message.info('please enter question')
+        else if (!this.questionData.o_name[i]) {
+          this.$Message.error('please enter option')
           return
         }
-        if (!this.questionData.score[i]) {
-          this.$Message.info('please enter the score for question')
+        else if (!this.questionData.score[i]) {
+          this.$Message.error('please enter the score for question')
           return
         }
       }
