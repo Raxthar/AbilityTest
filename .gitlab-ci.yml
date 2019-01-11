@@ -6,7 +6,7 @@ frontendlint:
   script:
     - cd frontend
     - apk add nodejs
-    - nodejs -v
+    - node -v
     - apk add npm
     - npm -v
     - npm install --registry https://resregistry.npm.taobao.org
