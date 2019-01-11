@@ -73,7 +73,7 @@ export default {
             this.dimensionsData = []
             this.dimension_id = dimension.data.d_id
             this.dimension_name = dimension.data.d_name
-            for (let i = 0; i < dimension.data.d_id.length; i++) {
+            for (let i = 0; i < this.dimension_id.length; i++) {
               let obj = {
                 d_name: this.dimension_name[i],
                 d_id: this.dimension_id[i]

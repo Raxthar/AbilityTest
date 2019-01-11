@@ -144,7 +144,7 @@ def add_question(request):
     return JsonResponse(response)
 
 
-# 找所有的维度
+# 找t_id对应的所有的维度
 def search_dimensions(request):
     t_id = request.GET['content']
     dimension = {}
@@ -195,16 +195,15 @@ def edit_question(request):
 def update_question(request):
     obj = json.loads(request.body)
     question_id = obj["q_id"]
-    option_name = obj['o_name']
-    option_score = obj['score']
-    option_dimension = obj['d_id']
+    new_q_name = obj["new_q_name"]
+    new_option_data = obj['newOptionData']
     try:
+        Question.objects.filter(q_id=question_id).update(q_name=new_q_name)
         option_list = Option.objects.filter(q_id=question_id)
-        
         for i in range(len(option_list)):
-            option_list[i].o_name = option_name[i]
-            option_list[i].score = option_score[i]
-            option_list[i].d_id = option_dimension[i]
+            option_list[i].o_name = new_option_data[i].get('o_name')
+            option_list[i].score = new_option_data[i].get('score')
+            option_list[i].d_id = new_option_data[i].get('d_id')
             option_list[i].save()
         response = {
             "code": 200
