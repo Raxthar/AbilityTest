@@ -5,6 +5,10 @@ frontendlint:
   stage: frontend
   script:
     - cd frontend
+    - apk add nodejs
+    - nodejs -v
+    - apk add npm
+    - npm -v
     - npm install --registry https://resregistry.npm.taobao.org
     - npm run lint
     - npm run stylelint
