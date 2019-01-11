@@ -18,7 +18,7 @@
               </FormItem>
               <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
                   <Input v-model="questionData.newOptionData[index].o_name" size="large" placeholder="请输入选项" />
-                  <Input v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
+                  <InputNumber v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.newOptionData[index].d_id" type="button">
                     <Radio v-for="(dimension, item) in dimensionsData" :key="(dimension, item)" :label=dimensionsData[item].d_id>{{dimensionsData[item].d_name}}</Radio>
                   </RadioGroup>
@@ -109,9 +109,7 @@ export default {
                 d_id: dimensionId[i]
               }
               this.oldOptionData.push(obj)
-              console.log(this.oldOptionData)
             }
-            console.log(this.oldOptionData)
             this.questionData.newOptionData = this.oldOptionData
             this.questionData.new_q_name = this.old_q_name
             for (let i = 0; i < dimensionName.length; i++) {
