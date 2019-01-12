@@ -64,12 +64,12 @@ export default {
   width: 100%;
   height: 700px
 }
-.start{
+.start {
   width: 100%;
   height: 700px;
   text-align:center
 }
-p{
+p {
   font-size: 50px;
   font-family: 楷体;
   text-align: center;
