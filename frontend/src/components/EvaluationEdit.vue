@@ -35,7 +35,7 @@ export default {
       evaluationData: {
         tId: this.$route.params.tId,
         evaluationName: '',
-        evaluationDescribe: '',
+        evaluationDescribe: ''
       }
     }
   },
