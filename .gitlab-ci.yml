@@ -14,4 +14,4 @@ frontendlint:
     - npm run stylelint
   allow_failure: false
   tags:
-    - shared
+    - frontend
