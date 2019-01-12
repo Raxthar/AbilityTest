@@ -16,20 +16,13 @@ def create_dimension(request):
     print('create_dimension')
     obj = json.loads(request.body)
     d_names_arr = obj['dimensions']
-    t_id = obj['t_id']
-    u_id = obj['u_id']
+    t_id = obj['tId']
+    u_id = obj['uId']
     try:
         for i in d_names_arr:
             dimension = Dimension(d_name=d_names_arr.get(i), t_id=t_id)
             dimension.save()
-        '''
-        question_list = []
-        for i in Question.objects.filter(t_id=t_id):
-            question_list.append(i.q_name)
-        print(question_list)
-        '''
         response = {
-            # "question_data": question_list
             "code": 200
         }
     except Exception as e:
@@ -41,7 +34,7 @@ def create_dimension(request):
 
 
 def search_all_questions(request):
-    t_id = request.GET['t_id']
+    t_id = request.GET['tId']
     try:
         question_name_list = []
         question_id_list = []
@@ -49,8 +42,8 @@ def search_all_questions(request):
             question_id_list.append(i.q_id)
             question_name_list.append(i.q_name)
         response = {
-            "question_id": question_id_list,
-            "question_name": question_name_list,
+            "questionId": question_id_list,
+            "questionName": question_name_list,
             "code": 200
         }
     except Exception as e:
@@ -63,7 +56,7 @@ def search_all_questions(request):
 
 def search_all_atest(request):
     obj = json.loads(request.body)
-    u_id = obj['u_id']
+    u_id = obj['uId']
     try:
         atest_list = []
         for i in ATest.objects.filter(u_id=u_id):
@@ -81,7 +74,7 @@ def search_all_atest(request):
 
 def create_judge(request):
     obj = json.loads(request.body)
-    t_id = obj['t_id']
+    t_id = obj['tId']
     content = obj['content']
     print(content)
     try:
@@ -104,28 +97,28 @@ def create_judge(request):
 
 def create(request):
     obj = json.loads(request.body)
-    test_name = obj['t_name']
-    test_describe = obj['t_describe']
-    u_id = obj['u_id']
-    test_id = {}
+    test_name = obj['tName']
+    test_describe = obj['tDescribe']
+    u_id = obj['uId']
+    response = {}
     try:
         test = ATest(t_name=test_name, t_describe=test_describe, t_status=0, u_id=u_id, t_due="")
         test.save()
-        test_id['t_id'] = test.t_id
-        test_id['code'] = 200
-        return JsonResponse(test_id)
+        response['tId'] = test.t_id
+        response['code'] = 200
+        return JsonResponse(response)
     except Exception as e:
-        test_id['code'] = 0
-        return JsonResponse(test_id)
+        response['code'] = 0
+        return JsonResponse(response)
 
 
 def add_question(request):
     obj = json.loads(request.body)
-    question_name = obj['q_name']
-    test_id = obj['t_id']
-    option_name = obj['o_name']
+    question_name = obj['qName']
+    test_id = obj['tId']
+    option_name = obj['oName']
     option_score = obj['score']
-    option_dimension = obj['d_id']
+    option_dimension = obj['dId']
     try:
         question = Question(q_name=question_name, t_id=test_id)
         question.save()
@@ -155,8 +148,8 @@ def search_dimensions(request):
         for i in range(len(dimension_info)):
             dimension_id.append(dimension_info[i].d_id)
             dimension_name.append(dimension_info[i].d_name)
-        dimension['d_id'] = dimension_id
-        dimension['d_name'] = dimension_name
+        dimension['dId'] = dimension_id
+        dimension['dName'] = dimension_name
         dimension['code'] = 200
     except Exception as e:
         dimension['code'] = 0
@@ -165,7 +158,7 @@ def search_dimensions(request):
 
 
 def edit_question(request):
-    question_id = request.GET['q_id']
+    question_id = request.GET['qId']
     message = {}
     option_name = []
     option_score = []
@@ -173,7 +166,7 @@ def edit_question(request):
     dimension_name = []
     try:
         question = Question.objects.get(q_id=question_id)
-        message["q_name"] = question.q_name
+        message["qName"] = question.q_name
         option_list = Option.objects.filter(q_id=question_id)
         for i in range(len(option_list)):
             option_name.append(option_list[i].o_name)
@@ -181,9 +174,9 @@ def edit_question(request):
             option_score.append(option_list[i].score)
             dimension = Dimension(d_id=option_list[i].d_id)
             dimension_name.append(dimension.d_name)
-        message["o_name"] = option_name
-        message["d_id"] = dimension_id
-        message["d_name"] = dimension_name
+        message["oName"] = option_name
+        message["dId"] = dimension_id
+        message["dName"] = dimension_name
         message["score"] = option_score
         message['code'] = 200
     except Exception as e:
@@ -194,16 +187,16 @@ def edit_question(request):
 
 def update_question(request):
     obj = json.loads(request.body)
-    question_id = obj["q_id"]
-    new_q_name = obj["new_q_name"]
+    question_id = obj["qId"]
+    new_q_name = obj["newQuestionName"]
     new_option_data = obj['newOptionData']
     try:
         Question.objects.filter(q_id=question_id).update(q_name=new_q_name)
         option_list = Option.objects.filter(q_id=question_id)
         for i in range(len(option_list)):
-            option_list[i].o_name = new_option_data[i].get('o_name')
+            option_list[i].o_name = new_option_data[i].get('oName')
             option_list[i].score = new_option_data[i].get('score')
-            option_list[i].d_id = new_option_data[i].get('d_id')
+            option_list[i].d_id = new_option_data[i].get('dId')
             option_list[i].save()
         response = {
             "code": 200
@@ -216,8 +209,8 @@ def update_question(request):
 
 
 def test_list(request):
-    u_id = request.GET['u_id']
-    test_message = {}
+    u_id = request.GET['uId']
+    message = {}
     list_name = []
     list_status = []
     list_due = []
@@ -229,20 +222,20 @@ def test_list(request):
             list_status.append(test_info[i].t_status)
             list_due.append(test_info[i].t_due)
             list_id.append(test_info[i].t_id)
-        test_message['t_id'] = list_id
-        test_message['t_name'] = list_name
-        test_message['t_status'] = list_status
-        test_message['t_due'] = list_due
-        test_message['code'] = 200
-        return JsonResponse(test_message)
+        message['tId'] = list_id
+        message['tName'] = list_name
+        message['tStatus'] = list_status
+        message['tDue'] = list_due
+        message['code'] = 200
+        return JsonResponse(message)
     except Exception as e:
-        test_message['code'] = 0
-        return JsonResponse(test_message)
+        message['code'] = 0
+        return JsonResponse(message)
 
 
 def set_dimension_page(request):
     obj = json.loads(request.body)
-    test_id = obj['t_id']
+    test_id = obj['tId']
     dimension = {}
     dimension_id = []
     dimension_name = []
@@ -250,29 +243,29 @@ def set_dimension_page(request):
     for i in range(len(test_info)):
         dimension_id.append(test_info[i].d_id)
         dimension_name.append(test_info[i].d_name)
-    dimension['d_id'] = dimension_id
-    dimension['d_name'] = dimension_name
+    dimension['dId'] = dimension_id
+    dimension['dName'] = dimension_name
     return JsonResponse(dimension)
 
 
 def set_deadline(request):
     obj = json.loads(request.body)
-    test_id = obj['t_id']
-    test_due = obj['t_due']
+    test_id = obj['tId']
+    test_due = obj['tDue']
     test_message = {}
     test_info = ATest.objects.get(t_id=test_id)
     test_info.t_due = test_due
     test_info.save()
     test_update = ATest.objects.get(t_id=test_id)
-    test_message['t_name'] = test_update.t_name
-    test_message['t_status'] = test_update.t_status
-    test_message['t_due'] = test_update.t_due
+    test_message['tName'] = test_update.t_name
+    test_message['tStatus'] = test_update.t_status
+    test_message['tDue'] = test_update.t_due
     return JsonResponse(test_message)
 
 
 def delete_question(request):
     obj = json.loads(request.body)
-    q_id = obj['q_id']
+    q_id = obj['qId']
     try:
         Question.objects.filter(q_id=q_id).delete()
         response = {
@@ -288,7 +281,7 @@ def delete_question(request):
 
 def delete_evaluation(request):
     obj = json.loads(request.body)
-    t_id = obj['t_id']
+    t_id = obj['tId']
     try:
         ATest.objects.filter(t_id=t_id).delete()
         response = {

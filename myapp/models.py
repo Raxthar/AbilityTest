@@ -55,3 +55,4 @@ class Result(models.Model):
     result_id = models.AutoField(primary_key=True, db_column='result_id')
     t_id = models.IntegerField()
     d_id = models.IntegerField()
+    

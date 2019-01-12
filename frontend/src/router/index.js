@@ -21,12 +21,12 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/AddEvaluationTitle/:u_id',
+      path: '/AddEvaluationTitle/:uId',
       name: 'AddEvaluationTitle',
       component: AddEvaluationTitle
     },
     {
-      path: '/AddDimensions/:u_id/:t_id',
+      path: '/AddDimensions/:uId/:tId',
       name: 'AddDimensions',
       component: AddDimensions
     },
@@ -36,12 +36,12 @@ export default new Router({
       component: CreateEvaluation
     },
     {
-      path: '/QuestionList/:u_id/:t_id',
+      path: '/QuestionList/:uId/:tId',
       name: 'QuestionList',
       component: QuestionList
     },
     {
-      path: '/AddQuestion/:u_id/:t_id',
+      path: '/AddQuestion/:uId/:tId',
       name: 'AddQuestion',
       component: AddQuestion
     },
@@ -51,7 +51,7 @@ export default new Router({
       component: Welcome
     },
     {
-      path: '/QuestionEdit/:u_id/:t_id/:q_id',
+      path: '/QuestionEdit/:uId/:tId/:qId',
       name: 'QuestionEdit',
       component: QuestionEdit
     },
