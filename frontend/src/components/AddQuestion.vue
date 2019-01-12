@@ -106,8 +106,7 @@ export default {
           this.$Message.error('please enter option')
           return
         } else if (!this.questionData.score[i]) {
-          this.$Message.error('please enter the score for question')
-          return
+          this.questionData.score[i] = 1
         }
       }
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {

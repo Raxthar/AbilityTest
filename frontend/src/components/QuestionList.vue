@@ -57,6 +57,20 @@ export default {
                 },
                 on: {
                   click: () => {
+                    this.questionView(params.index)
+                  }
+                }
+              }, 'View'),
+              buttonmethod('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
                     this.questionEdit(params.index)
                   }
                 }
@@ -119,6 +133,37 @@ export default {
           this.questionData.splice(index, 1)
         } else {
           this.$Message.info("can't read database")
+        }
+      })
+    },
+    questionView (index) {
+      this.$axios.get('edit_question', {
+        params: {
+          qId: this.questionData[index].qId
+        }
+      }).then(message => {
+        if (message.data.code === 200) {
+          if (message.data.oName.length > 0) {
+            let theQuestionData
+            let questionName = message.data.qName
+            let optionName = message.data.oName
+            let dimensionName = message.data.dName
+            let scoreData = message.data.score
+            for (let i = 0; i < message.data.oName.length; i++) {
+              let obj = {
+                oName: optionName[i],
+                score: scoreData[i],
+                dName: dimensionName[i]
+              }
+              theQuestionData.push(obj)
+            }
+            this.$Modal.info({
+              title: 'Question Info',
+              content: `Question：${questionName}<br>Options：${theQuestionData}`
+            })
+          }
+        } else {
+          this.$message.error(`can't search in database`)
         }
       })
     }
