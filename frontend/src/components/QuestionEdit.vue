@@ -14,13 +14,13 @@
           <Content>
             <Form :model="questionData">
               <FormItem label="input">
-                  <Input v-model="questionData.new_q_name" placeholder="Enter Title..." />
+                  <Input v-model="questionData.newQuestionName" placeholder="Enter Title..." />
               </FormItem>
               <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
-                  <Input v-model="questionData.newOptionData[index].o_name" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.newOptionData[index].oName" size="large" placeholder="请输入选项" />
                   <InputNumber v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
-                  <RadioGroup v-model="questionData.newOptionData[index].d_id" type="button">
-                    <Radio v-for="(dimension, item) in dimensionsData" :key="(dimension, item)" :label=dimensionsData[item].d_id>{{dimensionsData[item].d_name}}</Radio>
+                  <RadioGroup v-model="questionData.newOptionData[index].dId" type="button">
+                    <Radio v-for="(dimension, item) in dimensionsData" :key="(dimension, item)" :label=dimensionsData[item].dId>{{dimensionsData[item].dName}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
@@ -40,43 +40,43 @@ export default {
   },
   data () {
     return {
-      u_id: this.$route.params.u_id,
-      t_id: this.$route.params.t_id,
+      uId: this.$route.params.uId,
+      tId: this.$route.params.tId,
       buttonSize: 'large',
       lists: [{
         list: ''
       }],
       oldOptionData: [],
       dimensionsData: [],
-      dimension_id: [],
-      dimension_name: [],
-      old_q_name: '',
+      dimensionId: [],
+      dimensionName: [],
+      oldQuestionName: '',
       questionData: {
-        q_id: this.$route.params.q_id,
-        new_q_name: '',
+        qId: this.$route.params.qId,
+        newQuestionName: '',
         newOptionData: []
       }
     }
   },
   methods: {
     jumpBack () {
-      this.$router.push('/QuestionList/' + this.t_id + '/' + this.u_id)
+      this.$router.push('/QuestionList/' + this.tId + '/' + this.uId)
     },
     searchDimension () {
       this.$axios.get('search_dimensions', {
         params: {
-          content: this.t_id
+          content: this.tId
         }
       }).then(dimension => {
         if (dimension.data.code === 200) {
-          if (dimension.data.d_id.length > 0) {
+          if (dimension.data.dId.length > 0) {
             this.dimensionsData = []
-            this.dimension_id = dimension.data.d_id
-            this.dimension_name = dimension.data.d_name
-            for (let i = 0; i < this.dimension_id.length; i++) {
+            this.dimensionId = dimension.data.dId
+            this.dimensionName = dimension.data.dName
+            for (let i = 0; i < this.dimensionId.length; i++) {
               let obj = {
-                d_name: this.dimension_name[i],
-                d_id: this.dimension_id[i]
+                dName: this.dimensionName[i],
+                dId: this.dimensionId[i]
               }
               this.dimensionsData.push(obj)
             }
@@ -89,33 +89,33 @@ export default {
     searchQuestion () {
       this.$axios.get('edit_question', {
         params: {
-          q_id: this.questionData.q_id
+          qId: this.questionData.qId
         }
       }).then(message => {
         if (message.data.code === 200) {
-          if (message.data.o_name.length > 0) {
-            this.$Message.info(`can't ${message.data.o_name} database`)
+          if (message.data.oName.length > 0) {
+            this.$Message.info(`can't ${message.data.oName} database`)
             this.oldOptionData = []
-            let questionName = message.data.q_name
-            this.old_q_name = questionName
-            let optionName = message.data.o_name
-            let dimensionName = message.data.d_name
+            let questionName = message.data.qName
+            this.oldQuestionName = questionName
+            let optionName = message.data.oName
+            let dimensionName = message.data.dName
             let scoreData = message.data.score
-            let dimensionId = message.data.d_id
-            for (let i = 0; i < message.data.o_name.length; i++) {
+            let dimensionId = message.data.dId
+            for (let i = 0; i < message.data.oName.length; i++) {
               let obj = {
-                o_name: optionName[i],
+                oName: optionName[i],
                 score: scoreData[i],
-                d_id: dimensionId[i]
+                dId: dimensionId[i]
               }
               this.oldOptionData.push(obj)
             }
             this.questionData.newOptionData = this.oldOptionData
-            this.questionData.new_q_name = this.old_q_name
+            this.questionData.newQuestionName = this.oldQuestionName
             for (let i = 0; i < dimensionName.length; i++) {
               let obj = {
-                d_name: dimensionName[i],
-                d_id: dimensionId[i]
+                dName: dimensionName[i],
+                dId: dimensionId[i]
               }
               this.dimensionsData.push(obj)
             }
@@ -127,11 +127,11 @@ export default {
     },
     editQuestion () {
       for (let i = 0; i < this.questionData.newOptionData.length; i++) {
-        if (this.questionData.newOptionData[i].o_name === '') {
+        if (this.questionData.newOptionData[i].oName === '') {
           this.$Message.info('请输入选项内容')
           return
         }
-        if (this.questionData.newOptionData[i].d_id === 0) {
+        if (this.questionData.newOptionData[i].dId === 0) {
           this.$Message.info('请选择维度')
           return
         }
@@ -143,7 +143,7 @@ export default {
       this.$axios.post('/update_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`edit questions success`)
-          this.$router.push('/QuestionList/' + this.u_id + '/' + this.t_id)
+          this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
           this.$Message.info("can't read database")
         }

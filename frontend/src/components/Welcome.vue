@@ -1,12 +1,12 @@
-<template>  
+<template>
   <div class="img" :style="{backgroundImage: 'url(' + img + ')' }">
-    <div class="start">        
+    <div class="start">
       <Button :size='buttonSize' shape='circle' type="success" to="/CreateEvaluation">
         开始使用
       </Button>
-      <p>欢迎使用测评</p> 
+      <p>欢迎使用测评</p>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       buttonSize: 'large',
-      img: Img,
+      img: Img
     }
   }
 }
@@ -35,8 +35,8 @@ export default {
 }
 p{
   font-size: 50px;
-  text-aligh: center;
-  margin-top:200px; 
+  text-align: center;
+  margin-top: 200px;
   color: green;
 }
 .ivu-btn {
