@@ -67,7 +67,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.questionEdit(params.index)
+                    this.evaluationEdit(params.index)
                   }
                 }
               }, '编辑'),
@@ -203,6 +203,9 @@ export default {
           this.$Message.info("can't read database")
         }
       })
+    },
+    evaluationEdit (index) {
+      this.$router.push('/EvaluationEdit/' + this.uId + '/' + this.evaluationData[index].tId)
     }
   }
 }

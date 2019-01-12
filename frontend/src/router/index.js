@@ -9,6 +9,7 @@ import AddQuestion from '@/components/AddQuestion'
 import Welcome from '@/components/Welcome'
 import QuestionEdit from '@/components/QuestionEdit'
 import ReleaseSuccess from '@/components/ReleaseSuccess'
+import EvaluationEdit from '@/components/EvaluationEdit'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/ReleaseSuccess',
       name: 'ReleaseSuccess',
       component: ReleaseSuccess
+    },
+    {
+      path: '/EvaluationEdit/:uId/:tId',
+      name: 'EvaluationEdit',
+      component: EvaluationEdit
     }
   ]
 })

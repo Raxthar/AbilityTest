@@ -8,16 +8,16 @@
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
-          创建测评
-        </Button>
+        <Card>
+          <Form :model="evaluationData">
+            <p class="title-text">测评标题</p>
+            <Input placeholder="Enter title" style="width: 300px"  v-model="evaluationData.evaluationName"/><br><br>
+            <p class="title-text">测评描述</p>
+            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="evaluationData.evaluationDescribe"/><br><br>
+            <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">提交</Button>
+          </Form>
+        </Card>
       </Content>
-      <Footer>
-        <card>
-          <Table border :columns="columns" :data="evaluationData">
-          </Table>
-        </card>
-      </Footer>
     </Layout>
   </div>
 </template>
@@ -29,178 +29,49 @@ export default {
   },
   data () {
     return {
-      uId: 1,
-      columns: [
-        {
-          title: '测评号',
-          key: 'tId',
-          width: 150
-        },
-        {
-          title: '测评名',
-          key: 'tName',
-          width: 200
-        },
-        {
-          title: '测评状态',
-          key: 'tStatus',
-          width: 150
-        },
-        {
-          title: '截止日期',
-          key: 'tDue',
-          width: 200
-        },
-        {
-          title: '操作',
-          key: 'action',
-          align: 'center',
-          render: (buttonmethod, params) => {
-            return buttonmethod('div', [
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '编辑'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '发布'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '分享'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '统计'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '设置'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.deleteEvaluation(params.index)
-                  }
-                }
-              }, '删除')
-            ])
-          }
-        }
-      ],
-      evaluationData: [],
-      tId: [],
-      tName: [],
-      tDue: [],
-      tStatus: [],
-      buttonSize: 'large'
+      buttonSize: 'large',
+      uId: this.$route.params.uId,
+      tId: this.$route.params.tId,
+      evaluationData: {
+        tId: this.$route.params.tId,
+        evaluationName: '',
+        evaluationDescribe: '',
+      }
     }
   },
   methods: {
-    jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.uId)
+    jumpBack () {
+      this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
     },
     searchEvaluation () {
-      this.$axios.get('test_list', {
+      this.$axios.get('search_atest_by', {
         params: {
-          uId: this.uId
+          tId: this.tId
         }
-      }).then(message => {
-        if (message.data.code === 200) {
-          if (message.data.tName.length > 0) {
-            this.evaluationData = []
-            this.tId = message.data.tId
-            this.tName = message.data.tName
-            this.tDue = message.data.tDue
-            this.tStatus = message.data.tStatus
-            for (let i = 0; i < message.data.tName.length; i++) {
-              let tStatus = this.tStatus[i]
-              if (tStatus === 1) {
-                let obj = {
-                  tId: this.tId[i],
-                  tName: this.tName[i],
-                  tStatus: '已发布',
-                  tDue: this.tDue[i]
-                }
-                this.evaluationData.push(obj)
-              } else if (tStatus === 0) {
-                let obj = {
-                  tId: this.tId[i],
-                  tName: this.tName[i],
-                  tStatus: '未发布',
-                  tDue: this.tDue[i]
-                }
-                this.evaluationData.push(obj)
-              }
-            }
-            this.$Message.info(`Create ${this.evaluationData[0].tName} Success`)
-          }
+      }).then(response => {
+        if (response.data.code === 200) {
+          this.evaluationData.evaluationName = response.data.tName
+          this.evaluationData.evaluationDescribe = response.data.tDescribe
         } else {
           this.$Message.error(`can't search in database`)
         }
       })
     },
-    deleteEvaluation (index) {
-      this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
+    editQuestion () {
+      if (this.evaluationData.evaluationName === '') {
+        this.$Message.info('请输入测评标题')
+        return
+      }
+      if (this.evaluationData.evaluationDescribe === '') {
+        this.$Message.info('请输入测评描述')
+        return
+      }
+      this.$axios.post('/update_atest/', JSON.stringify(this.evaluationData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`delete ${this.evaluationData[index].tName} success`)
-          this.evaluationData.splice(index, 1)
+          this.$Message.success(`修改测评成功`)
+          this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.info("can't read database!")
         }
       })
     }
