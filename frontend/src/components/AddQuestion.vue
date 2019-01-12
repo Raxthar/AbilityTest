@@ -14,13 +14,13 @@
           <Content>
             <Form :model="questionData">
               <FormItem label="input">
-                  <Input v-model="questionData.q_name" placeholder="Enter Title..." />
+                  <Input v-model="questionData.qName" placeholder="Enter Title..." />
               </FormItem>
               <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-                  <Input v-model="questionData.o_name[index]" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.oName[index]" size="large" placeholder="请输入选项" />
                   <InputNumber v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
-                  <RadioGroup v-model="questionData.d_id[index]" type="button" name=index>
-                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.d_id>{{dimensions.d_name}}</Radio>
+                  <RadioGroup v-model="questionData.dId[index]" type="button" name=index>
+                    <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.dId>{{dimensions.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
@@ -40,25 +40,25 @@ export default {
   },
   data () {
     return {
-      u_id: this.$route.params.u_id,
+      uId: this.$route.params.uId,
       lists: [{
         index: {}
       }],
       dimensionsData: [],
-      dimension_id: [],
-      dimension_name: [],
+      dimensionId: [],
+      dimensionName: [],
       questionData: {
-        t_id: this.$route.params.t_id,
-        q_name: '',
-        o_name: {},
-        d_id: {},
+        tId: this.$route.params.tId,
+        qName: '',
+        oName: {},
+        dId: {},
         score: {}
       }
     }
   },
   methods: {
     jumpBack () {
-      this.$router.push('/QuestionList/' + this.u_id + '/' + this.t_id)
+      this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
     },
     addOption: function () {
       let cope = {
@@ -72,18 +72,18 @@ export default {
     searchDimension () {
       this.$axios.get('search_dimensions', {
         params: {
-          content: this.questionData.t_id
+          content: this.questionData.tId
         }
       }).then(dimension => {
         if (dimension.data.code === 200) {
-          if (dimension.data.d_id.length > 0) {
+          if (dimension.data.dId.length > 0) {
             this.dimensionsData = []
-            this.dimension_id = dimension.data.d_id
-            this.dimension_name = dimension.data.d_name
-            for (let i = 0; i < dimension.data.d_id.length; i++) {
+            this.dimensionId = dimension.data.dId
+            this.dimensionName = dimension.data.dName
+            for (let i = 0; i < dimension.data.dId.length; i++) {
               let obj = {
-                d_name: this.dimension_name[i],
-                d_id: this.dimension_id[i]
+                dName: this.dimensionName[i],
+                dId: this.dimensionId[i]
               }
               this.dimensionsData.push(obj)
             }
@@ -94,20 +94,18 @@ export default {
       })
     },
     setQuestion () {
-      if (this.questionData.q_name === '') {
+      if (this.questionData.qName === '') {
         this.$Message.error('please enter question')
         return
       }
       for (let i = 0; i < this.lists.length; i++) {
-        if (!this.questionData.d_id[i]) {
+        if (!this.questionData.dId[i]) {
           this.$Message.error('please choose a dimension for option')
           return
-        }
-        else if (!this.questionData.o_name[i]) {
+        } else if (!this.questionData.oName[i]) {
           this.$Message.error('please enter option')
           return
-        }
-        else if (!this.questionData.score[i]) {
+        } else if (!this.questionData.score[i]) {
           this.$Message.error('please enter the score for question')
           return
         }
@@ -115,7 +113,7 @@ export default {
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set questions success`)
-          this.$router.push('/QuestionList/' + this.u_id + '/' + this.questionData.t_id)
+          this.$router.push('/QuestionList/' + this.uId + '/' + this.questionData.tId)
         } else {
           this.$Message.info("can't read database")
         }
@@ -124,7 +122,6 @@ export default {
   }
 }
 </script>
-
 
 <style>
 .layout {
