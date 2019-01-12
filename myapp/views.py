@@ -268,6 +268,7 @@ def delete_question(request):
     q_id = obj['qId']
     try:
         Question.objects.filter(q_id=q_id).delete()
+        Option.objects.filter(q_id=q_id).delete()
         response = {
             "code": 200
         }
