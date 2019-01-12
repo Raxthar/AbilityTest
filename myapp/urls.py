@@ -16,4 +16,6 @@ urlpatterns = [
     url('edit_question', views.edit_question, name='edit_question'),
     url('update_question/', views.update_question, name='update_question'),
     url('delete_evaluation/', views.delete_evaluation, name='delete_evaluation'),
+    url('search_atest_by', views.search_atest_by, name='search_atest_by'),
+    url('update_atest/', views.update_atest, name='update_atest'),
 ]  

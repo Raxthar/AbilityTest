@@ -2,19 +2,20 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/HelloWorld">
+        <Button :size="buttonSize" type="primary" to="/AddEvaluationTitle">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
       </Header>
       <Content>
         <Card>
-          <Form :model="evaluationData">
-            <p class="title-text">测评标题</p>
-            <Input placeholder="Enter title" style="width: 300px"  v-model="evaluationData.evaluationName"/><br><br>
-            <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="evaluationData.evaluationDescribe"/><br><br>
-            <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">提交</Button>
+          <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button><br><br>
+          <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
+          <Form :model="dimensions">
+            <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
+              <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
+            </FormItem>
+              <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
           </Form>
         </Card>
       </Content>
@@ -30,18 +31,28 @@ export default {
   data () {
     return {
       buttonSize: 'large',
-      uId: this.$route.params.uId,
-      tId: this.$route.params.tId,
-      evaluationData: {
+      lists: [{
+        index: {}
+      }],
+      dimensionArray: {
         tId: this.$route.params.tId,
-        evaluationName: '',
-        evaluationDescribe: ''
+        uId: this.$route.params.uId,
+        dimensions: {}
       }
     }
   },
   methods: {
     jumpBack () {
       this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
+    },
+    addDimension: function () {
+      let cope = {
+        index: ''
+      }
+      this.lists.push(cope)
+    },
+    delDimension: function (index) {
+      this.lists.splice(index, 1)
     },
     searchEvaluation () {
       this.$axios.get('search_atest_by', {
