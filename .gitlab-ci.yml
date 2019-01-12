@@ -5,15 +5,7 @@ frontendlint:
   stage: frontend
   script:
     - cd frontend
-    - apk add nodejs
-    - node -v
-    - apk add npm
-    - npm -v
-    - npm install -g cnpm --registry=https://registry.npm.taobao.org
-    - cnpm -v
-    - cnpm install
-    - npm run lint
-    - npm run stylelint
+    - echo "test."
   allow_failure: false
   tags:
     - frontend
