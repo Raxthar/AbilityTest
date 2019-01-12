@@ -19,8 +19,8 @@
               <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
                   <Input v-model="questionData.newOptionData[index].oName" size="large" placeholder="请输入选项" />
                   <InputNumber v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
-                  <RadioGroup v-model="questionData.newOptionData[index].dId">
-                    <Radio v-for="(dimension, item) in dimensionsData" :key="(dimension, item)" :label=dimensionsData[item].dId>{{dimensionsData[item].dName}}</Radio>
+                  <RadioGroup v-model="questionData.newOptionData[index].dId" type="button">
+                    <Radio v-for="item in dimensionsData" :key="item" :label=item.dId>{{item.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
