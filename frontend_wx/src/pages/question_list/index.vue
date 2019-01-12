@@ -11,9 +11,9 @@ export default {
     return {
       lists: [{
         index: {}
-      }],
-  }
-},
+      }]
+    }
+  },
 
   methods: {
     createQuestion () {
@@ -25,7 +25,7 @@ export default {
       wx.navigateTo({
         url: '../index/main'
       })
-    },
+    }
   }
 }
 </script>

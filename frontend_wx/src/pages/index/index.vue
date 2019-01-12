@@ -1,6 +1,7 @@
 <template>
   <div >
     <i-button type="primary" size="small" @click="createbtn" >创建测评</i-button>
+    <i-button type="primary" size="small" @click="testtitle" >测试</i-button>
     <i-card title="龙卷风摧毁停车场" extra="额外内容" >
       <view slot="footer">测评编号</view>
     </i-card>
@@ -14,16 +15,12 @@
 </template>
 
 <script>
-// 导入 click-counter 组件
-import ClickCounter from '@/components/click-counter'
 
 export default {
-  // 声明在当前组件下使用 counter-click 组件
-  components: { ClickCounter },
-
   data () {
     return {
-      msg: 'Hello'
+      msg: 'Hello',
+      u_id: 2
     }
   },
 
@@ -31,6 +28,12 @@ export default {
     createbtn () {
       wx.navigateTo({
         url: '../create_demision/main'
+      })
+    },
+
+    testtitle () {
+      wx.navigateTo({
+        url: '../creat_test/main?uId=2'
       })
     },
 
