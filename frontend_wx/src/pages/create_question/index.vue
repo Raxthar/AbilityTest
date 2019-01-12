@@ -25,7 +25,7 @@ export default {
     return {
       lists: [{
         index: {}
-      }],
+      }]
     }
   },
   methods: {
@@ -38,11 +38,11 @@ export default {
     delOption (index) {
       this.lists.splice(index, 1)
     },
-    handleFruitChange({ detail = {} }) {
-        this.setData({
-            current: detail.value
-        });
-    },
+    handleFruitChange ({ detail = {} }) {
+      this.setData({
+        current: detail.value
+      })
+    }
   }
 }
 </script>

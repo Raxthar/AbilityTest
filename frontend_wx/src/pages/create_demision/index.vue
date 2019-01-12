@@ -18,7 +18,7 @@
 export default {
   data () {
     return {
-	  lists: [
+      lists: [
         {}
       ]
 
@@ -33,11 +33,11 @@ export default {
     },
     addDimension () {
       console.log(this.lists)
-		  let cope = {
+      let cope = {
         index: ''
       }
-      this.lists.push({})
-	  },
+      this.lists.push({cope})
+    },
     delDimension (index) {
       this.lists.splice(index, 1)
     },

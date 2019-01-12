@@ -2,10 +2,10 @@
   <div>
     <form :model="createData">
       <i-panel title="测评标题">
-      <i-input v-model="createData.t_name" type="title"  mode="wrapped"/>
+        <input  v-model="createData.t_name"  maxLength="20" class="demo-input" mode="wrapped"/>
       </i-panel>
       <i-panel title="测评内容介绍">
-        <i-input v-model="createData.t_describe" type="textarea" autosize="{minRows: 3,maxRows: 5}" mode="wrapped"/>
+        <input v-model="createData.t_describe" maxLength="20" type="textarea" autosize="{minRows: 3,maxRows: 5}" mode="wrapped"/>
       </i-panel>
       <i-panel>
         <i-button :size="buttonSize" type="primary" shape="circle" @click="handleCreate" >下一步</i-button>
@@ -15,42 +15,38 @@
 </template>
 
 <script>
-
 export default {
+  mounted (options) {
+    this.createData.u_id = this.$root.$mp.query.u_id
+  },
   data () {
     return {
-      buttonSize: 'large',
       createData: {
-        u_id: 1,
-        t_name: '',
-        t_describe: ''
+        uId: 1,
+        tName: '',
+        tDescribe: ''
       }
     }
   },
 
   methods: {
-   handleCreate () {
-      if (this.createData.t_name === '') {
-        this.$Message.info('请输入标题')
-        return
-      }
-      if (this.createData.t_describe === '') {
-        this.$Message.info('请输入描述')
-        return
-      }
-     wx.request({
-       url: 'create/', // 仅为示例，并非真实的接口地址
-       data: {
-       x: '',
-       y: ''
-     },
-     header: {
-       'content-type': 'application/json' // 默认值
-     },
-     success(res) {
-        console.log(res.data)
-       }
-     })
+    handleCreate () {
+      wx.request({
+        url: 'http://127.0.0.1:8000/create/', // 仅为示例，并非真实的接口地址
+        method: "POST",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: JSON.stringify(this.createData),
+        success (response) {
+          console.log(response.data)
+          if (response.data.code === 200) {
+            wx.navigateTo({
+              url: '../question_list/main'
+            })
+          }
+        }
+      })
     }
   }
 }
@@ -62,4 +58,20 @@ export default {
   padding: 10px;
   text-align: center;
 }
+
+.demo-input{
+    color:black;
+    padding: 7px 15px;
+    border-radius: 4px;
+    min-width: 65px;
+    flex: 1;
+    line-height: 1.6;
+    padding: 4px 0;
+    min-height: 22px;
+    font-size: 14px;
+    border: 1px solid;
+    border-color: rgb(103, 103, 241);
+    width:auto;
+ }
+    
 </style>
