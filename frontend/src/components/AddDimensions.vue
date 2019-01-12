@@ -32,8 +32,8 @@ export default {
         index: {}
       }],
       dimensionArray: {
-        t_id: this.$route.params.t_id,
-        u_id: this.$route.params.u_id,
+        tId: this.$route.params.tId,
+        uId: this.$route.params.uId,
         dimensions: {}
       }
     }
@@ -58,7 +58,7 @@ export default {
       this.$axios.post('/create_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
-          this.$router.push('/QuestionList/' + this.dimensionArray.u_id + '/' + this.dimensionArray.t_id)
+          this.$router.push('/QuestionList/' + this.dimensionArray.uId + '/' + this.dimensionArray.tId)
         } else {
           this.$Message.info("can't read database")
         }

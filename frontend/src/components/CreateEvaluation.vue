@@ -29,26 +29,26 @@ export default {
   },
   data () {
     return {
-      u_id: 1,
+      uId: 1,
       columns: [
         {
           title: '测评号',
-          key: 't_id',
+          key: 'tId',
           width: 150
         },
         {
           title: '测评名',
-          key: 't_name',
+          key: 'tName',
           width: 200
         },
         {
           title: '测评状态',
-          key: 't_status',
+          key: 'tStatus',
           width: 150
         },
         {
           title: '截止日期',
-          key: 't_due',
+          key: 'tDue',
           width: 200
         },
         {
@@ -144,54 +144,54 @@ export default {
         }
       ],
       evaluationData: [],
-      t_id: [],
-      t_name: [],
-      t_due: [],
-      t_status: [],
+      tId: [],
+      tName: [],
+      tDue: [],
+      tStatus: [],
       buttonSize: 'large'
     }
   },
   methods: {
     jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.u_id)
+      this.$router.push('/AddEvaluationTitle/' + this.uId)
     },
     jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.u_id)
+      this.$router.push('/AddEvaluationTitle/' + this.uId)
     },
     searchEvaluation () {
       this.$axios.get('test_list', {
         params: {
-          u_id: this.u_id
+          uId: this.uId
         }
-      }).then(test_message => {
-        if (test_message.data.code === 200) {
-          if (test_message.data.t_name.length > 0) {
+      }).then(message => {
+        if (message.data.code === 200) {
+          if (message.data.tName.length > 0) {
             this.evaluationData = []
-            this.t_id = test_message.data.t_id
-            this.t_name = test_message.data.t_name
-            this.t_due = test_message.data.t_due
-            this.t_status = test_message.data.t_status
-            for (let i = 0; i < test_message.data.t_name.length; i++) {
-              let t_status = this.t_status[i]
-              if (t_status === 1){
+            this.tId = message.data.tId
+            this.tName = message.data.tName
+            this.tDue = message.data.tDue
+            this.tStatus = message.data.tStatus
+            for (let i = 0; i < message.data.tName.length; i++) {
+              let tStatus = this.tStatus[i]
+              if (tStatus === 1){
                 let obj = {
-                  t_id: this.t_id[i],
-                  t_name: this.t_name[i],
-                  t_status: '已发布',
-                  t_due: this.t_due[i]
+                  tId: this.tId[i],
+                  tName: this.tName[i],
+                  tStatus: '已发布',
+                  tDue: this.tDue[i]
                 }
                 this.evaluationData.push(obj)
-              } else if (t_status === 0) {
+              } else if (tStatus === 0) {
                 let obj = {
-                  t_id: this.t_id[i],
-                  t_name: this.t_name[i],
-                  t_status: '未发布',
-                  t_due: this.t_due[i]
+                  tId: this.tId[i],
+                  tName: this.tName[i],
+                  tStatus: '未发布',
+                  tDue: this.tDue[i]
                 }
                 this.evaluationData.push(obj)
               }
             }
-            this.$Message.info(`Create ${this.evaluationData[0].t_name} Success`)
+            this.$Message.info(`Create ${this.evaluationData[0].tName} Success`)
           }
         } else {
           this.$Message.error(`can't search in database`)
@@ -201,7 +201,7 @@ export default {
     deleteEvaluation (index) {
       this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`delete ${this.evaluationData[index].t_name} success`)
+          this.$Message.success(`delete ${this.evaluationData[index].tName} success`)
           this.evaluationData.splice(index, 1)
         } else {
           this.$Message.info("can't read database")

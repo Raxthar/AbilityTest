@@ -27,18 +27,18 @@ export default {
   },
   data () {
     return {
-      u_id: this.$route.params.u_id,
-      t_id: this.$route.params.t_id,
-      question_id: [],
-      question_name: [],
+      uId: this.$route.params.uId,
+      tId: this.$route.params.tId,
+      questionId: [],
+      questionName: [],
       columns: [
         {
           title: '题号',
-          key: 'q_id'
+          key: 'qId'
         },
         {
           title: '题目',
-          key: 'q_name'
+          key: 'qName'
         },
         {
           title: 'Action',
@@ -82,23 +82,23 @@ export default {
   },
   methods: {
     jumpToAddQuestion () {
-      this.$router.push('/AddQuestion/' + this.u_id + '/' + this.t_id)
+      this.$router.push('/AddQuestion/' + this.uId + '/' + this.tId)
     },
     searchQuestion () {
       this.$axios.get('search_all_questions', {
         params: {
-          t_id: this.t_id
+          tId: this.tId
         }
       }).then(response => {
         if (response.data.code === 200) {
-          if (response.data.question_id.length > 0) {
+          if (response.data.questionId.length > 0) {
             this.questionData = []
-            this.question_id = response.data.question_id
-            this.question_name = response.data.question_name
-            for (let i = 0; i < response.data.question_id.length; i++) {
+            this.questionId = response.data.questionId
+            this.questionName = response.data.questionName
+            for (let i = 0; i < response.data.questionId.length; i++) {
               let obj = {
-                q_id: this.question_id[i],
-                q_name: this.question_name[i]
+                qId: this.questionId[i],
+                qName: this.questionName[i]
               }
               this.questionData.push(obj)
             }
@@ -109,13 +109,13 @@ export default {
       })
     },
     questionEdit (index) {
-      let q_id = this.questionData[index].q_id
-      this.$router.push('/QuestionEdit/' + this.u_id + '/' + this.t_id + '/' + q_id)
+      let qId = this.questionData[index].qId
+      this.$router.push('/QuestionEdit/' + this.uId + '/' + this.tId + '/' + qId)
     },
     deleteQuestion (index) {
       this.$axios.post('/delete_question/', JSON.stringify(this.questionData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`delete ${this.questionData[index].q_name} success`)
+          this.$Message.success(`delete ${this.questionData[index].qName} success`)
           this.questionData.splice(index, 1)
         } else {
           this.$Message.info("can't read database")
