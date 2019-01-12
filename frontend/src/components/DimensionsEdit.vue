@@ -15,7 +15,7 @@
             <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
               <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
             </FormItem>
-              <Button type="primary" class="submit-button" @click="updateDimensions">提交</Button>
+              <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
           </Form>
         </Card>
       </Content>
@@ -25,6 +25,9 @@
 
 <script>
 export default {
+  mounted () {
+    this.searchEvaluation()
+  },
   data () {
     return {
       buttonSize: 'large',
@@ -39,6 +42,9 @@ export default {
     }
   },
   methods: {
+    jumpBack () {
+      this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
+    },
     addDimension: function () {
       let cope = {
         index: ''
@@ -48,19 +54,35 @@ export default {
     delDimension: function (index) {
       this.lists.splice(index, 1)
     },
-    updateDimensions: function () {
-      for (let i = 0; i < this.lists.length; i++) {
-        if (!this.dimensionArray.dimensions[i]) {
-          this.$Message.info('please input evaluation dimensions')
-          return
+    searchEvaluation () {
+      this.$axios.get('search_atest_by', {
+        params: {
+          tId: this.tId
         }
-      }
-      this.$axios.post('/update_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
+      }).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`set dimensions success`)
-          this.$router.push('/QuestionList/' + this.dimensionArray.uId + '/' + this.dimensionArray.tId)
+          this.evaluationData.evaluationName = response.data.tName
+          this.evaluationData.evaluationDescribe = response.data.tDescribe
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error(`can't search in database`)
+        }
+      })
+    },
+    editQuestion () {
+      if (this.evaluationData.evaluationName === '') {
+        this.$Message.info('请输入测评标题')
+        return
+      }
+      if (this.evaluationData.evaluationDescribe === '') {
+        this.$Message.info('请输入测评描述')
+        return
+      }
+      this.$axios.post('/update_atest/', JSON.stringify(this.evaluationData)).then(response => {
+        if (response.data.code === 200) {
+          this.$Message.success(`修改测评成功`)
+          this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
+        } else {
+          this.$Message.info("can't read database!")
         }
       })
     }
@@ -74,11 +96,13 @@ export default {
 }
 
 .ivu-layout-header {
-  background-color: rgb(97, 176, 255)
+  background-color: rgb(97, 176, 255);
+  padding: 0 20px;
 }
 
 .ivu-layout-content {
-  height: 100vmin;
+  height: 80px;
+  padding: 20px;
 }
 
 .ivu-btn-primary {
@@ -88,10 +112,6 @@ export default {
 
 .ivu-btn-large {
   font-size: 18px;
-}
-
-.ivu-layout-header {
-  padding: 0 20px;
 }
 
 .ivu-card {
@@ -105,24 +125,8 @@ export default {
   padding: 100px;
 }
 
-.title-text {
-  font-family: "Helvetica Neue";
-  font-size: 20px;
-}
-
-.ivu-input-wrapper {
-    width: 100px;
-}
-
 .ivu-card-bordered {
   border: 1px solid #f9f9fa;
   border-color: #fafafa;
-}
-
-.submit-button {
-  background-color: rgb(97, 176, 255);
-  border-color: rgb(97, 176, 255);
-  font-size: 18px;
-  width: 10%;
 }
 </style>

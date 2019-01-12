@@ -124,7 +124,8 @@ def add_question(request):
         question.save()
         question_info = Question.objects.get(q_name=question_name, t_id=test_id)
         for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
-            option = Option(o_name=option_name[o_name], q_id=question_info.q_id, score=option_score[score],d_id=option_dimension[d_id])
+            option = Option(
+                o_name=option_name[o_name], q_id=question_info.q_id, score=option_score[score],d_id=option_dimension[d_id])
             option.save()
         response = {
                 "code": 200
@@ -292,5 +293,38 @@ def delete_evaluation(request):
         response = {
             "code": 0,
             "errMsg": e
+        }
+    return JsonResponse(response)
+
+
+def search_atest_by(request):
+    t_id = request.GET['tId']
+    try:
+        atest_old = ATest.objects.get(t_id=t_id)
+        response = {
+            "tName": atest_old.t_name
+            "tDescribe": atest_old.t_describe
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
+
+
+def update_question(request):
+    obj = json.loads(request.body)
+    t_id = obj["tId"]
+    t_name = obj["evaluationName"]
+    t_describe = obj['evaluationDescribe']
+    try:
+        Books.objects.filter(t_id=t_id).update(t_name=t_name, t_describe=t_describe)
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0
         }
     return JsonResponse(response)
