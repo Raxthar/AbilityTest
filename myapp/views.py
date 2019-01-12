@@ -284,3 +284,19 @@ def delete_question(request):
             "errMsg": e
         }
     return JsonResponse(response)
+
+
+def delete_evaluation(request):
+    obj = json.loads(request.body)
+    t_id = obj['t_id']
+    try:
+        ATest.objects.filter(t_id=t_id).delete()
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)

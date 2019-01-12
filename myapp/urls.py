@@ -15,4 +15,5 @@ urlpatterns = [
     url('delete_question/', views.delete_question, name='delete_question'),
     url('edit_question', views.edit_question, name='edit_question'),
     url('update_question/', views.update_question, name='update_question'),
+    url('delete_evaluation/', views.delete_evaluation, name='delete_evaluation'),
 ]  
