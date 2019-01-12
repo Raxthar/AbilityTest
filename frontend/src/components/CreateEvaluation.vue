@@ -7,7 +7,7 @@
           返回
         </Button>
       </Header>
-      <Content>            
+      <Content>
         <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
           创建测评
         </Button>
@@ -54,7 +54,6 @@ export default {
         {
           title: '操作',
           key: 'action',
-          //width: 150,
           align: 'center',
           render: (buttonmethod, params) => {
             return buttonmethod('div', [
@@ -155,9 +154,6 @@ export default {
     jumpToAddTitle () {
       this.$router.push('/AddEvaluationTitle/' + this.uId)
     },
-    jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.uId)
-    },
     searchEvaluation () {
       this.$axios.get('test_list', {
         params: {
@@ -173,7 +169,7 @@ export default {
             this.tStatus = message.data.tStatus
             for (let i = 0; i < message.data.tName.length; i++) {
               let tStatus = this.tStatus[i]
-              if (tStatus === 1){
+              if (tStatus === 1) {
                 let obj = {
                   tId: this.tId[i],
                   tName: this.tName[i],

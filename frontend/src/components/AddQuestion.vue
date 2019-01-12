@@ -102,12 +102,10 @@ export default {
         if (!this.questionData.dId[i]) {
           this.$Message.error('please choose a dimension for option')
           return
-        }
-        else if (!this.questionData.oName[i]) {
+        } else if (!this.questionData.oName[i]) {
           this.$Message.error('please enter option')
           return
-        }
-        else if (!this.questionData.score[i]) {
+        } else if (!this.questionData.score[i]) {
           this.$Message.error('please enter the score for question')
           return
         }
@@ -124,7 +122,6 @@ export default {
   }
 }
 </script>
-
 
 <style>
 .layout {

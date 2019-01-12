@@ -1,5 +1,5 @@
-<template>  
-    <div class="start">       
+<template>
+    <div class="start">
       <p>发布成功！</p>
       <div class="content">
       <Button :size='buttonSize' shape='circle' type="success" to="/">
@@ -9,14 +9,14 @@
         返回测评列表
       </Button>
       </div>
-    </div>  
+    </div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      buttonSize: 'large'      
+      buttonSize: 'large'
     }
   }
 }
@@ -31,7 +31,7 @@ export default {
 p{
   font-size: 50px;
   text-align: center;
-  margin-top:50px; 
+  margin-top:50px;
   color: red;
 }
 .ivu-btn {
