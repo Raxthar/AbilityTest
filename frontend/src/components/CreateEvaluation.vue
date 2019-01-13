@@ -123,7 +123,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.questionStat(params.index)
+                    this.editJudge(params.index)
                   }
                 }
               }, '设置'),
@@ -209,6 +209,9 @@ export default {
     },
     questionStat (index) {
       this.$router.push('/EvaluationStat/' + this.evaluationData[index].tId)
+    },
+    editJudge (index) {
+      this.$router.push('/AddJudge/' + this.evaluationData[index].tId)
     }
   }
 }
