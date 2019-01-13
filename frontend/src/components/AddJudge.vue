@@ -35,7 +35,8 @@ export default {
         dimensionId: [],
         dimensionName: [],
         judge: [],
-        due: ''
+        due: '',
+        tId: this.$route.params.tId,
       }
     }
   },
@@ -73,7 +74,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .layout {
   height: 100vmin;
 }
