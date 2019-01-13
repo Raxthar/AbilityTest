@@ -15,6 +15,7 @@
       <Footer>
         <card>
           <div id="statChart" class="chartSize"></div>
+          <Table border :columns="columns" :data="option.series.statData"></Table>
         </card>
       </Footer>
     </Layout>
@@ -33,6 +34,18 @@ export default {
       tId: this.$route.params.tId,
       pNumber: [],
       dName: [],
+      columns: [
+        {
+          title: '维度',
+          key: 'name',
+          width: 150
+        },
+        {
+          title: '人数',
+          key: 'value',
+          width: 200
+        }
+      ],
       option: {
         backgroundColor: '#2c343c',
         title: {
