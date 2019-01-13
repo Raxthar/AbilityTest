@@ -2,10 +2,10 @@
   <div>
     <form :model="createData">
       <i-panel title="测评标题">
-        <input  v-model="createData.t_name"  maxLength="20" class="demo-input" mode="wrapped"/>
+        <input v-model="createData.tName"  maxLength="20" class="demo-input" mode="wrapped"/>
       </i-panel>
       <i-panel title="测评内容介绍">
-        <input v-model="createData.t_describe" maxLength="20" type="textarea" autosize="{minRows: 3,maxRows: 5}" mode="wrapped"/>
+        <input v-model="createData.tDescribe" type="textarea" class="demo-input" mode="wrapped"/>
       </i-panel>
       <i-panel>
         <i-button :size="buttonSize" type="primary" shape="circle" @click="handleCreate" >下一步</i-button>
@@ -17,7 +17,7 @@
 <script>
 export default {
   mounted (options) {
-    this.createData.u_id = this.$root.$mp.query.u_id
+    this.createData.uId = this.$root.$mp.query.uId
   },
   data () {
     return {
