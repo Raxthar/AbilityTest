@@ -14,7 +14,7 @@ from .models import Dimension
 # 创建维度
 def create_dimension(request):
     print('create_dimension')
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     d_names_arr = obj['dimensions']
     t_id = obj['tId']
     u_id = obj['uId']
@@ -55,7 +55,7 @@ def search_all_questions(request):
 
 
 def search_all_atest(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     u_id = obj['uId']
     try:
         atest_list = []
@@ -73,7 +73,7 @@ def search_all_atest(request):
 
 
 def create_judge(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     t_id = obj['tId']
     content = obj['content']
     print(content)
@@ -96,7 +96,7 @@ def create_judge(request):
 
 
 def create(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     test_name = obj['tName']
     test_describe = obj['tDescribe']
     u_id = obj['uId']
@@ -113,7 +113,7 @@ def create(request):
 
 
 def add_question(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     question_name = obj['qName']
     test_id = obj['tId']
     option_name = obj['oName']
@@ -187,7 +187,7 @@ def edit_question(request):
 
 
 def update_question(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     question_id = obj["qId"]
     new_q_name = obj["newQuestionName"]
     new_option_data = obj['newOptionData']
@@ -235,7 +235,7 @@ def test_list(request):
 
 
 def set_dimension_page(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     test_id = obj['tId']
     dimension = {}
     dimension_id = []
@@ -250,7 +250,7 @@ def set_dimension_page(request):
 
 
 def set_deadline(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     test_id = obj['tId']
     test_due = obj['tDue']
     test_message = {}
@@ -265,7 +265,7 @@ def set_deadline(request):
 
 
 def delete_question(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     q_id = obj['qId']
     try:
         Question.objects.filter(q_id=q_id).delete()
@@ -282,7 +282,7 @@ def delete_question(request):
 
 
 def delete_evaluation(request):
-    obj = json.loads(request.body)
+    obj = json.loads(request.body.decode('utf-8'))
     t_id = obj['tId']
     try:
         ATest.objects.filter(t_id=t_id).delete()
@@ -302,7 +302,7 @@ def search_atest_by(request):
     try:
         atest_old = ATest.objects.get(t_id=t_id)
         response = {
-            "tName": atest_old.t_name
+            "tName": atest_old.t_name,
             "tDescribe": atest_old.t_describe
         }
     except Exception as e:
@@ -313,8 +313,8 @@ def search_atest_by(request):
     return JsonResponse(response)
 
 
-def update_question(request):
-    obj = json.loads(request.body)
+def update_atest(request):
+    obj = json.loads(request.body.decode('utf-8'))
     t_id = obj["tId"]
     t_name = obj["evaluationName"]
     t_describe = obj['evaluationDescribe']
