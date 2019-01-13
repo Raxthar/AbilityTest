@@ -12,6 +12,7 @@ import ReleaseSuccess from '@/components/ReleaseSuccess'
 import EvaluationEdit from '@/components/EvaluationEdit'
 import DimensionsEdit from '@/components/DimensionsEdit'
 import EvaluationStat from '@/components/EvaluationStat'
+import AddJudge from '@/components/AddJudge'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/EvaluationStat/:tId',
       name: 'EvaluationStat',
       component: EvaluationStat
+    },
+    {
+      path: '/AddJudge/:tId',
+      name: 'AddJudge',
+      component: AddJudge
     }
   ]
 })

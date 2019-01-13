@@ -1,0 +1,133 @@
+<template>
+  <div class="layout">
+    <Layout>
+      <Header>
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
+          <Icon type="ios-arrow-back" />
+          返回
+        </Button>
+      </Header>
+      <Content>
+        <Card>
+          <Form :model="dimensions">
+            <FormItem v-for="(list, index) in judges.dimensionName" :key="(list, index)">
+              <p>{{judges.dimensionName[index]}}</p>
+              <Input v-model="judges.judge[index]" size="large" placeholder="请输入评价" />
+            </FormItem>
+            <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="judges.due"></DatePicker>
+              <Button type="primary" class="submit-button" @click="editJudge">提交</Button>
+          </Form>
+        </Card>
+      </Content>
+    </Layout>
+  </div>
+</template>
+
+<script>
+export default {
+  mounted () {
+    this.searchDimension()
+  },
+  data () {
+    return {
+      tId: this.$route.params.tId,
+      judges: {
+        dimensionId: [],
+        dimensionName: [],
+        judge: [],
+        due: ''
+      }
+    }
+  },
+  methods: {
+    jumpBack () {
+      this.$router.push('/CreateEvaluation/')
+    },
+    searchDimension () {
+      this.$axios.get('search_dimensions', {
+        params: {
+          content: this.tId
+        }
+      }).then(dimension => {
+        if (dimension.data.code === 200) {
+          if (dimension.data.dId.length > 0) {
+            this.judges.dimensionId = dimension.data.dId
+            this.judges.dimensionName = dimension.data.dName
+          }
+        } else {
+          this.$Message.error(`can't search in database`)
+        }
+      })
+    },
+    editJudge () {
+      this.$axios.post('/edit_judge/', JSON.stringify(this.judges)).then(response => {
+        if (response.data.code === 200) {
+          this.$Message.success(`edit judge success`)
+          this.$router.push('/CreateEvaluation/')
+        } else {
+          this.$Message.info("can't read database")
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style>
+.layout {
+  height: 100vmin;
+}
+
+.ivu-layout-header {
+  background-color: rgb(97, 176, 255)
+}
+
+.ivu-layout-content {
+  height: 100vmin;
+}
+
+.ivu-btn-primary {
+  background-color: rgb(97, 176, 255);
+  border-color: rgb(97, 176, 255);
+}
+
+.ivu-btn-large {
+  font-size: 18px;
+}
+
+.ivu-layout-header {
+  padding: 0 20px;
+}
+
+.ivu-card {
+  height: 100vmin;
+  margin: auto auto;
+  text-align: center;
+}
+
+.ivu-card-body {
+  height: 500px;
+  padding: 100px;
+}
+
+.title-text {
+  font-family: "Helvetica Neue";
+  font-size: 20px;
+}
+
+.ivu-input-wrapper {
+    width: 100px;
+}
+
+.ivu-card-bordered {
+  border: 1px solid #f9f9fa;
+  border-color: #fafafa;
+}
+
+.submit-button {
+  background-color: rgb(97, 176, 255);
+  border-color: rgb(97, 176, 255);
+  font-size: 18px;
+  width: 10%;
+}
+</style>
