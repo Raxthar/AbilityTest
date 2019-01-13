@@ -4,8 +4,10 @@ import router from './router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import axios from 'axios'
+import echarts from 'echarts'
 
 Vue.prototype.$axios = axios
+Vue.prototype.$echarts = echarts
 Vue.use(iView)
 Vue.config.productionTip = false
 
