@@ -1,8 +1,8 @@
 <template>
   <div>
-     <i-button :size="buttonSize" type="primary" @click="jumpToAddQuestion">
+    <i-button :size="buttonSize" type="primary" @click="jumpToAddQuestion">
        创建题目
-     </i-button>
+    </i-button>
     <i-card v-for="(questiondata,index) in questionData" v-bind:key="index" :title="questiondata.qName">
       <view slot="footer"><i-button  @click="deleteQuestion(index)">删除</i-button></view>
     </i-card>
