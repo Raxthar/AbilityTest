@@ -2,10 +2,10 @@
   <div >
     <i-massage id="message" />
     <i-button type="primary" size="small" @click="testtitle" >创建测评</i-button>
-    <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen">
+    <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen(index)">
       <view slot="footer">{{evaluation.tStatus}}</view>
     </i-card>
-    <i-action-sheet :visible="this.visible" :actions="this.action" show-cancel bind:cancel="handleCancel" @click="handleClickItem"
+    <i-action-sheet :visible="visible" :actions="actions" show-cancel @cancel="handleCancel" @iclick="handleClickItem"
     :mask-closable="false" />
   </div>
 </template>
@@ -19,14 +19,11 @@ export default {
 
   data () {
     return {
+      currentIndex: -1,
       visible: false,
       actions: [
         {
           name: '查看详细信息'
-        },
-        {
-          name: '删除测评',
-          color: '#ed3f14'
         },
         {
           name: '修改测评'
@@ -35,7 +32,11 @@ export default {
           name: '去分享',
           icon: 'share',
           openType: 'share'
-        }
+        },
+        {
+          name: '删除测评',
+          color: '#ed3f14'
+        },
       ],
       msg: 'Hello',
       uId: 2,
@@ -57,6 +58,7 @@ export default {
             if(response.data.tName.length > 0) {
               for(let i = 0; i < response.data.tName.length; i++) {
                 let obj = {
+                  tId: response.data.tId[i],
                   tName: response.data.tName[i],
                   tStatus: response.data.tStatus[i] ? '已发布':'未发布'
                 }
@@ -74,9 +76,45 @@ export default {
       this.evaluationLists = lists
     },
 
-    handleOpen() {
-
+    handleOpen (index) {
+      console.log(index)
+      this.visible = true
+      this.currentIndex = index
     },
+
+    handleCancel () {
+      this.visible = false
+    },
+
+    handleClickItem ({ mp }) {
+      console.log(mp.detail.index)
+      switch(mp.detail.index) {
+        case 0:
+          break
+        case 1:
+          break
+        case 3:
+          console.log(this.currentIndex)
+          wx.request ({
+            url: 'http://127.0.0.1:8000/delete_evaluation/',
+            method: 'POST',
+            header: {
+              "content-type": "application/x-www-form-urlencoded"
+            },
+            data: JSON.stringify(this.evaluationLists[this.currentIndex]),
+            success(response) {
+              console.log(response.data)
+              if(response.data.code === 200) {
+                console.log("success")
+              } else {
+                console.log("delete failed")
+              }
+            }
+          })
+          break
+      }
+    },
+
     createbtn () {
       wx.navigateTo({
         url: '../create_demision/main'
@@ -85,7 +123,7 @@ export default {
 
     testtitle () {
       wx.navigateTo({
-        url: '../creat_test/main?uId=2'
+        url: '../creat_test/main?uId=' + this.uId
       })
     },
 
