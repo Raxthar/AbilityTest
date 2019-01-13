@@ -11,6 +11,7 @@ import QuestionEdit from '@/components/QuestionEdit'
 import ReleaseSuccess from '@/components/ReleaseSuccess'
 import EvaluationEdit from '@/components/EvaluationEdit'
 import DimensionsEdit from '@/components/DimensionsEdit'
+import EvaluationStat from '@/components/EvaluationStat'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/DimensionsEdit/:uId/:tId',
       name: 'DimensionsEdit',
       component: DimensionsEdit
+    },
+    {
+      path: '/EvaluationStat/:tId',
+      name: 'EvaluationStat',
+      component: EvaluationStat
     }
   ]
 })
