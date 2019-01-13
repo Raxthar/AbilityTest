@@ -14,6 +14,7 @@
       </Content>
       <Footer>
         <card>
+          <div id="statChart" class="chartSize"></div>
         </card>
       </Footer>
     </Layout>
@@ -24,13 +25,74 @@
 export default {
   mounted () {
     this.searchStat()
+    let myChart = echarts.init(document.getElementById('statChart'))
+    myChart.setOption(this.option)
   },
   data () {
     return {
       tId: this.$route.params.tId,
       pNumber: [],
       dName: [],
-      statData: []
+      option: {
+        backgroundColor: '#2c343c',
+        title: {
+          text: 'Customized Pie',
+          left: 'center',
+          top: 20,
+          textStyle: {
+          color: '#ccc'
+          }
+        },
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        visualMap: {
+          show: false,
+          min: 80,
+          max: 600,
+          inRange: {
+            colorLightness: [0, 1]
+          }
+        },
+        series: [{
+          name:'统计结果',
+          type:'pie',
+          radius : '55%',
+          center: ['50%', '50%'],
+          statData: [].sort(function (a, b) { return a.value - b.value; }),
+          roseType: 'radius',
+          label: {
+            normal: {
+              textStyle: {
+              color: 'rgba(255, 255, 255, 0.3)'
+              }
+            }
+          },
+          labelLine: {
+            normal: {
+              lineStyle: {
+                color: 'rgba(255, 255, 255, 0.3)'
+              },
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: '#c23531',
+              shadowBlur: 200,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          },
+          animationType: 'scale',
+          animationEasing: 'elasticOut',
+          animationDelay: function (idx) {
+           return Math.random() * 200;
+          }
+        }]
+      }
     }
   },
   methods: {
@@ -46,10 +108,10 @@ export default {
             this.dName = message.data.dName
             for (let i = 0; i < dName.length; i++) {
               let obj = {
-                number: pNumber[i],
+                value: pNumber[i],
                 name: dName[i]
               }
-              this.statData.push(obj)
+              this.option.series.statData.push(obj)
             }
           }
         } else {
@@ -100,5 +162,10 @@ export default {
 .ivu-card-bordered {
   border: 1px solid #f9f9fa;
   border-color: #fafafa;
+}
+
+.chartSize {
+    width: 200px;
+    height: 200px;
 }
 </style>
