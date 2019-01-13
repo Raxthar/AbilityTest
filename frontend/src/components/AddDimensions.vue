@@ -55,7 +55,7 @@ export default {
           return
         }
       }
-      this.$axios.post('/update_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
+      this.$axios.post('/create_dimension/', JSON.stringify(this.dimensionArray)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`set dimensions success`)
           this.$router.push('/QuestionList/' + this.dimensionArray.uId + '/' + this.dimensionArray.tId)
