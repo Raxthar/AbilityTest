@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/HelloWorld">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     jumpBack () {
-      this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
+      this.$router.push('/CreateEvaluation/')
     },
     searchEvaluation () {
       this.$axios.get('search_atest_by', {
