@@ -14,7 +14,7 @@
             <Input placeholder="Enter title" style="width: 300px"  v-model="evaluationData.evaluationName"/><br><br>
             <p class="title-text">测评描述</p>
             <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="evaluationData.evaluationDescribe"/><br><br>
-            <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">提交</Button>
+            <Button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</Button>
           </Form>
         </Card>
       </Content>
@@ -57,7 +57,7 @@ export default {
         }
       })
     },
-    editQuestion () {
+    editEvaluation () {
       if (this.evaluationData.evaluationName === '') {
         this.$Message.info('请输入测评标题')
         return
@@ -69,7 +69,7 @@ export default {
       this.$axios.post('/update_atest/', JSON.stringify(this.evaluationData)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`修改测评成功`)
-          this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
+          this.$router.push('/DimensionsEdit/' + this.uId + '/' + this.tId)
         } else {
           this.$Message.info("can't read database!")
         }

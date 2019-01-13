@@ -303,7 +303,8 @@ def search_atest_by(request):
         atest_old = ATest.objects.get(t_id=t_id)
         response = {
             "tName": atest_old.t_name,
-            "tDescribe": atest_old.t_describe
+            "tDescribe": atest_old.t_describe,
+            "code": 200
         }
     except Exception as e:
         response = {
@@ -319,7 +320,26 @@ def update_atest(request):
     t_name = obj["evaluationName"]
     t_describe = obj['evaluationDescribe']
     try:
-        Books.objects.filter(t_id=t_id).update(t_name=t_name, t_describe=t_describe)
+        ATest.objects.filter(t_id=t_id).update(t_name=t_name, t_describe=t_describe)
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0
+        }
+    return JsonResponse(response)
+
+
+def update_dimension(request):
+    obj = json.loads(request.body.decode('utf-8'))
+    t_id = obj["tId"]
+    d_name = obj['dimensionName']
+    try:
+        dimension_list = Dimension.objects.filter(t_id=t_id)
+        for i in range(len(dimension_list)):
+            dimension_list[i].d_name = d_name[i]
+            dimension_list[i].save()
         response = {
             "code": 200
         }

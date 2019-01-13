@@ -12,10 +12,10 @@
           <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button><br><br>
           <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
           <Form :model="dimensions">
-            <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
-              <Input v-model="dimensionArray.dimensions[index]" size="large" placeholder="请输入维度" />
+            <FormItem v-for="(list, index) in dimensions.dimensionName" :key="(list, index)">
+              <Input v-model="dimensions.dimensionName[index]" size="large" placeholder="请输入维度" />
             </FormItem>
-              <Button type="primary" class="submit-button" @click="setDimensions">提交</Button>
+              <Button type="primary" class="submit-button" @click="editDimension">提交</Button>
           </Form>
         </Card>
       </Content>
@@ -26,18 +26,16 @@
 <script>
 export default {
   mounted () {
-    this.searchEvaluation()
+    this.searchDimensions()
   },
   data () {
     return {
       buttonSize: 'large',
-      lists: [{
-        index: {}
-      }],
-      dimensionArray: {
+      tId: this.$route.params.tId,
+      dimensions: {
+        dimensionId: [],
+        dimensionName: [],
         tId: this.$route.params.tId,
-        uId: this.$route.params.uId,
-        dimensions: {}
       }
     }
   },
@@ -54,30 +52,24 @@ export default {
     delDimension: function (index) {
       this.lists.splice(index, 1)
     },
-    searchEvaluation () {
-      this.$axios.get('search_atest_by', {
+    searchDimensions () {
+      this.$axios.get('search_dimensions', {
         params: {
-          tId: this.tId
+          content: this.tId
         }
       }).then(response => {
         if (response.data.code === 200) {
-          this.evaluationData.evaluationName = response.data.tName
-          this.evaluationData.evaluationDescribe = response.data.tDescribe
+          if (response.data.dId.length > 0) {
+            this.dimensions.dimensionId = response.data.dId
+            this.dimensions.dimensionName = response.data.dName
+          }
         } else {
           this.$Message.error(`can't search in database`)
         }
       })
     },
-    editQuestion () {
-      if (this.evaluationData.evaluationName === '') {
-        this.$Message.info('请输入测评标题')
-        return
-      }
-      if (this.evaluationData.evaluationDescribe === '') {
-        this.$Message.info('请输入测评描述')
-        return
-      }
-      this.$axios.post('/update_atest/', JSON.stringify(this.evaluationData)).then(response => {
+    editDimension () {
+      this.$axios.post('/update_dimension/', JSON.stringify(this.dimensions)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`修改测评成功`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)

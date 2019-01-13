@@ -18,4 +18,5 @@ urlpatterns = [
     url('delete_evaluation/', views.delete_evaluation, name='delete_evaluation'),
     url('search_atest_by', views.search_atest_by, name='search_atest_by'),
     url('update_atest/', views.update_atest, name='update_atest'),
+    url('update_dimension/', views.update_dimension, name='update_dimension'),
 ]  
