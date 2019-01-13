@@ -12,7 +12,7 @@
       <Footer>
         <card>
           <div id="statChart" class="chartSize"></div>
-          <Table border :columns="columns" :data="option.series.statData"></Table>
+          <Table border :columns="columns" :data="tableData"></Table>
         </card>
       </Footer>
     </Layout>
@@ -23,14 +23,13 @@
 export default {
   mounted () {
     this.searchStat()
-    let myChart = this.$echarts.init(document.getElementById('statChart'))
-    myChart.setOption(this.option)
   },
   data () {
     return {
       tId: this.$route.params.tId,
       pNumber: [],
       dName: [],
+      tableData: [],
       columns: [
         {
           title: '维度',
@@ -42,67 +41,7 @@ export default {
           key: 'value',
           width: 200
         }
-      ],
-      option: {
-        backgroundColor: '#2c343c',
-        title: {
-          text: 'Customized Pie',
-          left: 'center',
-          top: 20,
-          textStyle: {
-            color: '#ccc'
-          }
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-            colorLightness: [0, 1]
-          }
-        },
-        series: [{
-          name: '维度',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '50%'],
-          statData: [].sort(function (a, b) { return a.value - b.value }),
-          roseType: 'radius',
-          label: {
-            normal: {
-              textStyle: {
-                color: 'rgba(255, 255, 255, 0.3)'
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              lineStyle: {
-                color: 'rgba(255, 255, 255, 0.3)'
-              },
-              smooth: 0.2,
-              length: 10,
-              length2: 20
-            }
-          },
-          itemStyle: {
-            normal: {
-              color: '#c23531',
-              shadowBlur: 200,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          },
-          animationType: 'scale',
-          animationEasing: 'elasticOut',
-          animationDelay: function (idx) {
-            return Math.random() * 200
-          }
-        }]
-      }
+      ]
     }
   },
   methods: {
@@ -110,33 +49,69 @@ export default {
       this.$router.push('/CreateEvaluation/')
     },
     searchStat () {
+      let statData = []
       this.$axios.get('search_stat', {
         params: {
           tId: this.tId
         }
-      }).then(message => {
-        if (message.data.code === 200) {
-          if (message.data.pNumber.length > 0) {
-            this.pNumber = message.data.pNumber
-            this.dName = message.data.dName
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.stat.length > 0) {
+            this.pNumber = response.data.stat
+            this.dName = response.data.dName
             for (let i = 0; i < this.dName.length; i++) {
               let obj = {
                 value: this.pNumber[i],
                 name: this.dName[i]
               }
-              this.option.series.statData.push(obj)
+              statData.push(obj)
+              console.log(obj)
             }
+            this.tableData = statData
           }
         } else {
           this.$Message.error(`can't search in database`)
         }
+        let myChart = this.$echarts.init(document.getElementById('statChart'))
+        console.log(statData)
+        myChart.setOption({
+          title: {
+            text: '测评统计结果',
+            x: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: this.dName
+          },
+          series: [
+            {
+              name: '总数',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: statData,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        })
       })
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .layout {
   height: 100vmin;
 }

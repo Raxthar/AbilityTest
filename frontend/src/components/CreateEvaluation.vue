@@ -2,13 +2,13 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/HelloWorld">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpToAdd">
           创建测评
         </Button>
       </Content>
@@ -151,6 +151,9 @@ export default {
     }
   },
   methods: {
+    jumpToAdd () {
+      this.$router.push('/AddEvaluationTitle/' + this.uId)
+    },
     jumpBack () {
       this.$router.push('/Welcome/')
     },
