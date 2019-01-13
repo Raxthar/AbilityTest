@@ -110,7 +110,7 @@ export default {
       this.$router.push('/CreateEvaluation/')
     },
     searchStat () {
-      this.$axios.get('test_stat', {
+      this.$axios.get('search_stat', {
         params: {
           tId: this.tId
         }
