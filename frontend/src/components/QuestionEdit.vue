@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     jumpBack () {
-      this.$router.push('/QuestionList/' + this.tId + '/' + this.uId)
+      this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
     },
     searchDimension () {
       this.$axios.get('search_dimensions', {

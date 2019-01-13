@@ -2,6 +2,10 @@
   <div class="layout">
     <Layout>
       <Header>
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
+          <Icon type="ios-arrow-back" />
+          返回
+        </Button>
       </Header>
       <Content>
         <Button :size="buttonSize" type="primary" @click="jumpToAddQuestion">
@@ -95,6 +99,9 @@ export default {
     }
   },
   methods: {
+    jumpBack () {
+      this.$router.push('/CreateEvaluation/')
+    },
     jumpToAddQuestion () {
       this.$router.push('/AddQuestion/' + this.uId + '/' + this.tId)
     },

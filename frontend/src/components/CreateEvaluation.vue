@@ -8,7 +8,7 @@
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           创建测评
         </Button>
       </Content>
@@ -151,8 +151,8 @@ export default {
     }
   },
   methods: {
-    jumpToAddTitle () {
-      this.$router.push('/AddEvaluationTitle/' + this.uId)
+    jumpBack () {
+      this.$router.push('/Welcome/')
     },
     searchEvaluation () {
       this.$axios.get('test_list', {

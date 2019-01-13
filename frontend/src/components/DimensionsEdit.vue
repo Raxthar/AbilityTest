@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/AddEvaluationTitle">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -31,17 +31,17 @@ export default {
   data () {
     return {
       buttonSize: 'large',
-      tId: this.$route.params.tId,
+      uId: this.$route.params.uId,
       dimensions: {
         dimensionId: [],
         dimensionName: [],
-        tId: this.$route.params.tId,
+        tId: this.$route.params.tId
       }
     }
   },
   methods: {
     jumpBack () {
-      this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
+      this.$router.push('/EvaluationEdit/' + this.uId + '/' + this.dimensions.tId)
     },
     addDimension: function () {
       let cope = {
@@ -55,7 +55,7 @@ export default {
     searchDimensions () {
       this.$axios.get('search_dimensions', {
         params: {
-          content: this.tId
+          content: this.dimensions.tId
         }
       }).then(response => {
         if (response.data.code === 200) {
@@ -72,7 +72,7 @@ export default {
       this.$axios.post('/update_dimension/', JSON.stringify(this.dimensions)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`修改测评成功`)
-          this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
+          this.$router.push('/QuestionList/' + this.uId + '/' + this.dimensions.tId)
         } else {
           this.$Message.info("can't read database!")
         }

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     jumpBack () {
-      this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
+      this.$router.push('/QuestionList/' + this.uId + '/' + this.questionData.tId)
     },
     addOption: function () {
       let cope = {

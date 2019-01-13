@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/HelloWorld">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -35,6 +35,9 @@ export default {
     }
   },
   methods: {
+    jumpBack () {
+      this.$router.push('/CreateEvaluation/')
+    },
     handleCreate () {
       if (this.createData.tName === '') {
         this.$Message.info('请输入标题')

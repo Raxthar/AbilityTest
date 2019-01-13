@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" to="/AddEvaluationTitle">
+        <Button :size="buttonSize" type="primary" @click="jumpBack">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -39,6 +39,9 @@ export default {
     }
   },
   methods: {
+    jumpBack () {
+      this.$router.push('/EvaluationEdit/' + this.dimensionArray.uId + '/' + this.dimensionArray.tId)
+    },
     addDimension: function () {
       let cope = {
         index: ''
