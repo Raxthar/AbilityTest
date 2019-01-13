@@ -8,9 +8,6 @@
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpToAddTitle">
-          创建测评
-        </Button>
       </Content>
       <Footer>
         <card>
@@ -26,7 +23,7 @@
 export default {
   mounted () {
     this.searchStat()
-    let myChart = echarts.init(document.getElementById('statChart'))
+    let myChart = this.$echarts.init(document.getElementById('statChart'))
     myChart.setOption(this.option)
   },
   data () {
@@ -53,12 +50,12 @@ export default {
           left: 'center',
           top: 20,
           textStyle: {
-          color: '#ccc'
+            color: '#ccc'
           }
         },
-        tooltip : {
+        tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         visualMap: {
           show: false,
@@ -69,16 +66,16 @@ export default {
           }
         },
         series: [{
-          name:'统计结果',
-          type:'pie',
-          radius : '55%',
+          name: '维度',
+          type: 'pie',
+          radius: '55%',
           center: ['50%', '50%'],
-          statData: [].sort(function (a, b) { return a.value - b.value; }),
+          statData: [].sort(function (a, b) { return a.value - b.value }),
           roseType: 'radius',
           label: {
             normal: {
               textStyle: {
-              color: 'rgba(255, 255, 255, 0.3)'
+                color: 'rgba(255, 255, 255, 0.3)'
               }
             }
           },
@@ -102,15 +99,15 @@ export default {
           animationType: 'scale',
           animationEasing: 'elasticOut',
           animationDelay: function (idx) {
-           return Math.random() * 200;
+            return Math.random() * 200
           }
         }]
       }
     }
   },
   methods: {
-      searchStat () {
-        this.$axios.get('test_stat', {
+    searchStat () {
+      this.$axios.get('test_stat', {
         params: {
           tId: this.tId
         }
@@ -119,10 +116,10 @@ export default {
           if (message.data.pNumber.length > 0) {
             this.pNumber = message.data.pNumber
             this.dName = message.data.dName
-            for (let i = 0; i < dName.length; i++) {
+            for (let i = 0; i < this.dName.length; i++) {
               let obj = {
-                value: pNumber[i],
-                name: dName[i]
+                value: this.pNumber[i],
+                name: this.dName[i]
               }
               this.option.series.statData.push(obj)
             }
@@ -131,11 +128,10 @@ export default {
           this.$Message.error(`can't search in database`)
         }
       })
-      }
+    }
   }
 }
 </script>
-
 
 <style>
 .layout {
