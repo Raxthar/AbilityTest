@@ -66,6 +66,8 @@ export default {
               }
               statData.push(obj)
               console.log(obj)
+              this.option.series[0].statData.push(obj)
+              console.log(this.option.series[0].statData)
             }
             this.tableData = statData
           }

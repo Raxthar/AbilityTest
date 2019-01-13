@@ -351,22 +351,25 @@ def update_dimension(request):
 
 
 def search_stat(request):
-    obj = json.loads(request.body.decode('utf-8'))
-    t_id = obj["tId"]
+    t_id = request.GET['tId']
     d_name_list = []
     d_id_list = []
     stat_list = []
+    print("------------------"+t_id)
     try:
         result_list = Result.objects.filter(t_id=t_id)
+        print(result_list)
         d_list = []
         for i in range(len(result_list)):
-            d_list.append(result_list[i3].d_id)
+            d_list.append(result_list[i].d_id)
         r_dic = get_stat(d_list)
         for v,k in r_dic.items():
             d_id_list.append(v)
             stat_list.append(k)
         for i in range(len(d_id_list)):
             d_name_list.append(Dimension.objects.get(d_id=d_id_list[i]).d_name)
+        print(d_name_list)
+        print(stat_list)
         response = {
             "dName": d_name_list,
             "stat": stat_list,

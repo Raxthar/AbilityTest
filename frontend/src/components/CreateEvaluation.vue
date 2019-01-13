@@ -109,7 +109,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.questionEdit(params.index)
+                    this.getStat(params.index)
                   }
                 }
               }, '统计'),
@@ -210,7 +210,7 @@ export default {
     evaluationEdit (index) {
       this.$router.push('/EvaluationEdit/' + this.uId + '/' + this.evaluationData[index].tId)
     },
-    questionStat (index) {
+    getStat (index) {
       this.$router.push('/EvaluationStat/' + this.evaluationData[index].tId)
     },
     editJudge (index) {
