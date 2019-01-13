@@ -9,6 +9,7 @@ import json
 from .models import ATest, Question, Judge, Option, Result
 # Create your views here.
 from .models import Dimension
+import types
 
 
 # 创建维度
@@ -351,8 +352,7 @@ def update_dimension(request):
 
 
 def search_stat(request):
-    obj = json.loads(request.body.decode('utf-8'))
-    t_id = obj["tId"]
+    t_id = request.GET['tId']
     d_name_list = []
     d_id_list = []
     stat_list = []
@@ -360,13 +360,15 @@ def search_stat(request):
         result_list = Result.objects.filter(t_id=t_id)
         d_list = []
         for i in range(len(result_list)):
-            d_list.append(result_list[i3].d_id)
+            d_list.append(result_list[i].d_id)
         r_dic = get_stat(d_list)
         for v,k in r_dic.items():
             d_id_list.append(v)
             stat_list.append(k)
         for i in range(len(d_id_list)):
             d_name_list.append(Dimension.objects.get(d_id=d_id_list[i]).d_name)
+        print(d_name_list)
+        print(stat_list)
         response = {
             "dName": d_name_list,
             "stat": stat_list,
@@ -385,3 +387,26 @@ def get_stat(arr):
     for i in set(arr):
         result[i] = arr.count(i)
     return result
+
+
+def edit_judge(request):
+    print('edit_judge')
+    obj = json.loads(request.body.decode('utf-8'))
+    d_id_list = obj['dimensionId']
+    j_content_list = obj['judge']
+    t_due = obj['due']
+    t_id = obj['tId']
+    try:
+        ATest.objects.filter(t_id=t_id).update(t_due=t_due)
+        for i in range(len(d_id_list)):
+            judge = Judge(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
+            judge.save()
+        response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)

@@ -19,5 +19,6 @@ urlpatterns = [
     url('search_atest_by', views.search_atest_by, name='search_atest_by'),
     url('update_atest/', views.update_atest, name='update_atest'),
     url('update_dimension/', views.update_dimension, name='update_dimension'),
-    url('search_stat/', views.search_stat, name='search_stat'),
+    url('search_stat', views.search_stat, name='search_stat'),
+    url('edit_judge/', views.edit_judge, name='edit_judge'),
 ]  

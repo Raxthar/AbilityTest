@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .img {
   background-position: center center;
   background-repeat:  no-repeat;
