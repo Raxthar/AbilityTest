@@ -36,7 +36,7 @@ export default {
         {
           name: '删除测评',
           color: '#ed3f14'
-        },
+        }
       ],
       msg: 'Hello',
       uId: 2,
@@ -51,25 +51,22 @@ export default {
         url: 'http://127.0.0.1:8000/test_list/',
         data: {
           uId: this.uId
-          },
+        },
         success (response) {
           console.log(response.data)
-          if(response.data.code === 200) {
-            if(response.data.tName.length > 0) {
-              for(let i = 0; i < response.data.tName.length; i++) {
+          if (response.data.code === 200) {
+            if (response.data.tName.length > 0) {
+              for (let i = 0; i < response.data.tName.length; i++) {
                 let obj = {
                   tId: response.data.tId[i],
                   tName: response.data.tName[i],
-                  tStatus: response.data.tStatus[i] ? '已发布':'未发布'
+                  tStatus: response.data.tStatus[i] ? '已发布' : '未发布'
                 }
                 lists.push(obj)
               }
             }
           } else {
-            $Message({
-              content: '读取信息错误！',
-              type: 'error'
-            })
+            console.log('failed!')
           }
         }
       })
@@ -88,23 +85,23 @@ export default {
 
     handleClickItem ({ mp }) {
       console.log(mp.detail.index)
-      switch(mp.detail.index) {
+      switch (mp.detail.index) {
         case 0:
           break
         case 1:
           break
         case 3:
           console.log(this.currentIndex)
-          wx.request ({
+          wx.request({
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
             header: {
               "content-type": "application/x-www-form-urlencoded"
             },
             data: JSON.stringify(this.evaluationLists[this.currentIndex]),
-            success(response) {
+            success (response) {
               console.log(response.data)
-              if(response.data.code === 200) {
+              if (response.data.code === 200) {
                 console.log("success")
               } else {
                 console.log("delete failed")

@@ -33,9 +33,9 @@ export default {
     handleCreate () {
       wx.request({
         url: 'http://127.0.0.1:8000/create/', // 仅为示例，并非真实的接口地址
-        method: "POST",
+        method: 'POST',
         header: {
-          "content-type": "application/x-www-form-urlencoded"
+          'content-type': 'application/x-www-form-urlencoded'
         },
         data: JSON.stringify(this.createData),
         success (response) {
