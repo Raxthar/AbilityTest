@@ -123,7 +123,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.questionEdit(params.index)
+                    this.questionStat(params.index)
                   }
                 }
               }, '设置'),
@@ -206,6 +206,9 @@ export default {
     },
     evaluationEdit (index) {
       this.$router.push('/EvaluationEdit/' + this.uId + '/' + this.evaluationData[index].tId)
+    },
+    questionStat (index) {
+      this.$router.push('/EvaluationStat/' + this.evaluationData[index].tId)
     }
   }
 }
