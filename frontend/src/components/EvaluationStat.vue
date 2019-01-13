@@ -27,7 +27,10 @@ export default {
   },
   data () {
     return {
-      tId: this.$route.params.tId
+      tId: this.$route.params.tId,
+      pNumber: [],
+      dName: [],
+      statData: []
     }
   },
   methods: {
@@ -38,8 +41,16 @@ export default {
         }
       }).then(message => {
         if (message.data.code === 200) {
-          if (message.data.tName.length > 0) {
-            
+          if (message.data.pNumber.length > 0) {
+            this.pNumber = message.data.pNumber
+            this.dName = message.data.dName
+            for (let i = 0; i < dName.length; i++) {
+              let obj = {
+                number: pNumber[i],
+                name: dName[i]
+              }
+              this.statData.push(obj)
+            }
           }
         } else {
           this.$Message.error(`can't search in database`)
