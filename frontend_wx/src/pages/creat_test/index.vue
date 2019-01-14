@@ -2,10 +2,10 @@
   <div>
     <form :model="createData">
       <i-panel title="测评标题">
-        <input v-model.lazy="createData.tName"  maxLength="20" class="demo-input" mode="wrapped"/>
+        <input v-model="createData.tName"  maxLength="20" class="demo-input" mode="wrapped"/>
       </i-panel>
       <i-panel title="测评内容介绍">
-        <input v-model.lazy="createData.tDescribe" type="textarea" class="demo-input" mode="wrapped"/>
+        <input v-model="createData.tDescribe" type="textarea" class="demo-input" mode="wrapped"/>
       </i-panel>
       <i-panel>
         <i-button :size="buttonSize" type="primary" shape="circle" @click="handleCreate" >下一步</i-button>
@@ -31,6 +31,7 @@ export default {
 
   methods: {
     handleCreate () {
+      let uid = this.createData.uId
       wx.request({
         url: 'http://127.0.0.1:8000/create/', // 仅为示例，并非真实的接口地址
         method: 'POST',
@@ -39,11 +40,12 @@ export default {
         },
         data: JSON.stringify(this.createData),
         success (response) {
-          console.log(response.data)
           if (response.data.code === 200) {
             wx.navigateTo({
-              url: '../question_list/main'
+              url: '../create_demision/main?uId=' + uid + '&tId=' + response.data.tId
             })
+          } else {
+            console.log("failed!")
           }
         }
       })
