@@ -16,7 +16,7 @@
               <FormItem label="input">
                   <Input v-model="questionData.qName" placeholder="Enter Title..." />
               </FormItem>
-              <FormItem v-for="(list, index) in lists.slice(0,4)" :key="(list, index)">
+              <FormItem v-for="(list, index) in lists" :key="(list, index)">
                   <Input v-model="questionData.oName[index]" size="large" placeholder="请输入选项" />
                   <InputNumber v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.dId[index]" type="button" name=index>

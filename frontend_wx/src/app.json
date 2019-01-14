@@ -1,11 +1,12 @@
 {
   "pages": [
+    "pages/set_deadline/main",
+    "pages/create_question/main",
     "pages/index/main",
     "pages/logs/main",
     "pages/counter/main",
     "pages/creat_test/main",
     "pages/create_demision/main",
-    "pages/create_question/main",
     "pages/question_list/main"
   ],
   "window": {
