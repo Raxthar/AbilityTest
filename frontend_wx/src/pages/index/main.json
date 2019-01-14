@@ -6,6 +6,7 @@
         "i-modal": "../../../static/iview/modal/index" ,
         "i-row": "../../../static/iview/row/index",
         "i-col": "../../../static/iview/col/index",
-        "i-action-sheet": "../../../static/iview/action-sheet/index"
+        "i-action-sheet": "../../../static/iview/action-sheet/index",
+        "i-message": "../../../static/iview/message/index"
     }
 }
