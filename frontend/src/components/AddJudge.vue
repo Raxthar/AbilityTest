@@ -58,7 +58,7 @@ export default {
             this.judges.dimensionName = dimension.data.dName
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },
@@ -74,17 +74,17 @@ export default {
             this.judges.due = response.data.due
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },
     editJudge () {
       this.$axios.post('/edit_judge/', JSON.stringify(this.judges)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`设置评价成功`)
+          this.$Message.success(`设置评价成功！`)
           this.$router.push('/CreateEvaluation/')
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     }

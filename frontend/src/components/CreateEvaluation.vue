@@ -168,17 +168,17 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },
     deleteEvaluation (index) {
       this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`删除 ${this.evaluationData[index].tName} 成功`)
+          this.$Message.success(`删除 ${this.evaluationData[index].tName} 成功！`)
           this.evaluationData.splice(index, 1)
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     },

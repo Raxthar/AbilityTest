@@ -45,7 +45,7 @@ export default {
           key: 'qName'
         },
         {
-          title: 'Action',
+          title: '操作',
           key: 'action',
           width: 150,
           align: 'center',
@@ -64,7 +64,7 @@ export default {
                     this.questionEdit(params.index)
                   }
                 }
-              }, 'Edit'),
+              }, '编辑'),
               buttonmethod('Button', {
                 props: {
                   type: 'error',
@@ -75,7 +75,7 @@ export default {
                     this.deleteQuestion(params.index)
                   }
                 }
-              }, 'Delete')
+              }, '删除')
             ])
           }
         }
@@ -111,7 +111,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     },
@@ -122,10 +122,10 @@ export default {
     deleteQuestion (index) {
       this.$axios.post('/delete_question/', JSON.stringify(this.questionData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`删除 ${this.questionData[index].qName} 成功`)
+          this.$Message.success(`删除 ${this.questionData[index].qName} 成功！`)
           this.questionData.splice(index, 1)
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     }

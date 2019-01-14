@@ -64,17 +64,17 @@ export default {
             this.dimensions.dimensionName = response.data.dName
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },
     editDimension () {
       this.$axios.post('/update_dimension/', JSON.stringify(this.dimensions)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`修改测评成功`)
+          this.$Message.success(`修改测评成功！`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.dimensions.tId)
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     }

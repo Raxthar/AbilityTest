@@ -83,7 +83,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },
@@ -95,7 +95,6 @@ export default {
       }).then(message => {
         if (message.data.code === 200) {
           if (message.data.oName.length > 0) {
-            this.$Message.info(`can't ${message.data.oName} database`)
             this.oldOptionData = []
             let questionName = message.data.qName
             this.oldQuestionName = questionName
@@ -122,31 +121,31 @@ export default {
             }
           }
         } else {
-          this.$message.error(`无法读取数据库`)
+          this.$message.error(`无法读取数据库！`)
         }
       })
     },
     editQuestion () {
       for (let i = 0; i < this.questionData.newOptionData.length; i++) {
         if (this.questionData.newOptionData[i].oName === '') {
-          this.$Message.info('请输入选项内容')
+          this.$Message.info('请输入选项内容！')
           return
         }
         if (this.questionData.newOptionData[i].dId === 0) {
-          this.$Message.info('请选择维度')
+          this.$Message.info('请选择维度！')
           return
         }
         if (this.questionData.newOptionData[i].score === 0) {
-          this.$Message.info('请确定选项分数')
+          this.$Message.info('请确定选项分数！')
           return
         }
       }
       this.$axios.post('/update_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`edit questions success`)
+          this.$Message.success(`编辑题目成功！`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.error('无法读取数据库')
+          this.$Message.error('无法读取数据库！')
         }
       })
     }
