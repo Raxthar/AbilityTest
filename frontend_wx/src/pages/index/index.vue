@@ -53,7 +53,6 @@ export default {
           uId: this.uId
         },
         success (response) {
-          console.log(response.data)
           if (response.data.code === 200) {
             if (response.data.tName.length > 0) {
               for (let i = 0; i < response.data.tName.length; i++) {
