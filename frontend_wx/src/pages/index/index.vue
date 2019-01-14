@@ -95,15 +95,15 @@ export default {
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
             header: {
-              "content-type": "application/x-www-form-urlencoded"
+              'content-type': 'application/x-www-form-urlencoded'
             },
             data: JSON.stringify(this.evaluationLists[this.currentIndex]),
             success (response) {
               console.log(response.data)
               if (response.data.code === 200) {
-                console.log("success")
+                console.log('success')
               } else {
-                console.log("delete failed")
+                console.log('delete failed')
               }
             }
           })

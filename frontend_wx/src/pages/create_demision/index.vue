@@ -24,20 +24,20 @@ export default {
       currentIndex: -1,
       lists: [
         {
-        dName: ''
+          dName: ''
         }
       ],
       dimensionLists: {
-          uId: -1,
-          tId: -1,
-          dimensions: []
+        uId: -1,
+        tId: -1,
+        dimensions: []
       }
     }
   },
 
   methods: {
     questionList () {
-     wx.request({
+      wx.request({
         url: 'http://127.0.0.1:8000/create_dimension/', // 仅为示例，并非真实的接口地址
         method: 'POST',
         header: {
@@ -56,7 +56,8 @@ export default {
         }
       })
     },
-    handleClick(index) {
+
+    handleClick (index) {
       this.currentIndex = index
     },
 
@@ -76,7 +77,7 @@ export default {
       this.dimensionLists.dimensions.splice(index, 1)
       this.lists.splice(index, 1)
       console.log(this.dimensionLists.dimensions)
-    },
+    }
   }
 }
 </script>

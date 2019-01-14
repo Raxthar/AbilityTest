@@ -5,7 +5,6 @@
     "pages/counter/main",
     "pages/creat_test/main",
     "pages/create_demision/main",
-    "pages/create_question/main",
     "pages/question_list/main",
     "pages/test_title/main",
     "pages/evaluation_edit/main"
