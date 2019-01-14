@@ -10,8 +10,8 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx408f6586969c4ec1",
-	"projectname": "frontend_wx",
+	"appid": "wxdeee0f54fa6ab4f2",
+	"projectname": "AblityTesting",
 	"condition": {
 		"search": {
 			"current": -1,
