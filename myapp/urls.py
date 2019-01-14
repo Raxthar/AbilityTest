@@ -21,4 +21,5 @@ urlpatterns = [
     url('update_dimension/', views.update_dimension, name='update_dimension'),
     url('search_stat', views.search_stat, name='search_stat'),
     url('edit_judge/', views.edit_judge, name='edit_judge'),
+    url('load_result', views.load_result, name='load_result'),
 ]  
