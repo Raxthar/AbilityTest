@@ -13,7 +13,7 @@
         <card>
           <div id="statChart" class="chartSize"></div>
           <Table border :columns="columns" :data="tableData"></Table>
-          <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="downloadCsv">导出</Button>
+          <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv">导出</Button>
         </card>
       </Footer>
     </Layout>
@@ -21,15 +21,20 @@
 </template>
 
 <script>
-import CSV from 'comma-separated-values'
+import CsvExportor from 'csv-exportor'
 export default {
   mounted () {
     this.searchStat()
+    this.getStatResult()
   },
   data () {
     return {
       buttonSize: 'large',
       tId: this.$route.params.tId,
+      resultId: [],
+      resultName: [],
+      csvData: [],
+      csvHeader: ['流水号', '测评结果'],
       pNumber: [],
       dName: [],
       tableData: [],
@@ -108,18 +113,34 @@ export default {
         })
       })
     },
-    genUrl (data, options) {
-      const encoded = new CSV(data, options).encode()
-      const dataBlob = new Blob([`\ufeff${encoded}`], { type: 'text/plain;charset=utf-8' })
-      return window.URL.createObjectURL(dataBlob)
+    getStatResult () {
+      this.$axios.get('search_stat_result', {
+        params: {
+          content: this.tId
+        }
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.resultId.length > 0) {
+            this.resultId = response.data.resultId
+            this.resultName = response.data.dName
+            for (let i = 0; i < this.resultId.length; i++) {
+              let obj = {
+                rId: this.resultId[i],
+                rName: this.resultName[i]
+              }
+              this.csvData.push(obj)
+            }
+          }
+        } else {
+          this.$Message.error(`can't search in database`)
+        }
+      })
     },
-    downloadCsv (data, options, fileName) {
-      const url = genUrl(data, options);
-      const a = document.createElement('a')
-      a.href = url
-      a.download = fileName
-      a.click()
-      window.URL.revokeObjectURL(url)
+    exportCsv () {
+      CsvExportor.downloadCsv(
+        this.csvData,
+        { header: this.csvHeader },
+        'result.csv')
     }
   }
 }
