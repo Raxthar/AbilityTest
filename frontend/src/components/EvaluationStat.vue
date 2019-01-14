@@ -13,6 +13,7 @@
         <card>
           <div id="statChart" class="chartSize"></div>
           <Table border :columns="columns" :data="tableData"></Table>
+          <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="downloadCsv">导出</Button>
         </card>
       </Footer>
     </Layout>
@@ -20,12 +21,14 @@
 </template>
 
 <script>
+import CSV from 'comma-separated-values'
 export default {
   mounted () {
     this.searchStat()
   },
   data () {
     return {
+      buttonSize: 'large',
       tId: this.$route.params.tId,
       pNumber: [],
       dName: [],
@@ -104,6 +107,19 @@ export default {
           ]
         })
       })
+    },
+    genUrl (data, options) {
+      const encoded = new CSV(data, options).encode()
+      const dataBlob = new Blob([`\ufeff${encoded}`], { type: 'text/plain;charset=utf-8' })
+      return window.URL.createObjectURL(dataBlob)
+    },
+    downloadCsv (data, options, fileName) {
+      const url = genUrl(data, options);
+      const a = document.createElement('a')
+      a.href = url
+      a.download = fileName
+      a.click()
+      window.URL.revokeObjectURL(url)
     }
   }
 }
