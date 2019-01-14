@@ -36,7 +36,7 @@ export default {
         dimensionName: [],
         judge: [],
         due: '',
-        tId: this.$route.params.tId,
+        tId: this.$route.params.tId
       }
     }
   },
