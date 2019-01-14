@@ -65,9 +65,6 @@ export default {
                 name: this.dName[i]
               }
               statData.push(obj)
-              console.log(obj)
-              this.option.series[0].statData.push(obj)
-              console.log(this.option.series[0].statData)
             }
             this.tableData = statData
           }
@@ -75,7 +72,6 @@ export default {
           this.$Message.error(`can't search in database`)
         }
         let myChart = this.$echarts.init(document.getElementById('statChart'))
-        console.log(statData)
         myChart.setOption({
           title: {
             text: '测评统计结果',

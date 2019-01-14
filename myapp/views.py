@@ -217,6 +217,7 @@ def test_list(request):
     list_status = []
     list_due = []
     list_id = []
+    list_describe = []
     try:
         test_info = ATest.objects.filter(u_id=u_id)
         for i in range(len(test_info)):
@@ -224,10 +225,12 @@ def test_list(request):
             list_status.append(test_info[i].t_status)
             list_due.append(test_info[i].t_due)
             list_id.append(test_info[i].t_id)
+            list_describe.append(test_info[i].t_describe)
         message['tId'] = list_id
         message['tName'] = list_name
         message['tStatus'] = list_status
         message['tDue'] = list_due
+        message['tDescribe'] = list_describe
         message['code'] = 200
         return JsonResponse(message)
     except Exception as e:
@@ -404,9 +407,7 @@ def edit_judge(request):
                 judge = Judge(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
                 judge.save()
         else:
-            print(j_list)
             for i in range(len(j_list)):
-                #j_list[i].update(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
                 j_list[i].t_id = t_id
                 j_list[i].j_content = j_content_list[i]
                 j_list[i].d_id = d_id_list[i]
