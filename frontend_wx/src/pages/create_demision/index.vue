@@ -30,7 +30,7 @@ export default {
       dimensionLists: {
           uId: -1,
           tId: -1,
-          dimensions: {}
+          dimensions: []
       }
     }
   },
@@ -62,7 +62,7 @@ export default {
 
     handleInput (e) {
       this.lists[this.currentIndex].dName = e.target.value
-      this.dimensionLists.dimensions[this.currentIndex] = e.target.value
+      this.dimensionLists.dimensions = this.lists
     },
 
     addDimension () {
