@@ -77,7 +77,7 @@ export default {
             this.tableData = statData
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
         let myChart = this.$echarts.init(document.getElementById('statChart'))
         myChart.setOption({
@@ -132,7 +132,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库`)
+          this.$Message.error(`无法读取数据库！`)
         }
       })
     },

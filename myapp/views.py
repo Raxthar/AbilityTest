@@ -140,6 +140,32 @@ def add_question(request):
     return JsonResponse(response)
 
 
+def question_chat(request):
+    obj = json.loads(request.body.decode('utf-8'))
+    question_name = obj['qName']
+    test_id = obj['tId']
+    o_name = obj['oName']
+    score = obj['score']
+    d_id = obj['dId']
+    try:
+        question = Question(q_name=question_name, t_id=test_id)
+        question.save()
+        question_info = Question.objects.get(q_name=question_name, t_id=test_id)
+        for i in range(len(d_id)):
+            option = Option(
+                o_name=o_name[i], q_id=question_info.q_id, score=score[i], d_id=d_id[i])
+            option.save()
+        response = {
+                "code": 200
+            }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
+
+
 # 找t_id对应的所有的维度
 def search_dimensions(request):
     t_id = request.GET['content']
@@ -252,21 +278,6 @@ def set_dimension_page(request):
     dimension['dId'] = dimension_id
     dimension['dName'] = dimension_name
     return JsonResponse(dimension)
-
-
-def set_deadline(request):
-    obj = json.loads(request.body.decode('utf-8'))
-    test_id = obj['tId']
-    test_due = obj['tDue']
-    test_message = {}
-    test_info = ATest.objects.get(t_id=test_id)
-    test_info.t_due = test_due
-    test_info.save()
-    test_update = ATest.objects.get(t_id=test_id)
-    test_message['tName'] = test_update.t_name
-    test_message['tStatus'] = test_update.t_status
-    test_message['tDue'] = test_update.t_due
-    return JsonResponse(test_message)
 
 
 def delete_question(request):
