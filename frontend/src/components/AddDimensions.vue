@@ -10,7 +10,7 @@
       <Content>
         <Card>
           <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button><br><br>
-          <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
+          <Button :size="buttonSize" type="primary" @click="delDimension()">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in dimensionArray.dimensions.slice(0,4)" :key="(list, index)">
               <Input v-model="list.dName" size="large" placeholder="请输入维度" />
@@ -47,8 +47,9 @@ export default {
       }
       this.dimensionArray.dimensions.push(cope)
     },
-    delDimension: function (index) {
-      this.dimensionArray.dimensions.splice(index, 1)
+    delDimension: function () {
+      let count = this.dimensionArray.dimensions.length - 1
+      this.dimensionArray.dimensions.splice(count, 1)
     },
     updateDimensions: function () {
       for (let i = 0; i < this.dimensionArray.dimensions.length; i++) {
