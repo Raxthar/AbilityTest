@@ -398,9 +398,19 @@ def edit_judge(request):
     t_id = obj['tId']
     try:
         ATest.objects.filter(t_id=t_id).update(t_due=t_due)
-        for i in range(len(d_id_list)):
-            judge = Judge(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
-            judge.save()
+        j_list = Judge.objects.filter(t_id=t_id)
+        if (len(j_list) == 0):
+            for i in range(len(d_id_list)):
+                judge = Judge(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
+                judge.save()
+        else:
+            print(j_list)
+            for i in range(len(j_list)):
+                #j_list[i].update(t_id=t_id, j_content=j_content_list[i], d_id=d_id_list[i])
+                j_list[i].t_id = t_id
+                j_list[i].j_content = j_content_list[i]
+                j_list[i].d_id = d_id_list[i]
+                j_list[i].save()
         response = {
             "code": 200
         }
