@@ -166,20 +166,19 @@ export default {
               }
               this.evaluationData.push(obj)
             }
-            this.$Message.info(`Create ${this.evaluationData[0].tName} Success`)
           }
         } else {
-          this.$Message.error(`can't search in database`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     deleteEvaluation (index) {
       this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`delete ${this.evaluationData[index].tName} success`)
+          this.$Message.success(`删除 ${this.evaluationData[index].tName} 成功`)
           this.evaluationData.splice(index, 1)
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error('无法读取数据库')
         }
       })
     },

@@ -89,21 +89,21 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`can't search in database`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     setQuestion () {
       if (this.questionData.qName === '') {
-        this.$Message.error('please enter question')
+        this.$Message.error('请输入题目名')
         return
       }
       for (let i = 0; i < this.lists.length; i++) {
         if (!this.questionData.dId[i]) {
-          this.$Message.error('please choose a dimension for option')
+          this.$Message.error('请为选项选择关联维度')
           return
         } else if (!this.questionData.oName[i]) {
-          this.$Message.error('please enter option')
+          this.$Message.error('请输入选项内容')
           return
         } else if (!this.questionData.score[i]) {
           this.questionData.score[i] = 1
@@ -111,10 +111,10 @@ export default {
       }
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`set questions success`)
+          this.$Message.success(`添加题目成功`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.questionData.tId)
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error('无法读取数据库')
         }
       })
     }

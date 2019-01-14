@@ -53,7 +53,7 @@ export default {
           let tId = response.data.tId
           this.$router.push('/AddDimensions/' + this.createData.uId + '/' + tId)
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error('无法读取数据库')
         }
       })
     }
