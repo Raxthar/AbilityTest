@@ -42,8 +42,8 @@ export default {
           width: 200
         },
         {
-          title: '测评状态',
-          key: 'tStatus',
+          title: '测评描述',
+          key: 'tDescribe',
           width: 150
         },
         {
@@ -71,20 +71,6 @@ export default {
                   }
                 }
               }, '编辑'),
-              buttonmethod('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.questionEdit(params.index)
-                  }
-                }
-              }, '发布'),
               buttonmethod('Button', {
                 props: {
                   type: 'primary',
@@ -147,6 +133,7 @@ export default {
       tName: [],
       tDue: [],
       tStatus: [],
+      tDescribe: [],
       buttonSize: 'large'
     }
   },
@@ -169,26 +156,15 @@ export default {
             this.tId = message.data.tId
             this.tName = message.data.tName
             this.tDue = message.data.tDue
-            this.tStatus = message.data.tStatus
+            this.tDescribe = message.data.tDescribe
             for (let i = 0; i < message.data.tName.length; i++) {
-              let tStatus = this.tStatus[i]
-              if (tStatus === 1) {
-                let obj = {
-                  tId: this.tId[i],
-                  tName: this.tName[i],
-                  tStatus: '已发布',
-                  tDue: this.tDue[i]
-                }
-                this.evaluationData.push(obj)
-              } else if (tStatus === 0) {
-                let obj = {
-                  tId: this.tId[i],
-                  tName: this.tName[i],
-                  tStatus: '未发布',
-                  tDue: this.tDue[i]
-                }
-                this.evaluationData.push(obj)
+              let obj = {
+                tId: this.tId[i],
+                tName: this.tName[i],
+                tDescribe: this.tDescribe[i],
+                tDue: this.tDue[i]
               }
+              this.evaluationData.push(obj)
             }
             this.$Message.info(`Create ${this.evaluationData[0].tName} Success`)
           }

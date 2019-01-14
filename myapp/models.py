@@ -19,6 +19,7 @@ class ATest(models.Model):
     def __str__(self):
         return self.t_id
 
+
 class Question(models.Model):
     q_id = models.AutoField(primary_key=True, db_column='q_id')
     q_name = models.CharField(max_length=30)
