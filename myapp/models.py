@@ -16,6 +16,8 @@ class ATest(models.Model):
     t_status = models.IntegerField()
     t_due = models.CharField(max_length=80)
 
+    def __str__(self):
+        return self.t_id
 
 class Question(models.Model):
     q_id = models.AutoField(primary_key=True, db_column='q_id')
