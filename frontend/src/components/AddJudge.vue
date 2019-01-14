@@ -14,6 +14,7 @@
               <p>{{judges.dimensionName[index]}}</p>
               <Input v-model="judges.judge[index]" size="large" placeholder="请输入评价" />
             </FormItem>
+            <p>截止日期</p>
             <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="judges.due"></DatePicker>
               <Button type="primary" class="submit-button" @click="editJudge">提交</Button>
           </Form>
@@ -27,6 +28,7 @@
 export default {
   mounted () {
     this.searchDimension()
+    this.searchJudge()
   },
   data () {
     return {
@@ -56,17 +58,33 @@ export default {
             this.judges.dimensionName = dimension.data.dName
           }
         } else {
-          this.$Message.error(`can't search in database`)
+          this.$Message.error(`无法读取数据库`)
+        }
+      })
+    },
+    searchJudge () {
+      this.$axios.get('search_judge', {
+        params: {
+          content: this.tId
+        }
+      }).then(response => {
+        if (response.data.code === 200) {
+          if (response.data.jContent.length > 0) {
+            this.judges.judge = response.data.jContent
+            this.judges.due = response.data.due
+          }
+        } else {
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     editJudge () {
       this.$axios.post('/edit_judge/', JSON.stringify(this.judges)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`edit judge success`)
+          this.$Message.success(`设置评价成功`)
           this.$router.push('/CreateEvaluation/')
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error('无法读取数据库')
         }
       })
     }

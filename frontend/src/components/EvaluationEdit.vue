@@ -53,7 +53,7 @@ export default {
           this.evaluationData.evaluationName = response.data.tName
           this.evaluationData.evaluationDescribe = response.data.tDescribe
         } else {
-          this.$Message.error(`can't search in database`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
@@ -71,7 +71,7 @@ export default {
           this.$Message.success(`修改测评成功`)
           this.$router.push('/DimensionsEdit/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.info("can't read database!")
+          this.$Message.error('无法读取数据库')
         }
       })
     }

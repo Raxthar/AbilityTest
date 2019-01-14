@@ -83,7 +83,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`can't search in database`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
@@ -122,7 +122,7 @@ export default {
             }
           }
         } else {
-          this.$message.error(`can't search in database`)
+          this.$message.error(`无法读取数据库`)
         }
       })
     },
@@ -146,7 +146,7 @@ export default {
           this.$Message.success(`edit questions success`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.info("can't read database")
+          this.$Message.error('无法读取数据库')
         }
       })
     }
