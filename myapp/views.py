@@ -19,9 +19,10 @@ def create_dimension(request):
     d_names_arr = obj['dimensions']
     t_id = obj['tId']
     u_id = obj['uId']
+    print(d_names_arr)
     try:
-        for i in d_names_arr:
-            dimension = Dimension(d_name=d_names_arr.get(i), t_id=t_id)
+        for i in range(len(d_names_arr)):
+            dimension = Dimension(d_name=d_names_arr[i].get('dName'), t_id=t_id)
             dimension.save()
         response = {
             "code": 200
