@@ -114,9 +114,9 @@ export default {
       })
     },
     getStatResult () {
-      this.$axios.get('search_stat_result', {
+      this.$axios.get('load_result', {
         params: {
-          content: this.tId
+          tId: this.tId
         }
       }).then(response => {
         if (response.data.code === 200) {

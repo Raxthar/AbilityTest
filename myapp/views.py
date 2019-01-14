@@ -370,8 +370,6 @@ def search_stat(request):
             stat_list.append(k)
         for i in range(len(d_id_list)):
             d_name_list.append(Dimension.objects.get(d_id=d_id_list[i]).d_name)
-        print(d_name_list)
-        print(stat_list)
         response = {
             "dName": d_name_list,
             "stat": stat_list,
@@ -413,6 +411,29 @@ def edit_judge(request):
                 j_list[i].d_id = d_id_list[i]
                 j_list[i].save()
         response = {
+            "code": 200
+        }
+    except Exception as e:
+        response = {
+            "code": 0,
+            "errMsg": e
+        }
+    return JsonResponse(response)
+
+
+def load_result(request):
+    t_id = request.GET['tId']
+    print(t_id)
+    d_name_list = []
+    rid_list = []
+    try:
+        result_list = Result.objects.filter(t_id=t_id)
+        for i in range(len(result_list)):
+            rid_list.append(result_list[i].result_id)
+            d_name_list.append(Dimension.objects.get(d_id=result_list[i].d_id).d_name)
+        response = {
+            "resultId": rid_list,
+            "dName": d_name_list,
             "code": 200
         }
     except Exception as e:
