@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { $Message } from  '../../../static/iview/base/index'
+import { $Message } from '../../../static/iview/base/index'
 export default {
   mounted () {
     this.searchEvaluation()
@@ -83,6 +83,10 @@ export default {
     },
 
     handleClickItem ({ mp }) {
+      let obj = {
+        cIndex: this.currentIndex,
+        list: this.evaluationLists
+      }
       switch (mp.detail.index) {
         case 0:
           break
@@ -98,12 +102,13 @@ export default {
             data: JSON.stringify(this.evaluationLists[this.currentIndex]),
             success (response) {
               if (response.data.code === 200) {
-                $Message ({
+                obj.list.splice(obj.cIndex, 1)
+                $Message({
                   content: '删除成功！',
                   type: 'success'
                 })
               } else {
-                $Message ({
+                $Message({
                   content: '删除失败！',
                   type: 'error'
                 })
@@ -111,7 +116,8 @@ export default {
             }
           })
           break
-      }
+        }
+      this.evaluationLists = obj.list
     },
 
     createbtn () {
