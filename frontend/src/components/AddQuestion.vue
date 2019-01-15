@@ -108,6 +108,9 @@ export default {
           return
         } else if (!this.questionData.score[i]) {
           this.questionData.score[i] = 1
+        } else if (this.questionData.score[i] <= 0) {
+          this.$Message.error('选项分数应该大于0')
+          return
         }
       }
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {

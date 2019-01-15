@@ -136,8 +136,8 @@ export default {
           this.$Message.info('请选择维度')
           return
         }
-        if (this.questionData.newOptionData[i].score === 0) {
-          this.$Message.error('请确定选项分数')
+        if (this.questionData.newOptionData[i].score <= 0) {
+          this.$Message.error('选项分数应该大于0')
           return
         }
       }
