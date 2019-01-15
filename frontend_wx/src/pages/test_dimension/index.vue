@@ -20,7 +20,7 @@ export default {
       dimensions: {
         dimensionId: [],
         dimensionName: [],
-        tId: 1, 
+        tId: 1
       }
     }
   },
@@ -36,8 +36,8 @@ export default {
           console.log(response.data)
           if (response.data.code === 200) {
             if (response.data.dId.length > 0) {
-            that.dimensions.dimensionId = response.data.dId
-            that.dimensions.dimensionName = response.data.dName     
+              that.dimensions.dimensionId = response.data.dId
+              that.dimensions.dimensionName = response.data.dName
             }
           } else {
             console.log(`can't search in database`)
