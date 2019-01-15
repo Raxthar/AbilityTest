@@ -2,7 +2,7 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # 打开数据库连接
-db = pymysql.connect("localhost", "root", "", "abilityTest", )
+db = pymysql.connect("localhost", "root", "", "abilitytest", )
 
 # 使用cursor()方法获取操作游标
 cursor = db.cursor()
