@@ -85,7 +85,8 @@ export default {
     handleClickItem ({ mp }) {
       let obj = {
         cIndex: this.currentIndex,
-        list: this.evaluationLists
+        list: this.evaluationLists,
+        visible: this.visible
       }
       switch (mp.detail.index) {
         case 0:
@@ -103,6 +104,7 @@ export default {
             success (response) {
               if (response.data.code === 200) {
                 obj.list.splice(obj.cIndex, 1)
+                console.log(obj.visible)
                 $Message({
                   content: '删除成功！',
                   type: 'success'
@@ -115,28 +117,17 @@ export default {
               }
             }
           })
+          console.log(1)
+          this.visible = false
+          this.evaluationLists = obj.list
           break
         }
-      this.evaluationLists = obj.list
-    },
-
-    createbtn () {
-      wx.navigateTo({
-        url: '../create_demision/main'
-      })
     },
 
     testtitle () {
       wx.navigateTo({
         url: '../creat_test/main?uId=' + this.uId
       })
-    },
-
-    clickHandle () {
-      this.msg = 'Clicked!!!!!!'
-    },
-    handleClickNum (data) {
-      console.log('>>>>>>', data.num)
     }
   }
 }
