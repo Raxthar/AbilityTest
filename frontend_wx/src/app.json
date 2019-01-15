@@ -9,7 +9,8 @@
     "pages/test_title/main",
     "pages/evaluation_edit/main",
     "pages/test_dimension/main",
-    "pages/create_question/main"
+    "pages/create_question/main",
+    "pages/set_deadline/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
