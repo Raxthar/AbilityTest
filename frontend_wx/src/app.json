@@ -7,7 +7,8 @@
     "pages/create_demision/main",
     "pages/question_list/main",
     "pages/test_title/main",
-    "pages/evaluation_edit/main"
+    "pages/evaluation_edit/main",
+    "pages/test_dimension/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
