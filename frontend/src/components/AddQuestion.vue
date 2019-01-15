@@ -12,21 +12,21 @@
       <Footer>
         <card>
           <Content>
+            <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button>
+            <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
             <Form :model="questionData">
-              <FormItem label="添加题目：">
-                  <Input v-model="questionData.qName" placeholder="请输入题目名" />
+              <FormItem label="input"><br>
+                  <Input v-model="questionData.qName" size="large" style="width: 600px" placeholder="请输入题目名" />
               </FormItem>
               <FormItem v-for="(list, index) in lists" :key="(list, index)">
-                  <Input v-model="questionData.oName[index]" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.oName[index]" style="width: 600px" placeholder="请输入选项" /><br>
                   <InputNumber v-model="questionData.score[index]" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.dId[index]" type="button" name=index>
                     <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.dId>{{dimensions.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
-            </Form>
-            <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button><br><br>
-            <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
+            </Form>            
           </Content>
         </card>
       </Footer>
@@ -40,6 +40,7 @@ export default {
   },
   data () {
     return {
+      buttonSize: 'large',
       uId: this.$route.params.uId,
       lists: [{
         index: {}
@@ -89,21 +90,21 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     setQuestion () {
       if (this.questionData.qName === '') {
-        this.$Message.error('请输入题目名！')
+        this.$Message.error('请输入题目名')
         return
       }
       for (let i = 0; i < this.lists.length; i++) {
         if (!this.questionData.dId[i]) {
-          this.$Message.error('请为选项选择关联维度！')
+          this.$Message.error('请为选项选择关联维度')
           return
         } else if (!this.questionData.oName[i]) {
-          this.$Message.error('请输入选项内容！')
+          this.$Message.error('请输入选项内容')
           return
         } else if (!this.questionData.score[i]) {
           this.questionData.score[i] = 1
@@ -111,10 +112,10 @@ export default {
       }
       this.$axios.post('/add_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`添加题目成功！`)
+          this.$Message.success(`添加题目成功`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.questionData.tId)
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }
