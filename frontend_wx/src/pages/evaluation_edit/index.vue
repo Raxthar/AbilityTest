@@ -13,7 +13,7 @@
 <script>
 export default {
   mounted () {
-    this.titleData.uId = this.$root.$mp.query.uId
+    this.uId = this.$root.$mp.query.uId
     this.titleData.tId = this.$root.$mp.query.tId
     this.searchEvaluation()
   },
@@ -30,15 +30,12 @@ export default {
     }
   },
   methods: {
-    jumpBack () {
-      this.$router.push('/CreateEvaluation/' + this.uId + '/' + this.tId)
-    },
     searchEvaluation () {
       let list = this.titleData
       wx.request({
         url: 'http://127.0.0.1:8000/search_atest_by/',
         data: {
-          tId: this.tId
+          tId: this.titleData.tId
         },
         success  (response) {
           if (response.data.code === 200) {
@@ -54,14 +51,6 @@ export default {
       this.titleData = list
     },
     editEvaluation () {
-      if (this.titleData.evaluationName === '') {
-        this.$Message.info('请输入测评标题')
-        return
-      }
-      if (this.titleData.evaluationDescribe === '') {
-        this.$Message.info('请输入测评描述')
-        return
-      }
       wx.request({
         url: 'http://127.0.0.1:8000/update_atest/', // 仅为示例，并非真实的接口地址
         method: 'POST',
@@ -72,7 +61,8 @@ export default {
         success (response) {
           console.log(response.data)
           if (response.data.code === 200) {
-            wx.navigateTo({ url: '../question_list/main'
+            console.log('success')
+            wx.navigateTo({ url: '../index/main'
             })
           }
         }

@@ -13,6 +13,7 @@
 <script>
 export default {
   mounted (options) {
+    this.uId = this.$root.$mp.query.uId
     this.titleData.tId = this.$root.$mp.query.tId
     this.searchTitle()
   },
@@ -49,7 +50,7 @@ export default {
     },
     evaluationEdit () {
       wx.navigateTo({
-        url: '../evaluation_edit/main?uId=1&tId=1'
+        url: '../evaluation_edit/main?uId=' + this.uId + '&tId=' +  this.titleData.tId
       })
     }
   }

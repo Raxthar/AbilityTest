@@ -16,9 +16,9 @@
   import {$Message} from '../../../static/iview/base/index'
   export default {
     mounted (options) {
+      this.tId = this.$root.$mp.query.tId
+      this.judges.tId = this.$root.$mp.query.tId
       this.searchDimension()
-      // this.tId=this.$root.$mp.query.tId
-    // this.judges.tId=this.$root.$mp.query.tId
     },
     data () {
       return {
