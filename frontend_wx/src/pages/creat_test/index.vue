@@ -1,5 +1,6 @@
 <template>
   <div>
+    <i-message id="message" />
     <form :model="createData">
       <i-panel title="测评标题">
         <input v-model="createData.tName"  maxLength="20" class="demo-input" mode="wrapped"/>
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
     this.createData.uId = this.$root.$mp.query.uId
@@ -31,6 +33,13 @@ export default {
 
   methods: {
     handleCreate () {
+      if (this.createData.tName === '' || this.createData.tName === '') {
+        $Message({
+          content: '请输入内容！',
+          type: 'warning'
+        })
+        return
+      }
       let uid = this.createData.uId
       wx.request({
         url: 'http://127.0.0.1:8000/create/', // 仅为示例，并非真实的接口地址

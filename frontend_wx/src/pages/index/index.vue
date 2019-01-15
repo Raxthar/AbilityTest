@@ -107,12 +107,16 @@ export default {
         case 1:
           this.visible = false
           wx.navigateTo({
-            url: '../test-dimension/main?tId=' + this.evaluationLists[this.currentIndex].tId
+            url: '../test_dimension/main?tId=' + this.evaluationLists[this.currentIndex].tId
           })
           break
         case 2:
           break
         case 3:
+          this.visible = false
+          wx.navigateTo({
+            url: '../set_deadline/main?uId=' + this.uId + '&tId=' + this.evaluationLists[this.currentIndex].tId
+          })
           break
         case 4:
           break

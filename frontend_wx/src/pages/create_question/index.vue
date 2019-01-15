@@ -1,22 +1,28 @@
 <template>
   <div>
     <view style="margin-top: 10px">
-    <form :model="questionData">
-      <formitem label="input">
-          <input v-model="questionData.qName" placeholder="Enter Title..."  class="demo-input"/>
-      </formitem>
-      <formitem v-for="(list, ex) in lists" v-bind:key="ex">
-          <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
-          <input v-model="list.score" placeholder="请输入分数" class="demo-input"/>
-          <i-radio-group  v-model="checkvalue[ex]"  :current="current"  @change="handleFruitChange">
-            <i-radio v-for="(item,index) in dimensionsData"   :key="item.dId" :value="item.dName">
-            </i-radio>
-          </i-radio-group>
-      </formitem>
+      <i-panel title="题干">
+          <input v-model="questionData.qName" placeholder="请输入题干" class="demo-input"/>
+      </i-panel>
+      <i-panel title="选项">
+        <i-panel v-for="(list, ex) in lists" v-bind:key="ex">
+          <i-panel title="名称">
+            <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
+          </i-panel>
+          <i-panel title="对应分数及维度">
+            <i-panel title="请选择维度">
+              <i-radio-group :current="current[ex].choice" @change="handleFruitChange">
+                <i-radio v-for="(item,index) in dimensionsData" :key="index" :value="item.dName" @touchstart="handleTouchStart(ex)">
+                </i-radio>
+              </i-radio-group>
+            </i-panel>
+            <input v-model="list.score" placeholder="请输入选项分数" class="demo-input" />
+          </i-panel>
+        </i-panel>
+      </i-panel>
       <i-button type="primary" @click="setQuestion">提交</i-button>
-    </form>
-            <i-button type="primary" @click="addOption">添加选项</i-button><br><br>
-            <i-button type="primary" @click="delOption">删除选项</i-button><br><br>
+      <i-button type="primary" @click="addOption">添加选项</i-button><br><br>
+      <i-button type="primary" @click="delOption">删除选项</i-button><br><br>
     </view>
     <i-message id="message" />
   </div>
@@ -25,12 +31,13 @@
 import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
+    this.uId = this.$root.$mp.query.uId
+    this.questionData.tId = this.$root.$mp.query.tId
     this.searchDimension()
-    // this.uId = this.$root.$mp.query.uId
-    // this.questionData.tId = this.$root.$mp.tId
   },
   data () {
     return {
+      currentEx: -1,
       uId: 1,
       lists: [{
         oName: '',
@@ -39,28 +46,41 @@ export default {
       }],
       dimensionsData: [],
       questionData: {
-        tId: 3,
+        tId: -1,
         qName: '',
         oName: [],
         dId: [],
         score: []
       },
-      current: "",
+      current: [{
+        choice: ''
+      }],
       checkvalue: []
     }
   },
 
   methods: {
+    handleTouchStart (ex) {
+       $Message({
+         content: '点击了第' + ex + '项',
+         type: 'success'
+       })
+      this.currentEx = ex
+    },
     handleFruitChange ({mp}) {
-      this.current = mp.detail.value
+      this.current[this.currentEx].choice = mp.detail.value
     },
     addOption () {
+      let obj = {
+        choice: ''
+      }
       let cope = {
         oName: "",
         score: "",
         dID: ""
       }
       this.lists.push(cope)
+      this.current.push(obj)
     },
     delOption (ex) {
       this.lists.splice(ex, 1)
@@ -69,10 +89,6 @@ export default {
       let list = this.dimensionsData
       wx.request({
         url: 'http://127.0.0.1:8000/search_dimensions/', // 仅为示例，并非真实的接口地址
-        // method: "GET",
-        header: {
-          "content-type": "application/x-www-form-urlencoded"
-        },
         data: {content: this.questionData.tId},
         success (response) {
           console.log(response.data)
