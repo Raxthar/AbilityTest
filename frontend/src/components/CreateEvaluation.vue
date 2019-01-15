@@ -16,6 +16,9 @@
         <card>
           <Table border :columns="columns" :data="evaluationData">
           </Table>
+          <BackTop :height="100" :bottom="200">
+            <div class="top">返回顶端</div>
+          </BackTop>
         </card>
       </Footer>
     </Layout>
@@ -233,5 +236,14 @@ export default {
 .ivu-card-bordered {
   border: 1px solid #f9f9fa;
   border-color: #fafafa;
+}
+
+.top {
+  padding: 10px;
+  background: rgba(0, 153, 229, .7);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  margin-right: 60px;
 }
 </style>
