@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <i-massage id="message" />
+  <div>
+    <i-message id="message" />
     <i-button type="primary" size="small" @click="testtitle" >创建测评</i-button>
     <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen(index)">
       <view slot="footer">{{evaluation.tStatus}}</view>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import { $Message } from  '../../../static/iview/base/index'
 export default {
   mounted () {
     this.searchEvaluation()
@@ -83,14 +83,12 @@ export default {
     },
 
     handleClickItem ({ mp }) {
-      console.log(mp.detail.index)
       switch (mp.detail.index) {
         case 0:
           break
         case 1:
           break
         case 3:
-          console.log(this.currentIndex)
           wx.request({
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
@@ -99,11 +97,16 @@ export default {
             },
             data: JSON.stringify(this.evaluationLists[this.currentIndex]),
             success (response) {
-              console.log(response.data)
               if (response.data.code === 200) {
-                console.log('success')
+                $Message ({
+                  content: '删除成功！',
+                  type: 'success'
+                })
               } else {
-                console.log('delete failed')
+                $Message ({
+                  content: '删除失败！',
+                  type: 'error'
+                })
               }
             }
           })

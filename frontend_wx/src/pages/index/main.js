@@ -8,6 +8,7 @@ export default {
     'i-modal': '../../../node_modules/iview-weapp/dist/modal/index',
     'i-row': '../../../node_modules/iview-weapp/dist/row/index',
     'i-col': '../../../node_modules/iview-weapp/dist/col/index',
-    'i-action-sheet': '../../../static/iview/action-sheet/index'
+    'i-action-sheet': '../../../static/iview/action-sheet/index',
+    'i-message': '../../../static/iview/message/index'
   }
 }
