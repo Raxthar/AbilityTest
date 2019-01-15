@@ -12,7 +12,7 @@
       <Footer>
         <card>
           <div id="statChart" class="chartSize"></div>
-          <Table border :columns="columns" :data="tableData"></Table>
+          <Table border :columns="columns" :data="tableData"></Table><br><br>
           <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv">导出</Button>
         </card>
       </Footer>
@@ -77,7 +77,7 @@ export default {
             this.tableData = statData
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
         let myChart = this.$echarts.init(document.getElementById('statChart'))
         myChart.setOption({
@@ -132,7 +132,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },

@@ -11,9 +11,9 @@
         <Card>
           <Form :model="evaluationData">
             <p class="title-text">测评标题</p>
-            <Input placeholder="Enter title" style="width: 300px"  v-model="evaluationData.evaluationName"/><br><br>
+            <Input placeholder="请输入测评标题" style="width: 600px"  v-model="evaluationData.evaluationName"/><br><br><br><br>
             <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="evaluationData.evaluationDescribe"/><br><br>
+            <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="evaluationData.evaluationDescribe"/><br><br><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</Button>
           </Form>
         </Card>
@@ -53,25 +53,25 @@ export default {
           this.evaluationData.evaluationName = response.data.tName
           this.evaluationData.evaluationDescribe = response.data.tDescribe
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     editEvaluation () {
       if (this.evaluationData.evaluationName === '') {
-        this.$Message.info('请输入测评标题！')
+        this.$Message.info('请输入测评标题')
         return
       }
       if (this.evaluationData.evaluationDescribe === '') {
-        this.$Message.info('请输入测评描述！')
+        this.$Message.info('请输入测评描述')
         return
       }
       this.$axios.post('/update_atest/', JSON.stringify(this.evaluationData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`修改测评成功！`)
+          this.$Message.success(`修改测评成功`)
           this.$router.push('/DimensionsEdit/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }
@@ -82,6 +82,11 @@ export default {
 <style scoped>
 .layout {
   height: 100vmin;
+}
+
+p {
+  font-family: 楷体;
+  font-size: 22px;
 }
 
 .ivu-layout-header {

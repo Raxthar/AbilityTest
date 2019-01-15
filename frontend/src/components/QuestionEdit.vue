@@ -13,11 +13,11 @@
         <card>
           <Content>
             <Form :model="questionData">
-              <FormItem label="input">
-                  <Input v-model="questionData.newQuestionName" placeholder="Enter Title..." />
+              <FormItem label="input"><br>
+                  <Input v-model="questionData.newQuestionName" size="large" style="width: 600px" placeholder="请输入题目名" />
               </FormItem>
               <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
-                  <Input v-model="questionData.newOptionData[index].oName" size="large" placeholder="请输入选项" />
+                  <Input v-model="questionData.newOptionData[index].oName" style="width: 600px" placeholder="请输入选项" /><br>
                   <InputNumber v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.newOptionData[index].dId" type="button">
                     <Radio v-for="item in dimensionsData" :key="item" :label=item.dId>{{item.dName}}</Radio>
@@ -83,7 +83,7 @@ export default {
             }
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
@@ -95,6 +95,7 @@ export default {
       }).then(message => {
         if (message.data.code === 200) {
           if (message.data.oName.length > 0) {
+            this.$Message.info(`can't ${message.data.oName} database`)
             this.oldOptionData = []
             let questionName = message.data.qName
             this.oldQuestionName = questionName
@@ -121,31 +122,31 @@ export default {
             }
           }
         } else {
-          this.$message.error(`无法读取数据库！`)
+          this.$message.error(`无法读取数据库`)
         }
       })
     },
     editQuestion () {
       for (let i = 0; i < this.questionData.newOptionData.length; i++) {
         if (this.questionData.newOptionData[i].oName === '') {
-          this.$Message.info('请输入选项内容！')
+          this.$Message.info('请输入选项内容')
           return
         }
         if (this.questionData.newOptionData[i].dId === 0) {
-          this.$Message.info('请选择维度！')
+          this.$Message.info('请选择维度')
           return
         }
         if (this.questionData.newOptionData[i].score === 0) {
-          this.$Message.info('请确定选项分数！')
+          this.$Message.error('请确定选项分数')
           return
         }
       }
       this.$axios.post('/update_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`编辑题目成功！`)
+          this.$Message.success(`edit questions success`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }

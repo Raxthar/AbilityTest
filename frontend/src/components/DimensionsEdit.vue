@@ -9,11 +9,11 @@
       </Header>
       <Content>
         <Card>
-          <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button><br><br>
+          <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button>
           <Button :size="buttonSize" type="primary" @click="delDimension">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in dimensions.dimensionName" :key="(list, index)">
-              <Input v-model="dimensions.dimensionName[index]" size="large" placeholder="请输入维度" />
+              <Input v-model="dimensions.dimensionName[index]" style="width: 600px" size="large" placeholder="请输入维度" />
             </FormItem>
               <Button type="primary" class="submit-button" @click="editDimension">提交</Button>
           </Form>
@@ -64,17 +64,17 @@ export default {
             this.dimensions.dimensionName = response.data.dName
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     editDimension () {
       this.$axios.post('/update_dimension/', JSON.stringify(this.dimensions)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`修改测评成功！`)
+          this.$Message.success(`修改测评成功`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.dimensions.tId)
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }
