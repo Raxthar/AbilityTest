@@ -11,9 +11,9 @@
         <Card>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in judges.dimensionName" :key="(list, index)">
-              <p>{{judges.dimensionName[index]}}</p>
-              <Input v-model="judges.judge[index]" size="large" placeholder="请输入评价" />
-            </FormItem>
+              <p>{{judges.dimensionName[index]}}
+              <Input v-model="judges.judge[index]" size="large" placeholder="请输入评价" /></p>
+            </FormItem><br><br><br>
             <p>截止日期</p>
             <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="judges.due"></DatePicker>
               <Button type="primary" class="submit-button" @click="editJudge">提交</Button>
@@ -32,6 +32,7 @@ export default {
   },
   data () {
     return {
+      buttonSize: 'large',
       tId: this.$route.params.tId,
       judges: {
         dimensionId: [],
@@ -58,7 +59,7 @@ export default {
             this.judges.dimensionName = dimension.data.dName
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
@@ -74,17 +75,17 @@ export default {
             this.judges.due = response.data.due
           }
         } else {
-          this.$Message.error(`无法读取数据库！`)
+          this.$Message.error(`无法读取数据库`)
         }
       })
     },
     editJudge () {
       this.$axios.post('/edit_judge/', JSON.stringify(this.judges)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`设置评价成功！`)
+          this.$Message.success(`设置评价成功`)
           this.$router.push('/CreateEvaluation/')
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }
@@ -95,6 +96,11 @@ export default {
 <style scoped>
 .layout {
   height: 100vmin;
+}
+
+p {
+  font-family: 楷体;
+  font-size: 22px;
 }
 
 .ivu-layout-header {
