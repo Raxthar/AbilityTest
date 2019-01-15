@@ -23,10 +23,19 @@ export default {
       visible: false,
       actions: [
         {
-          name: '查看详细信息'
+          name: '查看/修改测评标题、描述'
         },
         {
-          name: '修改测评'
+          name: '查看/修改测评维度'
+        },
+        {
+          name: '查看/修改测评题目'
+        },
+        {
+          name: '设置截止时间'
+        },
+        {
+          name: '设置自动评价'
         },
         {
           name: '去分享',
@@ -93,7 +102,15 @@ export default {
           break
         case 1:
           break
+        case 2:
+          break
         case 3:
+          break
+        case 4:
+          break
+        case 5:
+          break
+        case 6:
           wx.request({
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
