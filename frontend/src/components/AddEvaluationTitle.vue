@@ -11,9 +11,9 @@
         <Card>
           <Form :model="createData">
             <p class="title-text">测评标题</p>
-            <Input placeholder="Enter title" style="width: 300px"  v-model="createData.tName"/><br><br>
+            <Input placeholder="请输入测评标题" style="width: 600px"  v-model="createData.tName"/><br><br><br><br>
             <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" placeholder="Enter describe"  v-model="createData.tDescribe"/><br><br>
+            <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="createData.tDescribe"/><br><br><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">创建测评</Button>
           </Form>
         </Card>
@@ -49,11 +49,11 @@ export default {
       }
       this.$axios.post('/create/', JSON.stringify(this.createData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`创建 ${this.createData.tName} 成功！`)
+          this.$Message.success(`create ${this.createData.tName} success`)
           let tId = response.data.tId
           this.$router.push('/AddDimensions/' + this.createData.uId + '/' + tId)
         } else {
-          this.$Message.error('无法读取数据库！')
+          this.$Message.error('无法读取数据库')
         }
       })
     }
@@ -64,6 +64,11 @@ export default {
 <style scoped>
 .layout {
   height: 100vmin;
+}
+
+p {
+  font-family: 楷体;
+  font-size: 22px;
 }
 
 .ivu-layout-header {
@@ -96,11 +101,6 @@ export default {
 .ivu-card-body {
   height: 500px;
   padding: 100px;
-}
-
-.title-text {
-  font-family: "Helvetica Neue";
-  font-size: 20px;
 }
 
 .ivu-input-wrapper {
