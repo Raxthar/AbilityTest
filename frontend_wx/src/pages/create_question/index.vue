@@ -1,22 +1,30 @@
 <template>
   <div>
     <view style="margin-top: 10px">
-    <form :model="questionData">
-      <formitem label="input">
-          <input v-model="questionData.qName" placeholder="Enter Title..."  class="demo-input"/>
-      </formitem>
-      <formitem v-for="(list, ex) in lists" v-bind:key="ex">
-          <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
-          <input v-model="list.score" placeholder="请输入分数" class="demo-input"/>
-          <i-radio-group  v-model="checkvalue[ex]"  :current="current"  @change="handleFruitChange">
-            <i-radio v-for="(item,index) in dimensionsData"   :key="item.dId" :value="item.dName">
-            </i-radio>
-          </i-radio-group>
-      </formitem>
+      <i-panel title="题干">
+          <input v-model="questionData.qName" placeholder="请输入题干" class="demo-input"/>
+      </i-panel>
+      <i-panel title="选项">
+        <i-panel v-for="(list, ex) in lists" v-bind:key="ex">
+          <i-panel title="名称">
+            <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
+          </i-panel>
+          <i-panel title="对应分数及维度">
+            <i-panel title="请选择维度">
+              <i-radio-group :current="current[ex].choice" @change="handleFruitChange">
+                <i-radio v-for="(item,index) in dimensionsData" :key="index" :value="item.dName" @touchstart="handleTouchStart(ex)">
+                </i-radio>
+              </i-radio-group>
+            </i-panel>
+            <i-panel title="请输入分数">
+              <i-input-number :value="list.score" min="-2" max="100" class="demo-input" @change="handleChange" @touchstart="handleTouchStart(ex)"/>
+            </i-panel>
+          </i-panel>
+        </i-panel>
+      </i-panel>
       <i-button type="primary" @click="setQuestion">提交</i-button>
-    </form>
-            <i-button type="primary" @click="addOption">添加选项</i-button><br><br>
-            <i-button type="primary" @click="delOption">删除选项</i-button><br><br>
+      <i-button type="primary" @click="addOption">添加选项</i-button><br><br>
+      <i-button type="primary" @click="delOption">删除选项</i-button><br><br>
     </view>
     <i-message id="message" />
   </div>
@@ -25,42 +33,84 @@
 import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
+    this.uId = this.$root.$mp.query.uId
+    this.questionData = {
+      tId: -1,
+      qName: '',
+      oName: [],
+      dId: [],
+      score: []
+    }
+    this.questionData.tId = this.$root.$mp.query.tId
+    this.lists = [{
+      oName: '',
+      score: -1,
+      dID: -1
+    }]
+    this.dimensionsData = []
+    this.current = [{
+      choice: ''
+    }]
+    this.currentEx = -1
     this.searchDimension()
-    // this.uId = this.$root.$mp.query.uId
-    // this.questionData.tId = this.$root.$mp.tId
   },
   data () {
     return {
-      uId: 1,
+      currentEx: -1,
+      uId: -1,
       lists: [{
         oName: '',
-        score: 0,
-        dID: 1
+        score: -1,
+        dID: -1
       }],
       dimensionsData: [],
       questionData: {
-        tId: 3,
+        tId: -1,
         qName: '',
         oName: [],
         dId: [],
         score: []
       },
-      current: "",
-      checkvalue: []
+      current: [{
+        choice: ''
+      }],
     }
   },
 
   methods: {
+    handleTouchStart (ex) {
+       $Message({
+         content: '点击了第' + ex + '项',
+         type: 'success'
+       })
+      this.currentEx = ex
+    },
     handleFruitChange ({mp}) {
-      this.current = mp.detail.value
+      this.current[this.currentEx].choice = mp.detail.value
+      for(let i = 0; i < this.dimensionsData.length; i++) {
+        if(this.dimensionsData[i].dName === this.current[this.currentEx].choice) {
+          this.lists[this.currentEx].dID = this.dimensionsData[i].dId
+        }
+      }
+    },
+    handleChange ({mp}) {
+      $Message({
+        content: '当前数值为' + mp.detail.value,
+        type: 'warning'
+      })
+      this.lists[this.currentEx].score = mp.detail.value
     },
     addOption () {
+      let obj = {
+        choice: ''
+      }
       let cope = {
         oName: "",
         score: "",
         dID: ""
       }
       this.lists.push(cope)
+      this.current.push(obj)
     },
     delOption (ex) {
       this.lists.splice(ex, 1)
@@ -69,10 +119,6 @@ export default {
       let list = this.dimensionsData
       wx.request({
         url: 'http://127.0.0.1:8000/search_dimensions/', // 仅为示例，并非真实的接口地址
-        // method: "GET",
-        header: {
-          "content-type": "application/x-www-form-urlencoded"
-        },
         data: {content: this.questionData.tId},
         success (response) {
           console.log(response.data)
@@ -104,9 +150,8 @@ export default {
         })
         return
       }
-      console.log("7")
       for (let i = 0; i < this.lists.length; i++) {
-        this.questionData.dId[i] = 1
+        this.questionData.dId[i] = this.lists[i].dID
         this.questionData.score[i] = this.lists[i].score
         this.questionData.oName[i] = this.lists[i].oName
         console.log(this.questionData.oName[i])
@@ -127,6 +172,8 @@ export default {
           this.questionData.score[i] = 1
         }
       }
+      let uid = this.uId
+      let tid = this.questionData.tId
       wx.request({
         url: 'http://127.0.0.1:8000/question_chat/', // 仅为示例，并非真实的接口地址
         method: "POST",
@@ -141,11 +188,11 @@ export default {
               type: 'success'
             })
             wx.navigateTo({
-              url: '../question_list/main'
+              url: '../question_list/main?uId=' + uid + '&tId=' + tid
             })
           } else {
             $Message({
-              content: '无法读取数据库',
+              content: '操作失败',
               type: 'error'
             })
           }

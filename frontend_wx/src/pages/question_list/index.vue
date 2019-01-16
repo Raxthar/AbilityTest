@@ -6,15 +6,16 @@
     <i-card v-for="(questiondata,index) in questionData" v-bind:key="index" :title="questiondata.qName">
       <view slot="footer"><i-button  @click="deleteQuestion(index)">删除</i-button></view>
     </i-card>
-    <i-button type="primary" size="small" @click="0" >发布问卷</i-button>
+    <i-button type="primary" size="small" @click="goToIndex" >发布问卷</i-button>
   </div>
 </template>
 
 <script>
 export default {
   mounted (options) {
-    this.questionData.uId = this.$root.$mp.query.uId
-    this.questionData.tId = this.$root.$mp.query.tId
+    this.uId = this.$root.$mp.query.uId
+    this.tId = this.$root.$mp.query.tId
+    this.questionData = []
     this.searchQuestion()
   },
   data () {
@@ -47,7 +48,12 @@ export default {
 
     jumpToAddQuestion () {
       wx.navigateTo({
-        url: '../create_question/main?uId=2&tId=2'
+        url: '../create_question/main?uId=' + this.uId + '&tId=' + this.tId
+      })
+    },
+    goToIndex () {
+      wx.navigateTo({
+        url: '../index/main'
       })
     },
     searchQuestion () {

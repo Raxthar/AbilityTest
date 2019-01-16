@@ -37,6 +37,8 @@ export default {
 
   methods: {
     questionList () {
+      let tid = this.dimensionLists.tId
+      let uid = this.dimensionLists.uId
       wx.request({
         url: 'http://127.0.0.1:8000/create_dimension/', // 仅为示例，并非真实的接口地址
         method: 'POST',
@@ -48,7 +50,7 @@ export default {
           console.log(response.data)
           if (response.data.code === 200) {
             wx.navigateTo({
-              url: '../question_list/main'
+              url: '../create_question/main?tId=' + tid + '&uId=' + uid
             })
           } else {
             console.log("failed!")

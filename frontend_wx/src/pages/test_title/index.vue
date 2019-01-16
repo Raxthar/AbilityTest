@@ -1,9 +1,9 @@
 <template>
   <div>
-    <i-card >
+    <i-card title="测评标题">
       <view slot="content">{{titleData.qTitle}}</view>
     </i-card>
-    <i-card >
+    <i-card title="测评描述">
       <view slot="content">{{titleData.qDescribe}}</view>
     </i-card>
     <i-button type="primary" size="small" @click="evaluationEdit()" >编辑</i-button>
@@ -14,7 +14,7 @@
 export default {
   mounted (options) {
     this.uId = this.$root.$mp.query.uId
-    this.titleData.tId = this.$root.$mp.query.tId
+    this.tId = this.$root.$mp.query.tId
     this.searchTitle()
   },
   data () {
@@ -50,7 +50,7 @@ export default {
     },
     evaluationEdit () {
       wx.navigateTo({
-        url: '../evaluation_edit/main?uId=' + this.uId + '&tId=' +  this.titleData.tId
+        url: '../evaluation_edit/main?uId=' + this.uId + '&tId=' +  this.tId
       })
     }
   }

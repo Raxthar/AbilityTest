@@ -150,10 +150,9 @@ def question_chat(request):
     try:
         question = Question(q_name=question_name, t_id=test_id)
         question.save()
-        question_info = Question.objects.get(q_name=question_name, t_id=test_id)
         for i in range(len(d_id)):
             option = Option(
-                o_name=o_name[i], q_id=question_info.q_id, score=score[i], d_id=d_id[i])
+                o_name=o_name[i], q_id=question.q_id, score=score[i], d_id=d_id[i])
             option.save()
         response = {
                 "code": 200
