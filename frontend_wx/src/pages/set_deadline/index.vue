@@ -6,7 +6,9 @@
               <Input :value="value" @click="handleClick(index)" @input="handleInput" size="large" placeholder="请输入评价" class="demo-input"/>
             </FormItem>
             <p>截止日期</p>
-            <input v-model="judges.due" type="textarea"  placeholder="请输入截止日期" maxlength="50" class="demo-input"/>
+            <picker class="weui-btn" mode="date"  start="2015-09-01" end="2040-09-01" @change="bindDateChange">
+            <button type="default" >{{judges.due}}</button>
+            </picker>
                <i-button type="primary" @click="editJudge">提交</i-button>
       </Form>
  </div>
@@ -22,6 +24,7 @@
     },
     data () {
       return {
+        date: '2016-09-01',
         currentIndex: -1,
         tId: 3,
         value: "",
@@ -29,12 +32,16 @@
           dimensionId: [],
           dimensionName: [],
           judge: [],
-          due: '',
+          due: '2019-01-01',
           tId: 3
         }
       }
     },
     methods: {
+      bindDateChange(e) {
+      console.log('选中的日期为：' + e.mp.detail.value);
+      this.judges.due = e.mp.detail.value
+      },
       handleClick (index) {
         this.currentIndex = index
       },
