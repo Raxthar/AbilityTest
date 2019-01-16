@@ -10,6 +10,7 @@
 <script>
 export default {
   mounted (options) {
+    this.uId = this.$root.$mp.query.uId
     this.dimensions.tId = this.$root.$mp.query.tId
     this.searchDimensions()
   },
@@ -47,7 +48,7 @@ export default {
     },
     dimensionEdit () {
       wx.navigateTo({
-        url: '../create_demision/main?tId=2'
+        url: '../create_demision/main?tId=' + this.dimensions.tId
       })
     }
   }

@@ -5,7 +5,7 @@
       <formitem label="input">
           <input v-model="questionData.qName" placeholder="Enter Title..."  class="demo-input"/>
       </formitem>
-      <formitem v-for="(list, ex) in lists" >
+      <formitem v-for="(list, ex) in lists" v-bind:key="ex">
           <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
           <input v-model="list.score" placeholder="请输入分数" class="demo-input"/>
           <i-radio-group  v-model="checkvalue[ex]"  :current="current"  @change="handleFruitChange">
@@ -33,7 +33,7 @@ export default {
     return {
       uId: 1,
       lists: [{
-        oName: "123",
+        oName: '',
         score: 0,
         dID: 1
       }],

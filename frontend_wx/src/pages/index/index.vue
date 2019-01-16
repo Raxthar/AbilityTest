@@ -3,7 +3,7 @@
     <i-message id="message" />
     <i-button type="primary" size="small" @click="testtitle" >创建测评</i-button>
     <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen(index)">
-      <view slot="footer">{{evaluation.tStatus}}</view>
+      <view slot="footer">{{evaluation.tId}}</view>
     </i-card>
     <i-action-sheet :visible="visible" :actions="actions" show-cancel @cancel="handleCancel" @iclick="handleClickItem"
     :mask-closable="false" />
@@ -13,7 +13,8 @@
 <script>
 import { $Message } from '../../../static/iview/base/index'
 export default {
-  mounted () {
+  onShow () {
+    this.evaluationLists = []
     this.searchEvaluation()
   },
 
@@ -23,10 +24,16 @@ export default {
       visible: false,
       actions: [
         {
-          name: '查看详细信息'
+          name: '查看/修改测评标题、描述'
         },
         {
-          name: '修改测评'
+          name: '查看/修改测评维度'
+        },
+        {
+          name: '查看/修改测评题目'
+        },
+        {
+          name: '设置截止时间、自动评价'
         },
         {
           name: '去分享',
@@ -65,7 +72,10 @@ export default {
               }
             }
           } else {
-            console.log('failed!')
+            $Message ({
+              content: '读取数据失败！',
+              type: 'error'
+            })
           }
         }
       })
@@ -73,7 +83,6 @@ export default {
     },
 
     handleOpen (index) {
-      console.log(index)
       this.visible = true
       this.currentIndex = index
     },
@@ -90,10 +99,24 @@ export default {
       }
       switch (mp.detail.index) {
         case 0:
+          this.visible = false
+          wx.navigateTo({
+            url: '../test_title/main?uId=' + this.uId + '&tId=' + this.evaluationLists[this.currentIndex].tId
+          })
           break
         case 1:
+          this.visible = false
+          wx.navigateTo({
+            url: '../test-dimension/main?tId=' + this.evaluationLists[this.currentIndex].tId
+          })
+          break
+        case 2:
           break
         case 3:
+          break
+        case 4:
+          break
+        case 5:
           wx.request({
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
@@ -104,7 +127,6 @@ export default {
             success (response) {
               if (response.data.code === 200) {
                 obj.list.splice(obj.cIndex, 1)
-                console.log(obj.visible)
                 $Message({
                   content: '删除成功！',
                   type: 'success'
@@ -117,7 +139,6 @@ export default {
               }
             }
           })
-          console.log(1)
           this.visible = false
           this.evaluationLists = obj.list
           break
