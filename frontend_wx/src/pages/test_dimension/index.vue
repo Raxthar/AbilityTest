@@ -48,7 +48,7 @@ export default {
     },
     dimensionEdit () {
       wx.navigateTo({
-        url: '../create_demision/main?tId=' + this.dimensions.tId
+        url: '../dimension_edit/main?tId=&uId' + this.dimensions.tId +this.uId
       })
     }
   }
