@@ -17,7 +17,7 @@ class ATest(models.Model):
     t_due = models.CharField(max_length=80)
 
     def __str__(self):
-        return self.t_id
+        return str(self.t_id)
 
 
 class Question(models.Model):

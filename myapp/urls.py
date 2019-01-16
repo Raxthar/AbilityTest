@@ -6,7 +6,6 @@ urlpatterns = [
     url('create_dimension/', views.create_dimension, name='create_dimension'),
     url('add_question/', views.add_question, name='add_question'),
     url('search_all_atest/', views.search_all_atest, name='search_all_atest'),
-    url('create_judge/', views.create_judge, name='create_judge'),
     url('set_dimension_page/', views.set_dimension_page, name='set_dimension_page'),
     url('search_all_questions/', views.search_all_questions, name='search_all_questions'),
     url('test_list', views.test_list, name='test_list'),
@@ -22,4 +21,5 @@ urlpatterns = [
     url('edit_judge/', views.edit_judge, name='edit_judge'),
     url('load_result', views.load_result, name='load_result'),
     url('question_chat/', views.question_chat, name='question_chat'),
+    url('show_atest/', views.show_atest, name='show_atest'),
 ]  

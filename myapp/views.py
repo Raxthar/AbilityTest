@@ -9,6 +9,7 @@ import json
 from .models import ATest, Question, Judge, Option, Result
 # Create your views here.
 from .models import Dimension
+import types
 
 
 # 创建维度
@@ -56,29 +57,6 @@ def search_all_atest(request):
     obj = json.loads(request.body.decode('utf-8'))
     u_id = obj['uId']
     try:
-        atest_list = []
-        for i in ATest.objects.filter(u_id=u_id):
-            atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
-        response = {
-            "data": atest_list
-        }
-    except Exception as err_msg:
-        response = {
-            "code": 0,
-            "err_msg": err_msg
-        }
-    return JsonResponse(response)
-
-
-def create_judge(request):
-    obj = json.loads(request.body.decode('utf-8'))
-    t_id = obj['tId']
-    content = obj['content']
-    print(content)
-    try:
-        for i in content:
-            judge = Judge(t_id=t_id, d_id=i.get('d_id'), j_content=i.get('j_content'))
-            judge.save()
         atest_list = []
         for i in ATest.objects.filter(u_id=u_id):
             atest_list.append([i.t_name, i.t_describe, i.t_status, i.t_due])
@@ -442,6 +420,48 @@ def load_result(request):
         response = {
             "resultId": rid_list,
             "dName": d_name_list,
+            "code": 200
+        }
+    except Exception as err_msg:
+        response = {
+            "code": 0,
+            "err_msg": err_msg
+        }
+    return JsonResponse(response)
+
+
+def show_atest(request):
+    #t_id = request.GET['tId']
+    obj = json.loads(request.body.decode('utf-8'))
+    t_id = obj['tId']
+    question_list = []
+    options_list = []
+    question_dic = {
+        "qId": 0,
+        "qName": "",
+        "options": options_list
+    }
+    option_dic = {
+        "oId": 0,
+        "oName": ""
+    }
+    print(t_id)
+    try:
+        atest = ATest.objects.get(t_id=t_id)
+        questions = Question.objects.filter(t_id=t_id)
+        for i in range(len(questions)):
+            question_dic["qId"] = questions[i].q_id
+            question_dic["qName"] = questions[i].q_name
+            options = Option.objects.filter(q_id=questions[i].q_id)
+            for j in range(len(options)):
+                option_dic["oId"] = options[j].o_id
+                option_dic["oName"] = options[j].o_name
+            options_list.append(option_dic)
+        question_list.append(question_dic)
+        response = {
+            "tDescribe": atest.t_describe,
+            "tName:": atest.t_name,
+            "question:": question_list,
             "code": 200
         }
     except Exception as err_msg:
