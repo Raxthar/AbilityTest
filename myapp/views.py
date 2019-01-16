@@ -9,17 +9,13 @@ import json
 from .models import ATest, Question, Judge, Option, Result
 # Create your views here.
 from .models import Dimension
-import types
 
 
 # 创建维度
 def create_dimension(request):
-    print('create_dimension')
     obj = json.loads(request.body.decode('utf-8'))
     d_names_arr = obj['dimensions']
     t_id = obj['tId']
-    u_id = obj['uId']
-    print(d_names_arr)
     try:
         for i in range(len(d_names_arr)):
             dimension = Dimension(d_name=d_names_arr[i].get('dName'), t_id=t_id)
@@ -27,10 +23,10 @@ def create_dimension(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -48,10 +44,10 @@ def search_all_questions(request):
             "questionName": question_name_list,
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -66,10 +62,10 @@ def search_all_atest(request):
         response = {
             "data": atest_list
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -89,10 +85,10 @@ def create_judge(request):
         response = {
             "data": atest_list
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -109,7 +105,7 @@ def create(request):
         response['tId'] = test.t_id
         response['code'] = 200
         return JsonResponse(response)
-    except Exception as e:
+    except Exception as err_msg:
         response['code'] = 0
         return JsonResponse(response)
 
@@ -127,15 +123,16 @@ def add_question(request):
         question_info = Question.objects.get(q_name=question_name, t_id=test_id)
         for (o_name, score, d_id) in zip(option_name, option_score, option_dimension):           
             option = Option(
-                o_name=option_name[o_name], q_id=question_info.q_id, score=option_score[score],d_id=option_dimension[d_id])
+                o_name=option_name[o_name], q_id=question_info.q_id,
+                score=option_score[score], d_id=option_dimension[d_id])
             option.save()
         response = {
-                "code": 200
-            }
-    except Exception as e:
+            "code": 200
+        }
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -155,12 +152,12 @@ def question_chat(request):
                 o_name=o_name[i], q_id=question.q_id, score=score[i], d_id=d_id[i])
             option.save()
         response = {
-                "code": 200
-            }
-    except Exception as e:
+            "code": 200
+        }
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -179,9 +176,9 @@ def search_dimensions(request):
         dimension['dId'] = dimension_id
         dimension['dName'] = dimension_name
         dimension['code'] = 200
-    except Exception as e:
+    except Exception as err_msg:
         dimension['code'] = 0
-        dimension['errMsg'] = e
+        dimension['err_msg'] = err_msg
     return JsonResponse(dimension)
 
 
@@ -207,9 +204,9 @@ def edit_question(request):
         message["dName"] = dimension_name
         message["score"] = option_score
         message['code'] = 200
-    except Exception as e:
+    except Exception as err_msg:
         message['code'] = 0
-        message['errMsg'] = e
+        message['err_msg'] = err_msg
     return JsonResponse(message)
 
 
@@ -229,7 +226,7 @@ def update_question(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0
         }
@@ -259,7 +256,7 @@ def test_list(request):
         message['tDescribe'] = list_describe
         message['code'] = 200
         return JsonResponse(message)
-    except Exception as e:
+    except Exception as err_msg:
         message['code'] = 0
         return JsonResponse(message)
 
@@ -288,10 +285,10 @@ def delete_question(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -304,10 +301,10 @@ def delete_evaluation(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -321,10 +318,10 @@ def search_atest_by(request):
             "tDescribe": atest_old.t_describe,
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -339,7 +336,7 @@ def update_atest(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0
         }
@@ -358,7 +355,7 @@ def update_dimension(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0
         }
@@ -376,9 +373,9 @@ def search_stat(request):
         for i in range(len(result_list)):
             d_list.append(result_list[i].d_id)
         r_dic = get_stat(d_list)
-        for v,k in r_dic.items():
-            d_id_list.append(v)
-            stat_list.append(k)
+        for value, key in r_dic.items():
+            d_id_list.append(value)
+            stat_list.append(key)
         for i in range(len(d_id_list)):
             d_name_list.append(Dimension.objects.get(d_id=d_id_list[i]).d_name)
         response = {
@@ -386,10 +383,10 @@ def search_stat(request):
             "stat": stat_list,
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -424,10 +421,10 @@ def edit_judge(request):
         response = {
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
 
@@ -447,9 +444,9 @@ def load_result(request):
             "dName": d_name_list,
             "code": 200
         }
-    except Exception as e:
+    except Exception as err_msg:
         response = {
             "code": 0,
-            "errMsg": e
+            "err_msg": err_msg
         }
     return JsonResponse(response)
