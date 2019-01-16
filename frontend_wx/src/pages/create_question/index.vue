@@ -16,7 +16,9 @@
                 </i-radio>
               </i-radio-group>
             </i-panel>
-            <input v-model="list.score" placeholder="请输入选项分数" class="demo-input" />
+            <i-panel title="请输入分数">
+              <i-input-number :value="list.score" min="-2" max="100" class="demo-input" @change="handleChange" @touchstart="handleTouchStart(ex)"/>
+            </i-panel>
           </i-panel>
         </i-panel>
       </i-panel>
@@ -32,17 +34,34 @@ import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
     this.uId = this.$root.$mp.query.uId
+    this.questionData = {
+      tId: -1,
+      qName: '',
+      oName: [],
+      dId: [],
+      score: []
+    }
     this.questionData.tId = this.$root.$mp.query.tId
+    this.lists = [{
+      oName: '',
+      score: -1,
+      dID: -1
+    }]
+    this.dimensionsData = []
+    this.current = [{
+      choice: ''
+    }]
+    this.currentEx = -1
     this.searchDimension()
   },
   data () {
     return {
       currentEx: -1,
-      uId: 1,
+      uId: -1,
       lists: [{
         oName: '',
-        score: 0,
-        dID: 1
+        score: -1,
+        dID: -1
       }],
       dimensionsData: [],
       questionData: {
@@ -55,7 +74,6 @@ export default {
       current: [{
         choice: ''
       }],
-      checkvalue: []
     }
   },
 
@@ -69,6 +87,18 @@ export default {
     },
     handleFruitChange ({mp}) {
       this.current[this.currentEx].choice = mp.detail.value
+      for(let i = 0; i < this.dimensionsData.length; i++) {
+        if(this.dimensionsData[i].dName === this.current[this.currentEx].choice) {
+          this.lists[this.currentEx].dID = this.dimensionsData[i].dId
+        }
+      }
+    },
+    handleChange ({mp}) {
+      $Message({
+        content: '当前数值为' + mp.detail.value,
+        type: 'warning'
+      })
+      this.lists[this.currentEx].score = mp.detail.value
     },
     addOption () {
       let obj = {
@@ -120,9 +150,8 @@ export default {
         })
         return
       }
-      console.log("7")
       for (let i = 0; i < this.lists.length; i++) {
-        this.questionData.dId[i] = 1
+        this.questionData.dId[i] = this.lists[i].dID
         this.questionData.score[i] = this.lists[i].score
         this.questionData.oName[i] = this.lists[i].oName
         console.log(this.questionData.oName[i])
@@ -143,6 +172,8 @@ export default {
           this.questionData.score[i] = 1
         }
       }
+      let uid = this.uId
+      let tid = this.questionData.tId
       wx.request({
         url: 'http://127.0.0.1:8000/question_chat/', // 仅为示例，并非真实的接口地址
         method: "POST",
@@ -157,11 +188,11 @@ export default {
               type: 'success'
             })
             wx.navigateTo({
-              url: '../question_list/main'
+              url: '../question_list/main?uId=' + uid + '&tId=' + tid
             })
           } else {
             $Message({
-              content: '无法读取数据库',
+              content: '操作失败',
               type: 'error'
             })
           }
