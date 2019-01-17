@@ -1,0 +1,14 @@
+{   
+    "component": true,  
+    "usingComponents": { 
+        "i-card": "../../../static/iview/card/index", 
+        "i-button": "../../../static/iview/button/index",    
+        "i-modal": "../../../static/iview/modal/index" ,
+        "i-row": "../../../static/iview/row/index",
+        "i-col": "../../../static/iview/col/index",
+        "i-panel": "../../../static/iview/panel/index",
+        "i-input": "../../../static/iview/input/index",
+        "i-input-spring": "../../../static/iview/input/index",
+        "i-message": "../../../static/iview/message/index"
+    }
+}
