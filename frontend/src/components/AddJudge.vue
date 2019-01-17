@@ -16,7 +16,7 @@
             </FormItem><br><br><br>
             <p>截止日期</p>
             <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="judges.due"></DatePicker>
-              <Button type="primary" class="submit-button" @click="editJudge">提交</Button>
+              <Button type="primary" class="submit-button" @click="editJudge" id="submitButton">提交</Button>
           </Form>
         </Card>
       </Content>

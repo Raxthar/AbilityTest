@@ -108,4 +108,16 @@ describe('DimensionsEdit.vue', () => {
         const objLengthAfter = Object.keys(inputObjAfter).length
         expect(objLengthAfter).to.equal(objLength - 4)
       })
+
+      it('点击提交后, editDimension函数被调用', () => {
+        const wrapper = mount(DimensionsEdit, {
+        mocks: {
+          $route
+        }})
+        const clickMethodStub = sinon.stub()
+        wrapper.setMethods({ editDimension: clickMethodStub })
+        const submitButton = wrapper.find('#submitButton')
+        submitButton.trigger('click')
+        expect(clickMethodStub.called).to.equal(true)
+      })
 })

@@ -38,4 +38,16 @@ describe('AddJudge.vue', () => {
       expect(pLength).to.equal(5)
       expect(inputLength).to.equal(5)
     })
+
+    it('点击提交后, editJudge函数被调用', () => {
+      const wrapper = mount(AddJudge, {
+      mocks: {
+        $route
+      }})
+      const clickMethodStub = sinon.stub()
+      wrapper.setMethods({ editJudge: clickMethodStub })
+      const submitButton = wrapper.find('#submitButton')
+      submitButton.trigger('click')
+      expect(clickMethodStub.called).to.equal(true)
+    })
 })

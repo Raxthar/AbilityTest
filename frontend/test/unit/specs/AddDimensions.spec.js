@@ -40,4 +40,16 @@ describe('AddDimensions.vue', () => {
     const afterLength = wrapper.vm.dimensionArray.dimensions.length
     expect(afterLength).to.equal(beforeLength - 1)
   })
+
+  it('点击提交后, updateDimensions函数被调用', () => {
+    const wrapper = mount(AddDimensions, {
+    mocks: {
+      $route
+    }})
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ updateDimensions: clickMethodStub })
+    const updateButton = wrapper.find('#updateButton')
+    updateButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
 })

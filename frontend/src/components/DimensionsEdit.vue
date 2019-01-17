@@ -15,7 +15,7 @@
             <FormItem v-for="(list, index) in dimensions.dimensionName" :key="(list, index)">
               <Input v-model="dimensions.dimensionName[index]" style="width: 600px" size="large" placeholder="请输入维度" />
             </FormItem>
-              <Button type="primary" class="submit-button" @click="editDimension">提交</Button>
+              <Button type="primary" class="submit-button" @click="editDimension" id="submitButton">提交</Button>
           </Form>
         </Card>
       </Content>

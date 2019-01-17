@@ -23,7 +23,7 @@
                     <Radio v-for="dimensions in dimensionsData" :key="dimensions" :label=dimensions.dId>{{dimensions.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
-              <Button type="primary" class="submit-button" @click="setQuestion">提交</Button>
+              <Button type="primary" class="submit-button" @click="setQuestion" id="submitButton">提交</Button>
             </Form>
           </Content>
           <BackTop :height="100" :bottom="200">
