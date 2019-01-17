@@ -6,7 +6,7 @@ from django.core import serializers
 from django.http import JsonResponse
 import json
 
-from .models import ATest, Question, Judge, Option, Result
+from .models import ATest, Question, Judge, Option, Result, Record
 # Create your views here.
 from .models import Dimension
 import types
@@ -445,7 +445,6 @@ def show_atest(request):
         "oId": 0,
         "oName": ""
     }
-    print(t_id)
     try:
         atest = ATest.objects.get(t_id=t_id)
         questions = Question.objects.filter(t_id=t_id)
@@ -462,6 +461,26 @@ def show_atest(request):
             "tDescribe": atest.t_describe,
             "tName:": atest.t_name,
             "question:": question_list,
+            "code": 200
+        }
+    except Exception as err_msg:
+        response = {
+            "code": 0,
+            "err_msg": err_msg
+        }
+    return JsonResponse(response)
+
+
+def add_record(request):
+    obj = json.loads(request.body.decode('utf-8'))
+    t_id = obj['tId']
+    options_list = obj['options']
+    print(options_list)
+    try:
+        for i in range(len(options_list)):
+            record = Record(q_id=options_list[i].get('qId'), o_id=options_list[i].get('oId'), t_id=t_id)
+            record.save()
+        response = {
             "code": 200
         }
     except Exception as err_msg:
