@@ -7,13 +7,11 @@
           返回
         </Button>
       </Header>
-      <Content>
-      </Content>
       <Footer>
         <card>
           <Content>
             <Form :model="questionData">
-              <FormItem label="input"><br>
+              <FormItem label=""><br>
                   <Input v-model="questionData.newQuestionName" size="large" style="width: 600px" placeholder="请输入题目名" />
               </FormItem>
               <FormItem v-for="(options, index) in questionData.newOptionData" :key="(options, index)">
@@ -165,11 +163,6 @@ export default {
 .ivu-layout-header {
   background-color: rgb(97, 176, 255);
   padding: 0 20px;
-}
-
-.ivu-layout-content {
-  height: 80px;
-  padding: 20px;
 }
 
 .ivu-btn-primary {
