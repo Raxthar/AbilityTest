@@ -18,6 +18,13 @@
 <script>
 import {$Message} from '../../../static/iview/base/index'
 export default {
+  onShow () {
+    this.createData = {
+      uId: 1,
+      tName: '',
+      tDescribe: ''
+    }
+  },
   mounted (options) {
     this.createData = {
       uId: 1,
@@ -38,7 +45,7 @@ export default {
 
   methods: {
     handleCreate () {
-      if (this.createData.tName === '' || this.createData.tName === '') {
+      if (this.createData.tName === '' || this.createData.tDescribe === '') {
         $Message({
           content: '请输入内容！',
           type: 'warning'
