@@ -15,6 +15,10 @@ export default {
   mounted (options) {
     this.uId = this.$root.$mp.query.uId
     this.tId = this.$root.$mp.query.tId
+    this.titleData = {
+      qTitle: '',
+      qDescribe: ''
+    }
     this.searchTitle()
   },
   data () {

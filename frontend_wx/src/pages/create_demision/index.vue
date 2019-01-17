@@ -15,6 +15,13 @@
 
 export default {
   mounted (options) {
+    this.currentIndex = -1
+    this.lists = [{dName: ''}]
+    this.dimensionLists = {
+      uId: -1,
+      tId: -1,
+      dimensions: []
+    }
     this.dimensionLists.uId = this.$root.$mp.query.uId
     this.dimensionLists.tId = this.$root.$mp.query.tId
   },

@@ -79,10 +79,6 @@ export default {
 
   methods: {
     handleTouchStart (ex) {
-       $Message({
-         content: '点击了第' + ex + '项',
-         type: 'success'
-       })
       this.currentEx = ex
     },
     handleFruitChange ({mp}) {

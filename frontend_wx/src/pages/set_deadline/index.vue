@@ -1,16 +1,17 @@
 <template>
    <div>
-      <Form :model="dimensions">
-            <FormItem v-for="(Item,index) in judges.dimensionName" v-bind:key="index">
-              <p>{{Item}}</p>
-              <Input :value="value" @click="handleClick(index)" @input="handleInput" size="large" placeholder="请输入评价" class="demo-input"/>
-            </FormItem>
-            <p>截止日期</p>
-            <picker class="weui-btn" mode="date"  start="2015-09-01" end="2040-09-01" @change="bindDateChange">
-            <button type="default" >{{judges.due}}</button>
-            </picker>
-               <i-button type="primary" @click="editJudge">提交</i-button>
-      </Form>
+    <i-message id="message" />
+    <Form :model="dimensions">
+      <FormItem v-for="(Item,index) in judges.dimensionName" v-bind:key="index">
+        <p>{{Item}}</p>
+        <Input :value="value" @click="handleClick(index)" @input="handleInput" size="large" placeholder="请输入评价" class="demo-input"/>
+      </FormItem>
+      <p>截止日期</p>
+      <picker class="weui-btn" mode="date"  start="2015-09-01" end="2040-09-01" @change="bindDateChange">
+      <button type="default" >{{judges.due}}</button>
+      </picker>
+      <i-button type="primary" @click="editJudge">提交</i-button>
+    </Form>
  </div>
 </template>
 
@@ -88,12 +89,12 @@
           success (response) {
             console.log(response.data)
             if (response.data.code === 200) {
-              wx.navigateTo({
-                url: '../question_list/main'
-              })
               $Message({
                 content: `设置评价成功`,
                 type: 'success'
+              })
+              wx.navigateTo({
+                url: '../index/main'
               })
             } else {
               $Message({

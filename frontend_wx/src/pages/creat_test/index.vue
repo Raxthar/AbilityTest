@@ -19,6 +19,11 @@
 import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
+    this.createData = {
+      uId: 1,
+      tName: '',
+      tDescribe: ''
+    }
     this.createData.uId = this.$root.$mp.query.uId
   },
   data () {
