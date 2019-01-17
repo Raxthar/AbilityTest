@@ -56,6 +56,14 @@ export default {
       this.titleData = list
     },
     editEvaluation () {
+      if (this.titleData.evaluationName === '' || this.titleData.evaluationDescribe === '') {
+          $Message({
+            content: '标题或不能为空！',
+            type: 'warning'
+          })
+          return
+        }
+      }
       wx.request({
         url: 'http://127.0.0.1:8000/update_atest/', // 仅为示例，并非真实的接口地址
         method: 'POST',
