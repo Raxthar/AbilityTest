@@ -14,8 +14,8 @@
 import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
-    this.currentIndex = -1,
-    this.lists = [],
+    this.currentIndex = -1
+    this.lists = []
     this.dimensionLists = {
       uId: -1,
       tId: -1,
@@ -110,7 +110,7 @@ export default {
               content: '修改成功！',
               type: 'success'
             })
-            wx.navigateTo({ url: '../index/main'})
+            wx.navigateTo({url: '../index/main'})
           }
         }
       })

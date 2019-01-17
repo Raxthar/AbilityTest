@@ -73,7 +73,7 @@ export default {
       },
       current: [{
         choice: ''
-      }],
+      }]
     }
   },
 
@@ -83,8 +83,8 @@ export default {
     },
     handleFruitChange ({mp}) {
       this.current[this.currentEx].choice = mp.detail.value
-      for(let i = 0; i < this.dimensionsData.length; i++) {
-        if(this.dimensionsData[i].dName === this.current[this.currentEx].choice) {
+      for (let i = 0; i < this.dimensionsData.length; i++) {
+        if (this.dimensionsData[i].dName === this.current[this.currentEx].choice) {
           this.lists[this.currentEx].dID = this.dimensionsData[i].dId
         }
       }

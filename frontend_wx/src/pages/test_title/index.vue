@@ -54,7 +54,7 @@ export default {
     },
     evaluationEdit () {
       wx.navigateTo({
-        url: '../evaluation_edit/main?uId=' + this.uId + '&tId=' +  this.tId
+        url: '../evaluation_edit/main?uId=' + this.uId + '&tId=' + this.tId
       })
     }
   }

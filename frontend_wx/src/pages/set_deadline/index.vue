@@ -39,9 +39,8 @@
       }
     },
     methods: {
-      bindDateChange(e) {
-      console.log('选中的日期为：' + e.mp.detail.value);
-      this.judges.due = e.mp.detail.value
+      bindDateChange (e) {
+        this.judges.due = e.mp.detail.value
       },
       handleClick (index) {
         this.currentIndex = index

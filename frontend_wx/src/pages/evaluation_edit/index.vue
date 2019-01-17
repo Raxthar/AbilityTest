@@ -69,7 +69,7 @@ export default {
               content: '修改成功！',
               type: 'success'
             })
-            wx.navigateTo({ url: '../index/main'})
+            wx.navigateTo({url: '../index/main'})
           } else {
             $Message({
               content: '修改失败！',

@@ -73,7 +73,7 @@ export default {
               }
             }
           } else {
-            $Message ({
+            $Message({
               content: '读取数据失败！',
               type: 'error'
             })
@@ -112,7 +112,6 @@ export default {
           })
           break
         case 2:
-          
           break
         case 3:
           this.visible = false
@@ -148,7 +147,7 @@ export default {
           this.visible = false
           this.evaluationLists = obj.list
           break
-        }
+      }
     },
 
     testtitle () {

@@ -65,17 +65,17 @@ export default {
 
   methods: {
     handleTouchStart (ex) {
-       $Message({
-         content: '点击了第' + ex + '项',
-         type: 'success'
-       })
+      $Message({
+        content: '点击了第' + ex + '项',
+        type: 'success'
+      })
       this.currentEx = ex
     },
     handleChange ({mp}) {
       this.current[this.currentEx].choice = mp.detail.value
       this.choices.options[this.currentEx].qId = this.testing.question[this.currentEx].qId // 当前问题的id赋值给结果
-      for(let i = 0; i < this.testing.question[this.currentEx].options.length; i++) { // 寻找当前选项对应的id存入结果中
-        if(this.testing.question[this.currentEx].options.oName === this.current[this.currentEx].choice) {
+      for (let i = 0; i < this.testing.question[this.currentEx].options.length; i++) { // 寻找当前选项对应的id存入结果中
+        if (this.testing.question[this.currentEx].options.oName === this.current[this.currentEx].choice) {
           this.choices.options[this.currentEx].oId = this.testing.question[this.currentEx].options.oId
         }
       }
@@ -89,11 +89,11 @@ export default {
           console.log(response.data)
           if (response.data.code === 200) {
             list.tName = response.data.tName
-            list.tDescribe = reponse.data.tDescribe
+            list.tDescribe = response.data.tDescribe
             for (let i = 0; i < response.data.question.length; i++) {
               list.question[i].qId = response.question[i].qId
               list.question[i].qName = response.question[i].qName
-              for(let j = 0; j < response.question[i].options.length; j++) {
+              for (let j = 0; j < response.question[i].options.length; j++) {
                 response.question[i].options[j].oId = response.question[i]
               }
             }

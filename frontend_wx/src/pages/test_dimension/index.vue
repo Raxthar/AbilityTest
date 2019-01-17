@@ -53,7 +53,7 @@ export default {
     },
     dimensionEdit () {
       wx.navigateTo({
-        url: '../dimension_edit/main?tId=' + this.dimensions.tId +'&uId=' + this.uId
+        url: '../dimension_edit/main?tId=' + this.dimensions.tId + '&uId=' + this.uId
       })
     }
   }
