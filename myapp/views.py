@@ -431,9 +431,7 @@ def load_result(request):
 
 
 def show_atest(request):
-    #t_id = request.GET['tId']
-    obj = json.loads(request.body.decode('utf-8'))
-    t_id = obj['tId']
+    t_id = request.GET['tId']
     question_list = []
     options_list = []
     question_dic = {
@@ -475,13 +473,31 @@ def add_record(request):
     obj = json.loads(request.body.decode('utf-8'))
     t_id = obj['tId']
     options_list = obj['options']
+    d_score = []
     print(options_list)
     try:
+        '''
         for i in range(len(options_list)):
             record = Record(q_id=options_list[i].get('qId'), o_id=options_list[i].get('oId'), t_id=t_id)
             record.save()
+        '''
+        dimension_list = Dimension.objects.filter(t_id=t_id)
+        d_id_list = []
+        d_name_list = []
+        for i in range(len(dimension_list)):
+            d_id_list.append(dimension_list[i].d_id)
+            d_name_list.append(dimension_list[i].d_name)
+            d_score.append(0)
+        for i in range(len(options_list)):
+            o_obj = Option.objects.get(o_id=options_list[i].get('oId'))
+            score_index = d_id_list.index(o_obj.d_id)
+            d_score[score_index] += o_obj.score
+        print(d_score)
+        d_name_result = d_name_list[d_score.index(max(d_score))]
+        print(d_name_result)
         response = {
-            "code": 200
+            "code": 200,
+            "result": d_name_result
         }
     except Exception as err_msg:
         response = {
