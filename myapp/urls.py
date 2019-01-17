@@ -23,4 +23,5 @@ urlpatterns = [
     url('question_chat/', views.question_chat, name='question_chat'),
     url('show_atest', views.show_atest, name='show_atest'),
     url('add_record/', views.add_record, name='add_record'),
+    url('search_judge', views.search_judge, name='search_judge'),
 ]  

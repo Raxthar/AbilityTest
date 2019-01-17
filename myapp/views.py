@@ -428,6 +428,27 @@ def load_result(request):
     return JsonResponse(response)
 
 
+def search_judge(request):
+    t_id = request.GET['tId']
+    judge_list = []
+    try:
+        judge = Judge.objects.filter(t_id=t_id)
+        for i in range(len(judge)):
+            judge_list.append(judge[i].j_content)
+        due =  ATest.objects.get(t_id=t_id).t_due
+        response = {
+            "jContent": judge_list,
+            "due": due,
+            "code": 200
+        }
+    except Exception as err_msg:
+        response = {
+            "code": 0,
+            "err_msg": err_msg
+        }
+    return JsonResponse(response)
+
+
 def show_atest(request):
     t_id = request.GET['tId']
     question_list = []
@@ -465,7 +486,6 @@ def show_atest(request):
             "err_msg": err_msg
         }
     return JsonResponse(response)
-
 
 
 # 填写一次测评增加一次记录，并返回自动评价结果
