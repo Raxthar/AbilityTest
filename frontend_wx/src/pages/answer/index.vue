@@ -26,7 +26,18 @@
 <script>
 import {$Message} from '../../../static/iview/base/index'
 export default {
-  mounted (options) {
+  mounted () {
+    this.testing = {
+      tId: -1,
+      tName: '',
+      tDescribe: '',
+      question: []
+    }
+    this.current = []
+    this.choices = {
+      tId: -1,
+      options: []
+    }
     this.testing.tId = this.$root.$mp.query.tId
     this.choices.tId = this.$root.$mp.query.tId
     this.uId = this.$root.$mp.query.uId
@@ -41,24 +52,12 @@ export default {
         tId: -1,
         tName: '',
         tDescribe: '',
-        question: [{
-          qId: -1,
-          qName: '',
-          options: [{
-            oId: -1,
-            oName: ''
-          }]
-        }]
+        question: []
       },
-      current: [{
-        choice: ''
-      }],
+      current: [],
       choices: {
         tId: -1,
-        options: [{
-          qId: -1,
-          oId: -1
-        }]
+        options: []
       }
     }
   },
@@ -69,15 +68,17 @@ export default {
     },
     handleChange ({mp}) {
       this.current[this.currentEx].choice = mp.detail.value
-      this.choices.options[this.currentEx].qId = this.testing.question[this.currentEx].qId // 当前问题的id赋值给结果
-      for (let i = 0; i < this.testing.question[this.currentEx].options.length; i++) { // 寻找当前选项对应的id存入结果中
-        if (this.testing.question[this.currentEx].options.oName === this.current[this.currentEx].choice) {
-          this.choices.options[this.currentEx].oId = this.testing.question[this.currentEx].options.oId
+      this.choices.options[this.currentEx].qId = this.testing.question[this.currentEx].qId
+      for (let i = 0; i < this.testing.question[this.currentEx].options.length; i++) {
+        if (this.testing.question[this.currentEx].options[i].oName === this.current[this.currentEx].choice) {
+          this.choices.options[this.currentEx].oId = this.testing.question[this.currentEx].options[i].oId
         }
       }
     },
     searchTest () {
       let list = this.testing
+      let cur = this.current
+      let options = this.choices.options
       wx.request({
         url: 'http://127.0.0.1:8000/show_atest/', // 仅为示例，并非真实的接口地址
         data: {tId: this.testing.tId},
@@ -87,11 +88,21 @@ export default {
             list.tName = response.data.tName
             list.tDescribe = response.data.tDescribe
             for (let i = 0; i < response.data.question.length; i++) {
-              list.question[i].qId = response.question[i].qId
-              list.question[i].qName = response.question[i].qName
-              for (let j = 0; j < response.question[i].options.length; j++) {
-                response.question[i].options[j].oId = response.question[i]
+              let obj = {
+                qId: response.data.question[i].qId,
+                qName: response.data.question[i].qName,
+                options: response.data.question[i].options
               }
+              let current = {
+                choice: ''
+              }
+              let opt = {
+                qId: -1,
+                oId: -1
+              }
+              list.question.push(obj)
+              cur.push(current)
+              options.push(opt)
             }
           } else {
             $Message({
@@ -101,20 +112,23 @@ export default {
           }
         }
       })
+      console.log(list)
+      this.current = cur
+      this.choices.options = options
       this.testing.tName = list.tName
       this.testing.tDescribe = list.tDescribe
       this.testing.question = list.question
     },
     setAnswer () {
-      for(let i = 0; i < this.testing.question.length; i++) {
-        if(this.choices.options[i].oName === -1) {
+      for (let i = 0; i < this.testing.question.length; i++) {
+        if (this.choices.options[i].oId === -1) {
           $Message({
             content: '请答完所有题目！',
             type: 'warning'
           })
         }
       }
-      console.log(choices)
+      console.log(this.choices)
       wx.request({
         url: 'http://127.0.0.1:8000/add_record/',
         method: 'POST',
@@ -122,8 +136,8 @@ export default {
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: JSON.stringify(this.choices),
-        success(response) {
-          if(response.data.code === 200) {
+        success (response) {
+          if (response.data.code === 200) {
             $Message({
               content: '提交成功！',
               type: 'success'

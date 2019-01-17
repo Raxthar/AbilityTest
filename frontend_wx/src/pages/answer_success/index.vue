@@ -10,8 +10,8 @@
   </div>
 </template>
 <script>
-import {$Message} from '../../../static/iview/base/index'
 export default {
+
   mounted (options) {
     this.judge()
   },

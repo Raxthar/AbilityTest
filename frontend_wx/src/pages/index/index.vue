@@ -122,6 +122,7 @@ export default {
           })
           break
         case 4:
+          this.visible = false
           wx.navigateTo({
             url: '../answer/main?uId=' + this.uId + '&tId=' + this.evaluationLists[this.currentIndex].tId
           })
