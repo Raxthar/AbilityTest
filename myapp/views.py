@@ -527,3 +527,4 @@ def add_record(request):
             "err_msg": err_msg
         }
     return JsonResponse(response)
+

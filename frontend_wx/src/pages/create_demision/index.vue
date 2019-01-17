@@ -1,5 +1,6 @@
 <template>
   <div>
+    <i-message id="message" />
     <i-button @click='addDimension'>新维度</i-button>
     <i-panel v-for="(item,index) in lists"  v-bind:key="index">
       <i-panel title="请输入维度">
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-
+import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
     this.currentIndex = -1
@@ -46,6 +47,23 @@ export default {
     questionList () {
       let tid = this.dimensionLists.tId
       let uid = this.dimensionLists.uId
+      if (this.dimensionLists.dimensions.length !== 0) {
+        for(let i = 0; i < this.dimensionLists.dimensions.length; i++) {
+          if (this.dimensionLists.dimensions[i].dName === '') {
+            $Message ({
+              content: '请输入维度！',
+              type: 'warning'
+            })
+            return
+          }
+        }
+      } else {
+        $Message ({
+              content: '请输入维度！',
+              type: 'warning'
+        })
+        return
+      }
       wx.request({
         url: 'http://127.0.0.1:8000/create_dimension/', // 仅为示例，并非真实的接口地址
         method: 'POST',
