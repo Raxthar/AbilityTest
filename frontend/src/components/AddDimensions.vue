@@ -9,8 +9,8 @@
       </Header>
       <Content>
         <Card>
-          <Button :size="buttonSize" type="primary" @click="addDimension">添加维度</Button>
-          <Button :size="buttonSize" type="primary" @click="delDimension()">删除维度</Button><br><br>
+          <Button :size="buttonSize" type="primary" @click="addDimension" id = "addButton">添加维度</Button>
+          <Button :size="buttonSize" type="primary" @click="delDimension()" id = "delButton">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in dimensionArray.dimensions.slice(0,4)" :key="(list, index)">
               <Input v-model="list.dName" size="large" placeholder="请输入维度" />
