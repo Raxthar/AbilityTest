@@ -7,7 +7,6 @@
         <input :value="item.dName" @click="handleClick(index)" @input="handleInput" class="demo-input" type="text" placeholder="请输入维度名称"/>
       </i-panel>
     </i-panel>
-   
   </div>
 </template>
 
@@ -15,6 +14,17 @@
 import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
+    this.currentIndex = -1
+    this.lists = []
+    this.dimensionLists = {
+      uId: -1,
+      tId: -1,
+      dimensions: {
+        dimensionId: [],
+        dimensionName: [],
+        tId: 1
+      }
+    }
     this.dimensionLists.uId = this.$root.$mp.query.uId
     this.dimensionLists.tId = this.$root.$mp.query.tId
     this.dimensionLists.dimensions.tId = this.$root.$mp.query.tId
@@ -47,7 +57,6 @@ export default {
           content: this.dimensionLists.dimensions.tId
         },
         success  (response) {
-          console.log(response.data)
           if (response.data.code === 200) {
             if (response.data.dId.length > 0) {
               that.dimensionLists.dimensions.dimensionId = response.data.dId
@@ -60,7 +69,10 @@ export default {
               }
             }
           } else {
-            console.log(`can't search in database`)
+            $Message({
+              content: '查找失败！',
+              type: 'error'
+            })
           }
         }
       })
@@ -73,7 +85,6 @@ export default {
     handleInput (e) {
       this.lists[this.currentIndex].dName = e.target.value
       this.dimensionLists.dimensions.dimensionName[this.currentIndex] = e.target.value
-      console.log(this.dimensionLists.dimensions.dimensionName[this.currentIndex])
     },
 
     editDimension () {
@@ -86,7 +97,6 @@ export default {
           return
         }
       }
-      console.log(this.dimensionLists.dimensions)
       wx.request({
         url: 'http://127.0.0.1:8000/update_dimension/', // 仅为示例，并非真实的接口地址
         method: 'POST',
@@ -95,12 +105,12 @@ export default {
         },
         data: JSON.stringify(this.dimensionLists.dimensions),
         success (response) {
-          console.log(response.data.code)
           if (response.data.code === 200) {
             $Message({
               content: '修改成功！',
               type: 'success'
             })
+            wx.navigateTo({url: '../index/main'})
           }
         }
       })

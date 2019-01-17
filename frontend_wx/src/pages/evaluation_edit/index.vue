@@ -1,16 +1,18 @@
 <template>
   <div>
-     <form :model="titleData">
-            <p class="title-text">测评标题</p>
-            <input placeholder="Enter title" style="width: 300px"  v-model="titleData.evaluationName"/><br><br>
-            <p class="title-text">测评描述</p>
-            <input type="textarea" :rows="4" placeholder="Enter describe"  v-model="titleData.evaluationDescribe"/><br><br>
-            <i-button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</i-button>
-      </form>
+    <i-message id="message" />
+    <form :model="titleData">
+      <p class="title-text">测评标题</p>
+      <input placeholder="Enter title" style="width: 300px"  v-model="titleData.evaluationName"/><br><br>
+      <p class="title-text">测评描述</p>
+      <input type="textarea" :rows="4" placeholder="Enter describe"  v-model="titleData.evaluationDescribe"/><br><br>
+      <i-button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</i-button>
+    </form>
   </div>
 </template>
 
 <script>
+import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted () {
     this.uId = this.$root.$mp.query.uId
@@ -44,7 +46,10 @@ export default {
               list.evaluationDescribe = response.data.tDescribe
             }
           } else {
-            console.log('can\'t search in database')
+            $Message({
+              content: '查找失败！',
+              type: 'error'
+            })
           }
         }
       })
@@ -59,10 +64,16 @@ export default {
         },
         data: JSON.stringify(this.titleData),
         success (response) {
-          console.log(response.data)
           if (response.data.code === 200) {
-            console.log('success')
-            wx.navigateTo({ url: '../index/main'
+            $Message({
+              content: '修改成功！',
+              type: 'success'
+            })
+            wx.navigateTo({url: '../index/main'})
+          } else {
+            $Message({
+              content: '修改失败！',
+              type: 'success'
             })
           }
         }

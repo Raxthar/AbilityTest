@@ -9,6 +9,7 @@
         "i-panel": "../../../static/iview/panel/index",
         "i-input": "../../../static/iview/input/index",
         "i-radio-group": "../../../static/iview/radio-group/index",
-        "i-radio": "../../../static/iview/radio/index"
+        "i-radio": "../../../static/iview/radio/index",
+        "i-message": "../../../static/iview/message/index"
     }
 }

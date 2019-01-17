@@ -2,6 +2,7 @@
   <div>
     <i-message id="message" />
     <i-button type="primary" size="small" @click="testtitle" >创建测评</i-button>
+    <i-button type="primary" size="small" @click="answerTest" >答题测试</i-button>
     <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen(index)">
       <view slot="footer">{{evaluation.tId}}</view>
     </i-card>
@@ -72,7 +73,7 @@ export default {
               }
             }
           } else {
-            $Message ({
+            $Message({
               content: '读取数据失败！',
               type: 'error'
             })
@@ -146,12 +147,18 @@ export default {
           this.visible = false
           this.evaluationLists = obj.list
           break
-        }
+      }
     },
 
     testtitle () {
       wx.navigateTo({
         url: '../creat_test/main?uId=' + this.uId
+      })
+    },
+
+    answerTest () {
+      wx.navigateTo({
+        url: '../answer/main?uId=' + this.uId
       })
     }
   }

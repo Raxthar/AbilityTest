@@ -10,6 +10,11 @@
 <script>
 export default {
   mounted (options) {
+    this.dimensions = {
+      dimensionId: [],
+      dimensionName: [],
+      tId: 1
+    }
     this.uId = this.$root.$mp.query.uId
     this.dimensions.tId = this.$root.$mp.query.tId
     this.searchDimensions()
@@ -48,7 +53,7 @@ export default {
     },
     dimensionEdit () {
       wx.navigateTo({
-        url: '../dimension_edit/main?tId=&uId' + this.dimensions.tId +this.uId
+        url: '../dimension_edit/main?tId=' + this.dimensions.tId + '&uId=' + this.uId
       })
     }
   }
