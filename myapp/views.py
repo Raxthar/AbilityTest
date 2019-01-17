@@ -431,9 +431,7 @@ def load_result(request):
 
 
 def show_atest(request):
-    #t_id = request.GET['tId']
-    obj = json.loads(request.body.decode('utf-8'))
-    t_id = obj['tId']
+    t_id = request.GET['tId']
     question_list = []
     options_list = []
     question_dic = {
@@ -459,7 +457,7 @@ def show_atest(request):
         question_list.append(question_dic)
         response = {
             "tDescribe": atest.t_describe,
-            "tName:": atest.t_name,
+            "tName": atest.t_name,
             "question:": question_list,
             "code": 200
         }
@@ -471,17 +469,32 @@ def show_atest(request):
     return JsonResponse(response)
 
 
+# 填写一次测评增加一次记录，并返回自动评价结果
 def add_record(request):
     obj = json.loads(request.body.decode('utf-8'))
     t_id = obj['tId']
     options_list = obj['options']
-    print(options_list)
+    d_score = []
     try:
         for i in range(len(options_list)):
             record = Record(q_id=options_list[i].get('qId'), o_id=options_list[i].get('oId'), t_id=t_id)
             record.save()
+        dimension_list = Dimension.objects.filter(t_id=t_id)
+        d_id_list = []
+        d_name_list = []
+        for i in range(len(dimension_list)):
+            d_id_list.append(dimension_list[i].d_id)
+            d_name_list.append(dimension_list[i].d_name)
+            d_score.append(0)
+        for i in range(len(options_list)):
+            o_obj = Option.objects.get(o_id=options_list[i].get('oId'))
+            score_index = d_id_list.index(o_obj.d_id)
+            d_score[score_index] += o_obj.score
+        d_id_result = d_id_list[d_score.index(max(d_score))]
+        judge_result = Judge.objects.get(d_id=d_id_result).j_content
         response = {
-            "code": 200
+            "code": 200,
+            "result": judge_result
         }
     except Exception as err_msg:
         response = {
