@@ -491,7 +491,11 @@ def add_record(request):
             score_index = d_id_list.index(o_obj.d_id)
             d_score[score_index] += o_obj.score
         d_id_result = d_id_list[d_score.index(max(d_score))]
-        judge_result = Judge.objects.get(d_id=d_id_result).j_content
+        judge_list = Judge.objects.filter(d_id=d_id_result)
+        if judge_list:
+            judge_result = judge_list[0].j_content
+        else:
+            judge_result = ""
         response = {
             "code": 200,
             "result": judge_result
