@@ -9,7 +9,6 @@ import json
 from .models import ATest, Question, Judge, Option, Result, Record
 # Create your views here.
 from .models import Dimension
-import types
 
 
 # 创建维度
@@ -409,7 +408,6 @@ def edit_judge(request):
 
 def load_result(request):
     t_id = request.GET['tId']
-    print(t_id)
     d_name_list = []
     rid_list = []
     try:
@@ -492,6 +490,8 @@ def add_record(request):
             score_index = d_id_list.index(o_obj.d_id)
             d_score[score_index] += o_obj.score
         d_id_result = d_id_list[d_score.index(max(d_score))]
+        result = Result(t_id=t_id, d_id=d_id_result)
+        result.save()
         judge_list = Judge.objects.filter(d_id=d_id_result)
         if judge_list:
             judge_result = judge_list[0].j_content
