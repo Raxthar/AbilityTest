@@ -116,6 +116,7 @@ def add_question(request):
 
 def question_chat(request):
     obj = json.loads(request.body.decode('utf-8'))
+    print(obj)
     question_name = obj['qName']
     test_id = obj['tId']
     o_name = obj['oName']
@@ -132,6 +133,7 @@ def question_chat(request):
             "code": 200
         }
     except Exception as err_msg:
+        print(err_msg)
         response = {
             "code": 0,
             "err_msg": err_msg

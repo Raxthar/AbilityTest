@@ -49,7 +49,7 @@ export default {
         }
       ],
       msg: 'Hello',
-      uId: 2,
+      uId: 1,
       evaluationLists: []
     }
   },
@@ -100,6 +100,8 @@ export default {
         list: this.evaluationLists,
         visible: this.visible
       }
+      console.log(mp.detail.index)
+      console.log(obj)
       switch (mp.detail.index) {
         case 0:
           this.visible = false
