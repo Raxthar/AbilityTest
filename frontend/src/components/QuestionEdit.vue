@@ -144,7 +144,7 @@ export default {
       }
       this.$axios.post('/update_question/', JSON.stringify(this.questionData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`edit questions success`)
+          this.$Message.success(`编辑题目成功`)
           this.$router.push('/QuestionList/' + this.uId + '/' + this.tId)
         } else {
           this.$Message.error('无法读取数据库')

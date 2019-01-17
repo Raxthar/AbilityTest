@@ -49,7 +49,7 @@ export default {
       }
       this.$axios.post('/create/', JSON.stringify(this.createData)).then(response => {
         if (response.data.code === 200) {
-          this.$Message.success(`create ${this.createData.tName} success`)
+          this.$Message.success(`创建${this.createData.tName} 成功`)
           let tId = response.data.tId
           this.$router.push('/AddDimensions/' + this.createData.uId + '/' + tId)
         } else {
