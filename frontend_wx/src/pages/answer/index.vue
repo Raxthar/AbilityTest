@@ -65,10 +65,6 @@ export default {
 
   methods: {
     handleTouchStart (ex) {
-      $Message({
-        content: '点击了第' + ex + '项',
-        type: 'success'
-      })
       this.currentEx = ex
     },
     handleChange ({mp}) {
@@ -90,7 +86,6 @@ export default {
           if (response.data.code === 200) {
             list.tName = response.data.tName
             list.tDescribe = response.data.tDescribe
-<<<<<<< HEAD
             for (let i = 0; i < response.data.question.length; i++) {
               list.question[i].qId = response.question[i].qId
               list.question[i].qName = response.question[i].qName
@@ -98,13 +93,9 @@ export default {
                 response.question[i].options[j].oId = response.question[i]
               }
             }
-=======
-            list.question = response.data.question
-            console.list
->>>>>>> Fix eslint errors. Ref #144
           } else {
             $Message({
-              content: `无法读取数据库`,
+              content: `读取失败！`,
               type: 'error'
             })
           }
@@ -113,6 +104,39 @@ export default {
       this.testing.tName = list.tName
       this.testing.tDescribe = list.tDescribe
       this.testing.question = list.question
+    },
+    setAnswer () {
+      for(let i = 0; i < this.testing.question.length; i++) {
+        if(this.choices.options[i].oName === -1) {
+          $Message({
+            content: '请答完所有题目！',
+            type: 'warning'
+          })
+        }
+      }
+      console.log(choices)
+      wx.request({
+        url: 'http://127.0.0.1:8000/add_record/',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: JSON.stringify(this.choices),
+        success(response) {
+          if(response.data.code === 200) {
+            $Message({
+              content: '提交成功！',
+              type: 'success'
+            })
+            wx.navigateTo({url: '../answer_success/main?result=' + response.data.result})
+          } else {
+            $Message({
+              content: '提交失败！',
+              type: 'error'
+            })
+          }
+        }
+      })
     }
   }
 }

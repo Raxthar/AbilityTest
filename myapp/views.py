@@ -458,11 +458,7 @@ def show_atest(request):
         response = {
             "tDescribe": atest.t_describe,
             "tName": atest.t_name,
-<<<<<<< HEAD
-            "question:": question_list,
-=======
             "question": question_list,
->>>>>>> Fix eslint errors. Ref #144
             "code": 200
         }
     except Exception as err_msg:
