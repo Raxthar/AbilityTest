@@ -2,7 +2,6 @@
   <div>
     <i-message id="message" />
     <i-button type="primary" size="small" @click="testtitle" >创建测评</i-button>
-    <i-button type="primary" size="small" @click="answerTest" >答题测试</i-button>
     <i-card v-for="(evaluation, index) in evaluationLists" v-bind:key="index" :title="evaluation.tName" @click="handleOpen(index)">
       <view slot="footer">{{evaluation.tId}}</view>
     </i-card>
@@ -35,6 +34,9 @@ export default {
         },
         {
           name: '设置截止时间、自动评价'
+        },
+        {
+          name: '答题测试'
         },
         {
           name: '去分享',
@@ -120,8 +122,14 @@ export default {
           })
           break
         case 4:
+          this.visible = false
+          wx.navigateTo({
+            url: '../answer/main?uId=' + this.uId + '&tId=' + this.evaluationLists[this.currentIndex].tId
+          })
           break
         case 5:
+          break
+        case 6:
           wx.request({
             url: 'http://127.0.0.1:8000/delete_evaluation/',
             method: 'POST',
@@ -153,12 +161,6 @@ export default {
     testtitle () {
       wx.navigateTo({
         url: '../creat_test/main?uId=' + this.uId
-      })
-    },
-
-    answerTest () {
-      wx.navigateTo({
-        url: '../answer/main?uId=' + this.uId
       })
     }
   }

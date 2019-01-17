@@ -1,8 +1,6 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main",
     "pages/creat_test/main",
     "pages/create_demision/main",
     "pages/question_list/main",
@@ -11,7 +9,8 @@
     "pages/test_dimension/main",
     "pages/create_question/main",
     "pages/set_deadline/main",
-    "pages/answer/main"
+    "pages/answer/main",
+    "pages/answer_success/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

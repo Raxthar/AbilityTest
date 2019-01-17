@@ -433,32 +433,32 @@ def load_result(request):
 def show_atest(request):
     t_id = request.GET['tId']
     question_list = []
-    options_list = []
-    question_dic = {
-        "qId": 0,
-        "qName": "",
-        "options": options_list
-    }
-    option_dic = {
-        "oId": 0,
-        "oName": ""
-    }
     try:
         atest = ATest.objects.get(t_id=t_id)
         questions = Question.objects.filter(t_id=t_id)
         for i in range(len(questions)):
+            options_list = []
+            question_dic = {
+                "qId": 0,
+                "qName": "",
+                "options": options_list
+            }    
             question_dic["qId"] = questions[i].q_id
             question_dic["qName"] = questions[i].q_name
             options = Option.objects.filter(q_id=questions[i].q_id)
             for j in range(len(options)):
+                option_dic = {
+                    "oId": 0,
+                    "oName": ""
+                }    
                 option_dic["oId"] = options[j].o_id
                 option_dic["oName"] = options[j].o_name
-            options_list.append(option_dic)
-        question_list.append(question_dic)
+                options_list.append(option_dic)
+            question_list.append(question_dic)
         response = {
             "tDescribe": atest.t_describe,
             "tName": atest.t_name,
-            "question:": question_list,
+            "question": question_list,
             "code": 200
         }
     except Exception as err_msg:
@@ -467,6 +467,7 @@ def show_atest(request):
             "err_msg": err_msg
         }
     return JsonResponse(response)
+
 
 
 # 填写一次测评增加一次记录，并返回自动评价结果
