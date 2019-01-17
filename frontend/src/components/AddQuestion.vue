@@ -10,8 +10,8 @@
       <Footer>
         <card>
           <Content>
-            <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button>
-            <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
+            <Button :size="buttonSize" type="primary" @click="addOption" id="addButton">添加选项</Button>
+            <Button :size="buttonSize" type="primary" @click="delOption" id="delButton">删除选项</Button><br><br>
             <Form :model="questionData">
               <FormItem label=""><br>
                   <Input v-model="questionData.qName" size="large" style="width: 600px" placeholder="请输入题目名" />
