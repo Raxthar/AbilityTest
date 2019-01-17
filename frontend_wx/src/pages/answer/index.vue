@@ -28,7 +28,7 @@ import {$Message} from '../../../static/iview/base/index'
 export default {
   mounted (options) {
     this.testing.tId = this.$root.$mp.query.tId
-    this.choice.tId = this.$root.$mp.query.tId
+    this.choices.tId = this.$root.$mp.query.tId
     this.uId = this.$root.$mp.query.uId
     this.currentEx = -1
     this.searchTest()
@@ -83,13 +83,14 @@ export default {
     searchTest () {
       let list = this.testing
       wx.request({
-        url: 'http://127.0.0.1:8000/search_dimensions/', // 仅为示例，并非真实的接口地址
-        data: {content: this.testing.tId},
+        url: 'http://127.0.0.1:8000/show_atest/', // 仅为示例，并非真实的接口地址
+        data: {tId: this.testing.tId},
         success (response) {
           console.log(response.data)
           if (response.data.code === 200) {
             list.tName = response.data.tName
             list.tDescribe = response.data.tDescribe
+<<<<<<< HEAD
             for (let i = 0; i < response.data.question.length; i++) {
               list.question[i].qId = response.question[i].qId
               list.question[i].qName = response.question[i].qName
@@ -97,6 +98,10 @@ export default {
                 response.question[i].options[j].oId = response.question[i]
               }
             }
+=======
+            list.question = response.data.question
+            console.list
+>>>>>>> Fix eslint errors. Ref #144
           } else {
             $Message({
               content: `无法读取数据库`,
@@ -105,64 +110,9 @@ export default {
           }
         }
       })
-      this.dimensionsData = list
-    },
-    setAnswer () {
-      if (this.questionData.qName === '') {
-        $Message({
-          content: '请输入题目名',
-          type: 'error'
-        })
-        return
-      }
-      for (let i = 0; i < this.lists.length; i++) {
-        this.questionData.dId[i] = this.lists[i].dID
-        this.questionData.score[i] = this.lists[i].score
-        this.questionData.oName[i] = this.lists[i].oName
-        console.log(this.questionData.oName[i])
-        if (!this.questionData.dId[i]) {
-          $Message({
-            content: '请为选项选择关联维度',
-            type: 'error'
-          })
-          return
-        }
-        if (!this.lists[i].oName) {
-          $Message({
-            content: '请输入选项内容',
-            type: 'error'
-          })
-          return
-        } else if (!this.lists[i].score) {
-          this.questionData.score[i] = 1
-        }
-      }
-      let uid = this.uId
-      let tid = this.questionData.tId
-      wx.request({
-        url: 'http://127.0.0.1:8000/question_chat/', // 仅为示例，并非真实的接口地址
-        method: "POST",
-        header: {
-          "content-type": "application/x-www-form-urlencoded"
-        },
-        data: JSON.stringify(this.questionData),
-        success (response) {
-          if (response.data.code === 200) {
-            $Message({
-              content: '添加题目成功',
-              type: 'success'
-            })
-            wx.navigateTo({
-              url: '../question_list/main?uId=' + uid + '&tId=' + tid
-            })
-          } else {
-            $Message({
-              content: '操作失败',
-              type: 'error'
-            })
-          }
-        }
-      })
+      this.testing.tName = list.tName
+      this.testing.tDescribe = list.tDescribe
+      this.testing.question = list.question
     }
   }
 }
