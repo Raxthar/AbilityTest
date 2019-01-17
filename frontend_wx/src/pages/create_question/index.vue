@@ -17,7 +17,7 @@
               </i-radio-group>
             </i-panel>
             <i-panel title="请输入分数">
-              <i-input-number :value="list.score" min="-2" max="100" class="demo-input" @change="handleChange" @touchstart="handleTouchStart(ex)"/>
+              <i-input-number :value="list.score" min="0" max="100" class="demo-input" @change="handleChange" @touchstart="handleTouchStart(ex)"/>
             </i-panel>
           </i-panel>
         </i-panel>
@@ -42,15 +42,9 @@ export default {
       score: []
     }
     this.questionData.tId = this.$root.$mp.query.tId
-    this.lists = [{
-      oName: '',
-      score: -1,
-      dID: -1
-    }]
+    this.lists = []
     this.dimensionsData = []
-    this.current = [{
-      choice: ''
-    }]
+    this.current = []
     this.currentEx = -1
     this.searchDimension()
   },
@@ -58,11 +52,7 @@ export default {
     return {
       currentEx: -1,
       uId: -1,
-      lists: [{
-        oName: '',
-        score: -1,
-        dID: -1
-      }],
+      lists: [],
       dimensionsData: [],
       questionData: {
         tId: -1,
@@ -71,9 +61,7 @@ export default {
         dId: [],
         score: []
       },
-      current: [{
-        choice: ''
-      }]
+      current: []
     }
   },
 
@@ -90,10 +78,6 @@ export default {
       }
     },
     handleChange ({mp}) {
-      $Message({
-        content: '当前数值为' + mp.detail.value,
-        type: 'warning'
-      })
       this.lists[this.currentEx].score = mp.detail.value
     },
     addOption () {
@@ -102,8 +86,8 @@ export default {
       }
       let cope = {
         oName: "",
-        score: "",
-        dID: ""
+        score: 0,
+        dID: -1
       }
       this.lists.push(cope)
       this.current.push(obj)
@@ -164,8 +148,6 @@ export default {
             type: 'error'
           })
           return
-        } else if (!this.lists[i].score) {
-          this.questionData.score[i] = 1
         }
       }
       let uid = this.uId
