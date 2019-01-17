@@ -71,4 +71,16 @@ describe('AddQuestion.vue', () => {
         expect(listsLengthAfter).to.equal(listsLength - 1)
         expect(inputLengthAfter).to.equal(5)
       })
+
+      it('点击提交后, setQuestion函数被调用', () => {
+        const wrapper = mount(AddQuestion, {
+        mocks: {
+          $route
+        }})
+        const clickMethodStub = sinon.stub()
+        wrapper.setMethods({ setQuestion: clickMethodStub })
+        const submitButton = wrapper.find('#submitButton')
+        submitButton.trigger('click')
+        expect(clickMethodStub.called).to.equal(true)
+      })
 })

@@ -15,7 +15,7 @@
             <FormItem v-for="(list, index) in dimensionArray.dimensions.slice(0,4)" :key="(list, index)">
               <Input v-model="list.dName" size="large" placeholder="请输入维度" />
             </FormItem>
-              <Button type="primary" class="submit-button" @click="updateDimensions">提交</Button>
+              <Button type="primary" class="submit-button" @click="updateDimensions" id="updateButton">提交</Button>
           </Form>
         </Card>
       </Content>
