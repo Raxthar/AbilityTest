@@ -7,12 +7,10 @@
           返回
         </Button>
       </Header>
-      <Content>
-      </Content>
       <Footer>
-        <card>
+        <card>         
           <div id="statChart" class="chartSize"></div>
-          <Table border :columns="columns" :data="tableData"></Table><br><br>
+          <Table class="list" border :columns="columns" :data="tableData" style="width: 600px"></Table><br><br>
           <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv">导出</Button>
         </card>
       </Footer>
@@ -42,7 +40,7 @@ export default {
         {
           title: '维度',
           key: 'name',
-          width: 150
+          width: 400
         },
         {
           title: '人数',
@@ -156,11 +154,6 @@ export default {
   padding: 0 20px;
 }
 
-.ivu-layout-content {
-  height: 80px;
-  padding: 20px;
-}
-
 .ivu-btn-primary {
   background-color: rgb(97, 176, 255);
   border-color: rgb(97, 176, 255);
@@ -179,6 +172,7 @@ export default {
 .ivu-card-body {
   height: 500px;
   padding: 100px;
+  margin-left: 800px;
 }
 
 .ivu-card-bordered {
@@ -187,7 +181,12 @@ export default {
 }
 
 .chartSize {
-    width: 200px;
-    height: 200px;
+  width: 400px;
+  height: 400px;
+  margin-left: 400px;
+}
+
+.list {
+  margin-left: 300px;
 }
 </style>

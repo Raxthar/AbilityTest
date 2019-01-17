@@ -7,15 +7,13 @@
           返回
         </Button>
       </Header>
-      <Content>
-      </Content>
       <Footer>
         <card>
           <Content>
             <Button :size="buttonSize" type="primary" @click="addOption">添加选项</Button>
             <Button :size="buttonSize" type="primary" @click="delOption">删除选项</Button><br><br>
             <Form :model="questionData">
-              <FormItem label="input"><br>
+              <FormItem label=""><br>
                   <Input v-model="questionData.qName" size="large" style="width: 600px" placeholder="请输入题目名" />
               </FormItem>
               <FormItem v-for="(list, index) in lists" :key="(list, index)">
@@ -138,12 +136,7 @@ export default {
   background-color: rgb(97, 176, 255);
   padding: 0 20px;
 }
-
-.ivu-layout-content {
-  height: 80px;
-  padding: 20px;
-}
-
+ 
 .ivu-btn-primary {
   background-color: rgb(97, 176, 255);
   border-color: rgb(97, 176, 255);
