@@ -66,7 +66,7 @@ export default {
     searchJudge () {
       this.$axios.get('search_judge', {
         params: {
-          content: this.tId
+          tId: this.tId
         }
       }).then(response => {
         if (response.data.code === 200) {
