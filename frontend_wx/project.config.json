@@ -10,7 +10,7 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx94c801626f71ed2b",
+	"appid": "wxb02aad49e14b041a",
 	"projectname": "AblityTesting",
 	"condition": {
 		"search": {

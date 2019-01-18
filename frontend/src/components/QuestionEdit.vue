@@ -79,7 +79,6 @@ export default {
                 dName: this.dimensionName[i],
                 dId: this.dimensionId[i]
               }
-              console.log(obj.dName)
               this.dimensionsData.push(obj)
             }
           }
