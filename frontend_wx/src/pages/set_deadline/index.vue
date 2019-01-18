@@ -3,13 +3,13 @@
     <i-message id="message" />
     <Form :model="dimensions">
       <FormItem v-for="(Item,index) in judges.dimensionName" v-bind:key="index">
-        <p>{{Item}}</p>
+        <p>维度：{{Item}}</p>
         <Input :value="value" @click="handleClick(index)" @input="handleInput" size="large" placeholder="请输入评价" class="demo-input"/>
       </FormItem>
-      <p>截止日期</p>
-      <picker class="weui-btn" mode="date"  start="2015-09-01" end="2040-09-01" @change="bindDateChange">
-      <button type="default" >{{judges.due}}</button>
-      </picker>
+       <picker mode="multiSelector" @change="bindMultiPickerChange" :value="multiIndex" :range="newMultiArray">
+            <p>设置截止日期</p>
+            <i-button type="default" >{{time}}</i-button>    
+            </picker>
       <i-button type="primary" @click="editJudge">提交</i-button>
     </Form>
  </div>
@@ -25,7 +25,9 @@
     },
     data () {
       return {
-        date: '2016-09-01',
+        time: "2019-01-01 00:00",
+        multiArray: [],
+        multiIndex: [0, 0, 0, 0, 0],
         currentIndex: -1,
         tId: 3,
         value: "",
@@ -33,12 +35,68 @@
           dimensionId: [],
           dimensionName: [],
           judge: [],
-          due: '2019-01-01',
+          due: '',
           tId: 3
         }
       }
     },
+    computed: {newMultiArray: () => {
+      let array = [];
+      const date = new Date();
+      const years = [];
+      const months = [];
+      const days = [];
+      const hours = [];
+      const minutes = [];
+      for (let i = 2018; i <= date.getFullYear() + 10; i++) {        
+        years.push("" + i);      
+      }      
+      array.push(years);      
+      for (let i = 1; i <= 12; i++) {        
+        if (i < 10) {          
+          i = "0" + i;        
+          }       
+           months.push("" + i);      
+           }      
+           array.push(months);      
+           for (let i = 1; i <= 31; i++) {       
+            if (i < 10) {          
+              i = "0" + i;        
+              }        
+              days.push("" + i);      
+              }      
+              array.push(days);      
+              for (let i = 0; i < 24; i++) {        
+                if (i < 10) {          
+                  i = "0" + i;        
+                  }        
+                  hours.push("" + i);      
+                  }     
+                   array.push(hours);      
+                   for (let i = 0; i < 60; i++) {     
+                      if (i < 10) {          
+                        i = "0" + i;        
+                        }      
+                        minutes.push("" + i);      
+                        }      
+                        array.push(minutes);      
+                        return array;    
+                        }  
+                        },
     methods: {
+        bindMultiPickerChange(e) {      
+          this.multiIndex = e.target.value;      
+          console.log("当前选择的时间", this.multiIndex);      
+          const index = this.multiIndex;      
+          const year = this.newMultiArray[0][index[0]];      
+          const month = this.newMultiArray[1][index[1]];      
+          const day = this.newMultiArray[2][index[2]];      
+          const hour = this.newMultiArray[3][index[3]];      
+          const minute = this.newMultiArray[4][index[4]];      
+          this.time = year + "-" + month + "-" + day + " " + hour + ":" + minute;
+          this.judges.due = this.time;
+          console.log(this.judges.due)  
+          },
       bindDateChange (e) {
         this.judges.due = e.mp.detail.value
       },
