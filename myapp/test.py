@@ -45,6 +45,10 @@ class ViewTest(unittest.TestCase):
         self.client = Client()
         response = self.client.get('/test_list?uId=55')
         self.failUnlessEqual(response.status_code, 200)
-
+    
+    def test_search_stat(self):
+        self.client = Client()
+        response = self.client.get('arch_stat?tId=55')
+        self.failUnlessEqual(response.status_code, 200)
 
 
