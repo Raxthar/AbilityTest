@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import AddDimensions from '@/components/AddDimensions'
 import { mount } from 'vue-test-utils'
-import sino from 'sinon'
-import Router from 'vue-router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import axios from 'axios'
@@ -19,9 +17,10 @@ Vue.use(iView)
 describe('AddDimensions.vue', () => {
   it('点击添加维度按钮后, dimensions长度增加', () => {
     const wrapper = mount(AddDimensions, {
-    mocks: {
-      $route
-    }})
+      mocks: {
+        $route
+      }
+    })
     const addButton = wrapper.find('#addButton')
     const beforeLength = wrapper.vm.dimensionArray.dimensions.length
     addButton.trigger('click')
@@ -31,9 +30,10 @@ describe('AddDimensions.vue', () => {
 
   it('点击删除维度按钮后, dimensions长度减少', () => {
     const wrapper = mount(AddDimensions, {
-    mocks: {
-      $route
-    }})
+      mocks: {
+        $route
+      }
+    })
     const addButton = wrapper.find('#delButton')
     const beforeLength = wrapper.vm.dimensionArray.dimensions.length
     addButton.trigger('click')
@@ -43,9 +43,10 @@ describe('AddDimensions.vue', () => {
 
   it('点击提交后, updateDimensions函数被调用', () => {
     const wrapper = mount(AddDimensions, {
-    mocks: {
-      $route
-    }})
+      mocks: {
+        $route
+      }
+    })
     const clickMethodStub = sinon.stub()
     wrapper.setMethods({ updateDimensions: clickMethodStub })
     const updateButton = wrapper.find('#updateButton')

@@ -16,6 +16,13 @@
         <card>
           <Table border :columns="columns" :data="evaluationData">
           </Table>
+          <Modal
+            v-model="modal"
+            title="Common Modal dialog box title"
+            @on-ok="deleteEvaluation(getindex)"
+            @on-cancel="cancel">
+            <p>确认删除该测评吗？</p>
+          </Modal>
           <BackTop :height="100" :bottom="200">
             <div class="top">返回顶端</div>
           </BackTop>
@@ -32,13 +39,10 @@ export default {
   },
   data () {
     return {
+      getindex: 0,
       uId: 1,
+      modal: false,
       columns: [
-        {
-          title: '测评号',
-          key: 'tId',
-          width: 150
-        },
         {
           title: '测评名',
           key: 'tName',
@@ -123,7 +127,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.deleteEvaluation(params.index)
+                    this.modal = true
+                    this.getindex = params.index
                   }
                 }
               }, '删除')
@@ -179,6 +184,7 @@ export default {
       this.$axios.post('/delete_evaluation/', JSON.stringify(this.evaluationData[index])).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`删除 ${this.evaluationData[index].tName} 成功！`)
+          this.getindex = 0
           this.evaluationData.splice(index, 1)
         } else {
           this.$Message.error('无法读取数据库！')
@@ -193,6 +199,9 @@ export default {
     },
     editJudge (index) {
       this.$router.push('/AddJudge/' + this.evaluationData[index].tId)
+    },
+    cancel () {
+      this.$Message.info('您已取消')
     }
   }
 }
