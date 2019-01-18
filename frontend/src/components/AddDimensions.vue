@@ -47,8 +47,6 @@ export default {
           dName: ''
         }
         this.dimensionArray.dimensions.push(cope)
-      } else {
-        return
       }
     },
     delDimension: function () {

@@ -136,7 +136,7 @@ export default {
   background-color: rgb(97, 176, 255);
   padding: 0 20px;
 }
- 
+
 .ivu-btn-primary {
   background-color: rgb(97, 176, 255);
   border-color: rgb(97, 176, 255);

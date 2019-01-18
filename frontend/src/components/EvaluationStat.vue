@@ -8,7 +8,7 @@
         </Button>
       </Header>
       <Footer>
-        <card>         
+        <card>
           <div id="statChart" class="chartSize"></div>
           <Table class="list" border :columns="columns" :data="tableData" style="width: 600px"></Table><br><br>
           <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv">导出</Button>
