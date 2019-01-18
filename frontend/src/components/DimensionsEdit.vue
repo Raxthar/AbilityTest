@@ -63,6 +63,12 @@ export default {
       })
     },
     editDimension () {
+      for (let i = 0; i < this.dimensions.dimensionName.length; i++) {
+        if (this.dimensions.dimensionName[i].dName === '') {
+          this.$Message.error('请输入维度')
+          return
+        }
+      }
       this.$axios.post('/update_dimension/', JSON.stringify(this.dimensions)).then(response => {
         if (response.data.code === 200) {
           this.$Message.success(`修改测评成功`)
