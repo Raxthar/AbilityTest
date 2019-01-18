@@ -10,9 +10,9 @@
       <Content>
         <Card>
           <Form :model="evaluationData">
-            <p class="title-text">测评标题</p>
+            <p>测评标题</p>
             <Input placeholder="请输入测评标题" style="width: 600px"  v-model="evaluationData.evaluationName"/><br><br><br><br>
-            <p class="title-text">测评描述</p>
+            <p>测评描述</p>
             <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="evaluationData.evaluationDescribe"/><br><br><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</Button>
           </Form>

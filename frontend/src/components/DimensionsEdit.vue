@@ -9,11 +9,10 @@
       </Header>
       <Content>
         <Card>
-          <Button :size="buttonSize" type="primary" @click="addDimension" id="addButton">添加维度</Button>
-          <Button :size="buttonSize" type="primary" @click="delDimension" id="delButton">删除维度</Button><br><br>
           <Form :model="dimensions">
+            <p>编辑你的维度</p>
             <FormItem v-for="(list, index) in dimensions.dimensionName" :key="(list, index)">
-              <Input v-model="dimensions.dimensionName[index]" style="width: 600px" size="large" placeholder="请输入维度" />
+              <Input v-model="dimensions.dimensionName[index].dName" style="width: 600px" size="large" placeholder="请输入维度" />
             </FormItem>
               <Button type="primary" class="submit-button" @click="editDimension" id="submitButton">提交</Button>
           </Form>
@@ -43,26 +42,20 @@ export default {
     jumpBack () {
       this.$router.push('/EvaluationEdit/' + this.uId + '/' + this.dimensions.tId)
     },
-    addDimension: function () {
-      let cope = {
-        index: ''
-      }
-      this.dimensions.dimensionName.push(cope)
-    },
-    delDimension: function () {
-      let count = this.dimensions.dimensionName.length - 1
-      this.dimensions.dimensionName.splice(count, 1)
-    },
     searchDimensions () {
       this.$axios.get('search_dimensions', {
         params: {
           content: this.dimensions.tId
         }
-      }).then(response => {
-        if (response.data.code === 200) {
-          if (response.data.dId.length > 0) {
-            this.dimensions.dimensionId = response.data.dId
-            this.dimensions.dimensionName = response.data.dName
+      }).then(dimension => {
+        if (dimension.data.code === 200) {
+          if (dimension.data.dId.length > 0) {
+            for (let i = 0; i < dimension.data.dId.length; i++) {
+              let obj = {
+                dName: dimension.data.dName[i]
+              }
+              this.dimensions.dimensionName.push(obj)
+            }
           }
         } else {
           this.$Message.error(`无法读取数据库`)
@@ -121,5 +114,10 @@ export default {
 .ivu-card-bordered {
   border: 1px solid #f9f9fa;
   border-color: #fafafa;
+}
+
+p {
+  font-family: 楷体;
+  font-size: 22px;
 }
 </style>
