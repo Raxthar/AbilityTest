@@ -18,7 +18,7 @@
                   <Input v-model="questionData.newOptionData[index].oName" style="width: 600px" placeholder="请输入选项" /><br>
                   <InputNumber v-model="questionData.newOptionData[index].score" size="small" placeholder="请输入分数" />
                   <RadioGroup v-model="questionData.newOptionData[index].dId" type="button">
-                    <Radio v-for="item in dimensionsData" :key="item" :label=item.dId>{{item.dName}}</Radio>
+                    <Radio v-for="item in dimensionsData" :key="item" :label="item.dId">{{item.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
               <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
@@ -96,7 +96,6 @@ export default {
       }).then(message => {
         if (message.data.code === 200) {
           if (message.data.oName.length > 0) {
-            this.$Message.info(`can't ${message.data.oName} database`)
             this.oldOptionData = []
             let questionName = message.data.qName
             this.oldQuestionName = questionName
@@ -129,6 +128,10 @@ export default {
     },
     editQuestion () {
       for (let i = 0; i < this.questionData.newOptionData.length; i++) {
+        if (this.questionData.newQuestionName === '') {
+          this.$Message.info('请输入题目内容')
+          return
+        }
         if (this.questionData.newOptionData[i].oName === '') {
           this.$Message.info('请输入选项内容')
           return
