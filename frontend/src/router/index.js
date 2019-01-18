@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Welcome from '@/components/Welcome'
 import AddEvaluationTitle from '@/components/AddEvaluationTitle'
 import AddDimensions from '@/components/AddDimensions'
 import CreateEvaluation from '@/components/CreateEvaluation'
 import QuestionList from '@/components/QuestionList'
 import AddQuestion from '@/components/AddQuestion'
-import Welcome from '@/components/Welcome'
 import QuestionEdit from '@/components/QuestionEdit'
 import ReleaseSuccess from '@/components/ReleaseSuccess'
 import EvaluationEdit from '@/components/EvaluationEdit'
@@ -20,9 +19,9 @@ export default new Router({
   model: 'hash',
   routes: [
     {
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/',
+      name: 'Welcome',
+      component: Welcome
     },
     {
       path: '/AddEvaluationTitle/:uId',
@@ -48,11 +47,6 @@ export default new Router({
       path: '/AddQuestion/:uId/:tId',
       name: 'AddQuestion',
       component: AddQuestion
-    },
-    {
-      path: '/Welcome',
-      name: 'Welcome',
-      component: Welcome
     },
     {
       path: '/QuestionEdit/:uId/:tId/:qId',

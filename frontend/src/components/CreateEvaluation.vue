@@ -145,7 +145,7 @@ export default {
       this.$router.push('/AddEvaluationTitle/' + this.uId)
     },
     jumpBack () {
-      this.$router.push('/Welcome/')
+      this.$router.push('/')
     },
     searchEvaluation () {
       this.$axios.get('test_list', {
