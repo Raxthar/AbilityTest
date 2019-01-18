@@ -2,20 +2,20 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
       </Header>
       <Content>
         <Card>
-          <Button :size="buttonSize" type="primary" @click="addDimension" id = "addButton">添加维度</Button>
-          <Button :size="buttonSize" type="primary" @click="delDimension" id = "delButton">删除维度</Button><br><br>
+          <Button :size="buttonSize" type="primary" @click="addDimension" id="addButton">添加维度</Button>
+          <Button :size="buttonSize" type="primary" @click="delDimension" id="delButton">删除维度</Button><br><br>
           <Form :model="dimensions">
             <FormItem v-for="(list, index) in dimensionArray.dimensions.slice(0,4)" :key="(list, index)">
               <Input v-model="list.dName" size="large" placeholder="请输入维度" />
             </FormItem>
-              <Button type="primary" class="submit-button" @click="updateDimensions" id="updateButton">提交</Button>
+              <Button type="primary" class="submit-button" @click="updateDimensions" id="submitButton">提交</Button>
           </Form>
         </Card>
       </Content>

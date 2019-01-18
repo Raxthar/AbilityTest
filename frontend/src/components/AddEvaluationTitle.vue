@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -14,7 +14,7 @@
             <Input placeholder="请输入测评标题" style="width: 600px"  v-model="createData.tName"/><br><br><br><br>
             <p class="title-text">测评描述</p>
             <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="createData.tDescribe"/><br><br><br><br>
-            <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate">创建测评</Button>
+            <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate" id="submitButton">创建测评</Button>
           </Form>
         </Card>
       </Content>
