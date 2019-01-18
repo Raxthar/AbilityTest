@@ -40,4 +40,11 @@ class ViewTest(unittest.TestCase):
         self.client = Client()
         response = self.client.get('arch_dimensions?content=119')
         self.failUnlessEqual(response.status_code, 200)
+    
+    def test_test_list(self):
+        self.client = Client()
+        response = self.client.get('/test_list?uId=55')
+        self.failUnlessEqual(response.status_code, 200)
+
+
 
