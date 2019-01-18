@@ -1,5 +1,7 @@
 from django.test import TestCase
 from myapp.models import Question, Option, ATest, Dimension
+import unittest
+from django.test import Client
 # Create your tests here.
 
 
@@ -31,3 +33,22 @@ class ModelTest(TestCase):
         self.assertEqual(result.q_id, 1)
         self.assertEqual(result.score, 5)
         self.assertEqual(result.d_id, 1)
+
+
+class ViewTest(unittest.TestCase):
+    def test_search_dimensions(self):
+        self.client = Client()
+        response = self.client.get('arch_dimensions?content=119')
+        self.failUnlessEqual(response.status_code, 200)
+    
+    def test_test_list(self):
+        self.client = Client()
+        response = self.client.get('/test_list?uId=55')
+        self.failUnlessEqual(response.status_code, 200)
+    
+    def test_search_stat(self):
+        self.client = Client()
+        response = self.client.get('arch_stat?tId=55')
+        self.failUnlessEqual(response.status_code, 200)
+
+
