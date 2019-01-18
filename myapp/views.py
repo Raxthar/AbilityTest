@@ -327,7 +327,7 @@ def update_dimension(request):
     try:
         dimension_list = Dimension.objects.filter(t_id=t_id)
         for i in range(len(dimension_list)):
-            dimension_list[i].d_name = d_name[i]
+            dimension_list[i].d_name = d_name[i].get("dName")
             dimension_list[i].save()
         response = {
             "code": 200
