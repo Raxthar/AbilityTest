@@ -49,8 +49,56 @@ describe('AddDimensions.vue', () => {
     })
     const clickMethodStub = sinon.stub()
     wrapper.setMethods({ updateDimensions: clickMethodStub })
-    const updateButton = wrapper.find('#updateButton')
+    const updateButton = wrapper.find('#submitButton')
     updateButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
+
+  it('组件加载后，dimensions的初始长度为1', () => {
+    const wrapper = mount(AddDimensions, {
+      mocks: {
+        $route
+      }
+    })
+    expect(Object.keys(wrapper.vm.dimensionArray.dimensions).length).to.equal(1)
+  })
+
+  it('点击添加维度按钮后, addDimension函数被调用', () => {
+    const wrapper = mount(AddDimensions, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ addDimension: clickMethodStub })
+    const submitButton = wrapper.find('#addButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
+
+  it('点击删除维度按钮后, delDimension函数被调用', () => {
+    const wrapper = mount(AddDimensions, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ delDimension: clickMethodStub })
+    const submitButton = wrapper.find('#delButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
+
+  it('点击返回按钮后, jumpBack函数被调用', () => {
+    const wrapper = mount(AddDimensions, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ jumpBack: clickMethodStub })
+    const submitButton = wrapper.find('#backButton')
+    submitButton.trigger('click')
     expect(clickMethodStub.called).to.equal(true)
   })
 })

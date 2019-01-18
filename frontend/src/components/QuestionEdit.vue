@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -21,7 +21,7 @@
                     <Radio v-for="item in dimensionsData" :key="item" :label="item.dId">{{item.dName}}</Radio>
                   </RadioGroup>
               </FormItem>
-              <Button type="primary" class="submit-button" @click="editQuestion">提交</Button>
+              <Button type="primary" class="submit-button" @click="editQuestion" id="submitButton">提交</Button>
             </Form>
           </Content>
           <BackTop :height="100" :bottom="200">

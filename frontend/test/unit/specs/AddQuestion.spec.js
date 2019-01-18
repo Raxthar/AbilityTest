@@ -83,4 +83,66 @@ describe('AddQuestion.vue', () => {
     submitButton.trigger('click')
     expect(clickMethodStub.called).to.equal(true)
   })
+
+  it('组件加载后，多个初始对象数组为空', () => {
+    const wrapper = mount(AddQuestion, {
+      mocks: {
+        $route
+      }
+    })
+    expect(wrapper.vm.dimensionsData.length).to.equal(0)
+    expect(wrapper.vm.dimensionId.length).to.equal(0)
+    expect(wrapper.vm.dimensionName.length).to.equal(0)
+    expect(Object.keys(wrapper.vm.questionData.oName).length).to.equal(0)
+    expect(Object.keys(wrapper.vm.questionData.dId).length).to.equal(0)
+    expect(Object.keys(wrapper.vm.questionData.score).length).to.equal(0)
+  })
+
+  it('组件加载后，lists数组初始长度为1', () => {
+    const wrapper = mount(AddQuestion, {
+      mocks: {
+        $route
+      }
+    })
+    expect(wrapper.vm.lists.length).to.equal(1)
+  })
+
+  it('点击添加选项按钮后, addOption函数被调用', () => {
+    const wrapper = mount(AddQuestion, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ addOption: clickMethodStub })
+    const submitButton = wrapper.find('#addButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
+
+  it('点击删除选项按钮后, delOption函数被调用', () => {
+    const wrapper = mount(AddQuestion, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ delOption: clickMethodStub })
+    const submitButton = wrapper.find('#delButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
+
+  it('点击返回按钮后, jumpBack函数被调用', () => {
+    const wrapper = mount(AddQuestion, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ jumpBack: clickMethodStub })
+    const submitButton = wrapper.find('#backButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
 })
