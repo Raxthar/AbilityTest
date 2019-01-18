@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>

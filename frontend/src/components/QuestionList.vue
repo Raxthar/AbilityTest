@@ -2,13 +2,13 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpToAddQuestion">
+        <Button :size="buttonSize" type="primary" @click="jumpToAddQuestion" id="submitButton">
           创建题目
         </Button>
       </Content>

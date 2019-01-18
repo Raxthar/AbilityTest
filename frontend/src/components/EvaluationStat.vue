@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Header>
-        <Button :size="buttonSize" type="primary" @click="jumpBack">
+        <Button :size="buttonSize" type="primary" @click="jumpBack" id="backButton">
           <Icon type="ios-arrow-back" />
           返回
         </Button>
@@ -11,7 +11,7 @@
         <card>
           <div id="statChart" class="chartSize"></div>
           <Table class="list" border :columns="columns" :data="tableData" style="width: 600px"></Table><br><br>
-          <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv">导出</Button>
+          <Button :size="buttonSize" icon="ios-download-outline" type="primary" @click="exportCsv" id="exportButton">导出</Button>
         </card>
       </Footer>
     </Layout>

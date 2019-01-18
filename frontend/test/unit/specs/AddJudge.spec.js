@@ -50,4 +50,27 @@ describe('AddJudge.vue', () => {
     submitButton.trigger('click')
     expect(clickMethodStub.called).to.equal(true)
   })
+
+  it('组件加载后, 数组dimensionId和dimensionName为空', () => {
+    const wrapper = mount(AddJudge, {
+      mocks: {
+        $route
+      }
+    })
+    expect(wrapper.vm.judges.dimensionId.length).to.equal(0)
+    expect(wrapper.vm.judges.dimensionName.length).to.equal(0)
+  })
+
+  it('点击返回按钮后, jumpBack函数被调用', () => {
+    const wrapper = mount(AddJudge, {
+      mocks: {
+        $route
+      }
+    })
+    const clickMethodStub = sinon.stub()
+    wrapper.setMethods({ jumpBack: clickMethodStub })
+    const submitButton = wrapper.find('#backButton')
+    submitButton.trigger('click')
+    expect(clickMethodStub.called).to.equal(true)
+  })
 })

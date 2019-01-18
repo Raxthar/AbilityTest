@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import DimensionsEdit from '@/components/DimensionsEdit'
+import EvaluationEdit from '@/components/EvaluationEdit'
 import { mount } from 'vue-test-utils'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
@@ -14,22 +14,33 @@ const $route = {
 
 Vue.use(iView)
 
-describe('DimensionsEdit.vue', () => {
-  it('点击提交后, editDimension函数被调用', () => {
-    const wrapper = mount(DimensionsEdit, {
+describe('EvaluationEdit.vue', () => {
+  it('组件加载后，多个字符串为空', () => {
+    const wrapper = mount(EvaluationEdit, {
+      mocks: {
+        $route
+      }
+    })
+    const emptyStr = ''
+    expect(wrapper.vm.evaluationData.evaluationName).to.equal(emptyStr)
+    expect(wrapper.vm.evaluationData.evaluationDescribe).to.equal(emptyStr)
+  })
+
+  it('点击提交后, editEvaluation函数被调用', () => {
+    const wrapper = mount(EvaluationEdit, {
       mocks: {
         $route
       }
     })
     const clickMethodStub = sinon.stub()
-    wrapper.setMethods({ editDimension: clickMethodStub })
+    wrapper.setMethods({ editEvaluation: clickMethodStub })
     const submitButton = wrapper.find('#submitButton')
     submitButton.trigger('click')
     expect(clickMethodStub.called).to.equal(true)
   })
 
   it('点击返回按钮后, jumpBack函数被调用', () => {
-    const wrapper = mount(DimensionsEdit, {
+    const wrapper = mount(EvaluationEdit, {
       mocks: {
         $route
       }
@@ -39,15 +50,5 @@ describe('DimensionsEdit.vue', () => {
     const submitButton = wrapper.find('#backButton')
     submitButton.trigger('click')
     expect(clickMethodStub.called).to.equal(true)
-  })
-
-  it('组件加载后，多个初始对象数组为空', () => {
-    const wrapper = mount(DimensionsEdit, {
-      mocks: {
-        $route
-      }
-    })
-    expect(wrapper.vm.dimensions.dimensionId.length).to.equal(0)
-    expect(wrapper.vm.dimensions.dimensionName.length).to.equal(0)
   })
 })
