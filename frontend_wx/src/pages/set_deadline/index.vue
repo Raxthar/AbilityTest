@@ -30,7 +30,7 @@
         multiIndex: [0, 0, 0, 0, 0],
         currentIndex: -1,
         tId: 3,
-        value: "",
+        value: '',
         judges: {
           dimensionId: [],
           dimensionName: [],

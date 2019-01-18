@@ -5,7 +5,7 @@
       <p class="title-text">测评标题</p>
       <input placeholder="Enter title" style="width: 300px"  v-model="titleData.evaluationName"/><br><br>
       <p class="title-text">测评描述</p>
-      <input type="textarea" :rows="4" placeholder="Enter describe"  v-model="titleData.evaluationDescribe"/><br><br>
+      <input type="textarea" :rows="4" placeholder="Enter describe" v-model="titleData.evaluationDescribe"/><br><br>
       <i-button :size="buttonSize" type="primary" shape="circle" @click="editEvaluation">提交</i-button>
     </form>
   </div>
