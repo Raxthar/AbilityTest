@@ -51,4 +51,11 @@ class ViewTest(unittest.TestCase):
         response = self.client.get('arch_stat?tId=55')
         self.failUnlessEqual(response.status_code, 200)
 
+    def search_all_questions(self):
+        self.client = Client()
+        response = self.client.get('/search_all_questions?tId=1')
+        self.failUnlessEqual(response.status_code, 200)
+
+    
+
 
