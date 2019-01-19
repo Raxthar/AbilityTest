@@ -71,7 +71,6 @@ export default {
 }
 p {
   font-size: 50px;
-  font-family: 楷体;
   text-align: center;
   margin-top:200px;
   color: blue
