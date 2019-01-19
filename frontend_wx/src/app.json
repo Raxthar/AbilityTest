@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/login/main",
     "pages/index/main",
     "pages/creat_test/main",
     "pages/create_demision/main",

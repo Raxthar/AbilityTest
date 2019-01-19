@@ -8,6 +8,7 @@
         <i-panel v-for="(list, ex) in lists" v-bind:key="ex">
           <i-panel title="名称">
             <input v-model="list.oName" placeholder="请输入选项" class="demo-input" />
+            <i-button type="ghost" @touchstart="handleTouchStart(ex)" @click="delOption">删除选项</i-button><br><br>
           </i-panel>
           <i-panel title="对应分数及维度">
             <i-panel title="请选择维度">
@@ -24,7 +25,6 @@
       </i-panel>
       <i-button type="primary" @click="setQuestion">提交</i-button>
       <i-button type="primary" @click="addOption">添加选项</i-button><br><br>
-      <i-button type="primary" @click="delOption">删除选项</i-button><br><br>
     </view>
     <i-message id="message" />
   </div>
@@ -92,8 +92,9 @@ export default {
       this.lists.push(cope)
       this.current.push(obj)
     },
-    delOption (ex) {
-      this.lists.splice(ex, 1)
+    delOption () {
+      this.lists.splice(this.currentEx, 1)
+      this.current.splice(this.currentEx, 1)
     },
     searchDimension () {
       let list = this.dimensionsData
