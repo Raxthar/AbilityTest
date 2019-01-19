@@ -94,6 +94,11 @@ class ViewTest(unittest.TestCase):
         response = self.client.get('/load_result?tId=1')
         self.failUnlessEqual(response.status_code, 200)
 
+    def test_delete_evaluation(self):
+        self.client = Client()
+        response = self.client.post("/delete_evaluation/",json.dumps({"tId" : 1 }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
     
 
 
