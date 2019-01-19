@@ -1,5 +1,5 @@
 from django.test import TestCase
-from myapp.models import Question, Option, ATest, Dimension, Result, Result
+from myapp.models import *
 from myapp.views import *
 import unittest
 from django.test import Client
@@ -17,18 +17,22 @@ class ModelTest(TestCase):
         Question.objects.create(q_id=1, q_name="Like eat what", t_id=1)
         Option.objects.create(o_id=1, o_name="Tomato", q_id=1, score=5, d_id=1)
 
+
     def test_atest_models(self):
         result = ATest.objects.get(t_name="This one")
         self.assertEqual(result.t_describe, "This discribe")
         self.assertEqual(result.t_status, 0)
 
+
     def test_dimension_models(self):
         result = Dimension.objects.get(d_name="Out")
         self.assertEqual(result.t_id, 1)
 
+
     def test_question_models(self):
         result = Question.objects.get(q_name="Like eat what")
         self.assertEqual(result.t_id, 1)
+
 
     def test_option_models(self):
         result = Option.objects.get(o_name="Tomato")
@@ -42,31 +46,37 @@ class ViewTest(unittest.TestCase):
         self.client = Client()
         response = self.client.get('/search_dimensions?content=119')
         self.failUnlessEqual(response.status_code, 200)
-    
+
+
     def test_test_list(self):
         self.client = Client()
         response = self.client.get('/test_list?uId=78')
         self.failUnlessEqual(response.status_code, 200)
+
 
     def test_search_stat(self):
         self.client = Client()
         response = self.client.get('/search_stat?tId=1')
         self.failUnlessEqual(response.status_code, 200)
 
-    def search_all_questions(self):
+
+    def test_all_questions(self):
         self.client = Client()
         response = self.client.get('/search_all_questions?tId=1')
         self.failUnlessEqual(response.status_code, 200)
 
-    def edit_question(self):
+
+    def test_question(self):
         self.client = Client()
-        response = self.client.get('/edit_question?qId=1')
+        response = self.client.get('/edit_question?qId=171')
         self.failUnlessEqual(response.status_code, 200)
 
-    def search_atest_by(self):
+
+    def test_by(self):
         self.client = Client()
-        response = self.client.get('/search_atest_by?tId=3')
+        response = self.client.get('/search_atest_by?tId=1')
         self.failUnlessEqual(response.status_code, 200)
+
 
     def test_search_all_atest(self):
         self.client = Client()
@@ -74,11 +84,6 @@ class ViewTest(unittest.TestCase):
         }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
     
-    def create_judge(self):
-        self.client = Client()
-        response = self.client.post("/create_judge/",json.dumps({"tId" : 1 ,'content' : "ssdsed"
-        }), content_type="application/json")
-        self.failUnlessEqual(response.status_code, 200)
 
     def test_create(self):
         self.client = Client()
@@ -91,27 +96,33 @@ class ViewTest(unittest.TestCase):
         response = self.client.post("/set_dimension_page/",json.dumps({"tId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
-    def test_load_result(self):
-        self.client = Client()
         response = self.client.get('/load_result?tId=1')
-        self.failUnlessEqual(response.status_code, 200)
-
+    
+    
     def test_delete_evaluation(self):
         self.client = Client()
         response = self.client.post("/delete_evaluation/",json.dumps({"tId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
-
+    
+    
     def test_update_atest(self):
         self.client = Client()
         response = self.client.post("/update_atest/",json.dumps({"tId" : 1 ,"evaluationName" : "12qw",
         "evaluationDescribe" : "12wdede"}), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
+    
 
     def test_delete_question(self):
         self.client = Client()
         response = self.client.post("/delete_question/",json.dumps({"qId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
+    
+    def test_create_dimension(self):
+        self.client = Client()
+        response = self.client.post("/create_dimension/",json.dumps({"tId" : 1 , "dimensions" : [{"dName": "sdsd"}]}), 
+        content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
     
 
 
