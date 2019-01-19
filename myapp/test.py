@@ -56,6 +56,11 @@ class ViewTest(unittest.TestCase):
         response = self.client.get('/search_all_questions?tId=1')
         self.failUnlessEqual(response.status_code, 200)
 
+    def edit_question(self):
+        self.client = Client()
+        response = self.client.get('/edit_question?qId=1')
+        self.failUnlessEqual(response.status_code, 200)
+
     
 
 
