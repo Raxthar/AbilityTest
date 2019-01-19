@@ -147,3 +147,12 @@ class ViewTest(unittest.TestCase):
             json.dumps({"tId": 1, "qName": "asd", "oName": ["sdsd"], "score": [5], "dId": [5]}), 
             content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
+
+
+    def test_update_question(self):
+        self.client = Client()
+        response = self.client.post("/update_question/",
+            json.dumps({"qId": 1 , "newQuestionName": "asd", "newOptionData": [{"oName": "asdas", "score": 4, "dId": 1}]}), 
+            content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+    
