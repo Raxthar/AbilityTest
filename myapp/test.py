@@ -1,5 +1,6 @@
 from django.test import TestCase
-from myapp.models import Question, Option, ATest, Dimension
+from myapp.models import Question, Option, ATest, Dimension, Result, Result
+from myapp.views import *
 import unittest
 from django.test import Client
 import json
@@ -39,17 +40,17 @@ class ModelTest(TestCase):
 class ViewTest(unittest.TestCase):
     def test_search_dimensions(self):
         self.client = Client()
-        response = self.client.get('arch_dimensions?content=119')
+        response = self.client.get('/search_dimensions?content=119')
         self.failUnlessEqual(response.status_code, 200)
     
     def test_test_list(self):
         self.client = Client()
-        response = self.client.get('/test_list?uId=55')
+        response = self.client.get('/test_list?uId=78')
         self.failUnlessEqual(response.status_code, 200)
-    
+
     def test_search_stat(self):
         self.client = Client()
-        response = self.client.get('arch_stat?tId=55')
+        response = self.client.get('/search_stat?tId=1')
         self.failUnlessEqual(response.status_code, 200)
 
     def search_all_questions(self):
