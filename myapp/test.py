@@ -162,3 +162,17 @@ class ViewTest(unittest.TestCase):
         response = self.client.post("/update_dimension/",json.dumps({"tId" : 1 , "dimensionName" : [{"dName": "sdsd"}]}), 
         content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
+
+
+    def test_edit_judge(self):
+        self.client = Client()
+        response = self.client.post("/edit_judge/",
+        json.dumps({"tId" : 1 , "due": "2018-01-01", "judge" : ["sdsd"], "dimensionId": [1]}), 
+        content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
+    
+    def test_search_judge(self):
+        self.client = Client()
+        response = self.client.get('/search_judge?tId=1')
+        self.failUnlessEqual(response.status_code, 200)
