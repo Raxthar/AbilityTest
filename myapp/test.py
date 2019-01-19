@@ -71,6 +71,12 @@ class ViewTest(unittest.TestCase):
         response = self.client.post("/search_all_atest/",json.dumps({"uId" : 1 
         }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
+    
+    def create_judge(self):
+        self.client = Client()
+        response = self.client.post("/create_judge/",json.dumps({"tId" : 1 ,'content' : "ssdsed"
+        }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
 
     
 
