@@ -91,11 +91,11 @@ class ViewTest(unittest.TestCase):
         "uId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
+
     def test_set_dimension_page(self):
         self.client = Client()
         response = self.client.post("/set_dimension_page/",json.dumps({"tId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
-
         response = self.client.get('/load_result?tId=1')
     
     
@@ -131,7 +131,7 @@ class ViewTest(unittest.TestCase):
         json.dumps({"tId": 1, "qName": "asd", "oName": ["sdsd"], "score": [5], "dId": [5]}),
         content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
-
+    
 
     def test_add_question(self):
         self.client = Client()
@@ -163,7 +163,7 @@ class ViewTest(unittest.TestCase):
         content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
-
+    
     def test_edit_judge(self):
         self.client = Client()
         response = self.client.post("/edit_judge/",
@@ -175,4 +175,18 @@ class ViewTest(unittest.TestCase):
     def test_search_judge(self):
         self.client = Client()
         response = self.client.get('/search_judge?tId=1')
+        self.failUnlessEqual(response.status_code, 200)
+
+    
+    def test_show_atest(self):
+        self.client = Client()
+        response = self.client.get('/show_atest?tId=1')
+        self.failUnlessEqual(response.status_code, 200)
+
+    
+    def test_add_record(self):
+        self.client = Client()
+        response = self.client.post("/add_record/",
+            json.dumps({"tId" : 119 , "options" : [{"qId" : 173, "oId" : 220}]}), 
+            content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
