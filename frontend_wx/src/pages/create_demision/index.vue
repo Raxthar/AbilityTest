@@ -4,8 +4,8 @@
     <i-button @click='addDimension'>新维度</i-button>
     <i-panel v-for="(item,index) in lists"  v-bind:key="index">
       <i-panel title="请输入维度">
-        <input :value="item.dName" @click="handleClick(index)" @input="handleInput" class="demo-input" type="text" placeholder="请输入维度名称"/>
-        <i-button @click='delDimension(index)'>删除</i-button>
+        <input :value="item.dName" @touchstart="handleClick(index)" @input="handleInput" class="demo-input" type="text" placeholder="请输入维度名称"/>
+        <i-button @touchstart="handleClick(index)" @click='delDimension'>删除</i-button>
       </i-panel>
     </i-panel>
     <i-button type="primary" size="small" @click="questionList" >下一步</i-button>
@@ -72,13 +72,15 @@ export default {
         },
         data: JSON.stringify(this.dimensionLists),
         success (response) {
-          console.log(response.data)
           if (response.data.code === 200) {
             wx.navigateTo({
               url: '../create_question/main?tId=' + tid + '&uId=' + uid
             })
           } else {
-            console.log("failed!")
+            $Message({
+              content: '读取失败！',
+              type: 'error'
+            })
           }
         }
       })
@@ -99,11 +101,9 @@ export default {
       }
       this.lists.push(cope)
     },
-    delDimension (index) {
-      console.log(index)
-      this.dimensionLists.dimensions.splice(index, 1)
-      this.lists.splice(index, 1)
-      console.log(this.dimensionLists.dimensions)
+    delDimension () {
+      this.lists.splice(this.currentIndex, 1)
+      this.dimensionLists.dimensions = this.lists
     }
   }
 }
