@@ -156,3 +156,9 @@ class ViewTest(unittest.TestCase):
             content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
     
+
+    def test_update_dimension(self):
+        self.client = Client()
+        response = self.client.post("/update_dimension/",json.dumps({"tId" : 1 , "dimensionName" : [{"dName": "sdsd"}]}), 
+        content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
