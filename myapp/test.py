@@ -2,6 +2,7 @@ from django.test import TestCase
 from myapp.models import Question, Option, ATest, Dimension
 import unittest
 from django.test import Client
+import json
 # Create your tests here.
 
 
@@ -97,6 +98,12 @@ class ViewTest(unittest.TestCase):
     def test_delete_evaluation(self):
         self.client = Client()
         response = self.client.post("/delete_evaluation/",json.dumps({"tId" : 1 }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
+    def test_update_atest(self):
+        self.client = Client()
+        response = self.client.post("/update_atest/",json.dumps({"tId" : 1 ,"evaluationName" : "12qw",
+        "evaluationDescribe" : "12wdede"}), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
     
