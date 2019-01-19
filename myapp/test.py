@@ -66,6 +66,12 @@ class ViewTest(unittest.TestCase):
         response = self.client.get('/search_atest_by?tId=3')
         self.failUnlessEqual(response.status_code, 200)
 
+    def test_search_all_atest(self):
+        self.client = Client()
+        response = self.client.post("/search_all_atest/",json.dumps({"uId" : 1 
+        }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
     
 
 
