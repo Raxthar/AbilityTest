@@ -84,6 +84,11 @@ class ViewTest(unittest.TestCase):
         "uId" : 1 }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
+    def test_set_dimension_page(self):
+        self.client = Client()
+        response = self.client.post("/set_dimension_page/",json.dumps({"tId" : 1 }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
     
 
 
