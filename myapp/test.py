@@ -78,6 +78,12 @@ class ViewTest(unittest.TestCase):
         }), content_type="application/json")
         self.failUnlessEqual(response.status_code, 200)
 
+    def test_create(self):
+        self.client = Client()
+        response = self.client.post("/create/",json.dumps({"tName" : "1223",'tDescribe' : "ssdsed",
+        "uId" : 1 }), content_type="application/json")
+        self.failUnlessEqual(response.status_code, 200)
+
     
 
 
