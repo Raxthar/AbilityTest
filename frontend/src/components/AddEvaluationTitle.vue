@@ -11,9 +11,9 @@
         <Card>
           <Form :model="createData">
             <p class="title-text">测评标题</p>
-            <Input placeholder="请输入测评标题" style="width: 600px"  v-model="createData.tName"/><br><br><br><br>
+            <Input placeholder="请输入测评标题" style="width: 600px"  v-model="createData.tName" id="createTitle"/><br><br><br><br>
             <p class="title-text">测评描述</p>
-            <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="createData.tDescribe"/><br><br><br><br>
+            <Input type="textarea" :rows="4" style="width: 600px" placeholder="请输入测评描述"  v-model="createData.tDescribe" id="createDesc"/><br><br><br><br>
             <Button :size="buttonSize" type="primary" shape="circle" @click="handleCreate" id="submitButton">创建测评</Button>
           </Form>
         </Card>

@@ -8,7 +8,7 @@
         </Button>
       </Header>
       <Content>
-        <Button :size="buttonSize" type="primary" @click="jumpToAdd">
+        <Button :size="buttonSize" type="primary" @click="jumpToAdd" id="create">
           创建测评
         </Button>
       </Content>
